@@ -187,9 +187,9 @@ In all, inference is dramatically accelerated, and we obtain (among the other ki
     
     \item Here, we implement multi-component, stratified ejecta. \TARDIS~allows for ejecta composed of stratified shells, each with a specific temperature, density, and plasma conditions. In this configuration, each shell can have a specific abundance pattern. We use 10 shells in all runs unless indicated otherwise. We also employ multiple (30) \TARDIS~iterations when generating synthetic spectra in this configuration. At each iteration, the plasma conditions are updated, and converge towards an ejecta where the outer boundary emitted luminosity matches the user-requested $L_{\mathrm{outer}}$. 
     
-    \item We begin with a simple two-component ejecta. As with our single-component model, this two-component model is described by an outer boundary luminosity $L_{\mathrm{outer}}$ and $\rho_0$. Each of the components is then described by inner and outer boundary $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$ and a $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$. Multi-component fits are thus $2 + 5 + 5 = 12$-dimensional. The components necessarily overlap in physical space because \TARDIS~cannot simulate a gap between 2 componentsthem. The abundance in each shell is then determined by the component(s) which are in a given shell. For shells where there is overlap between two components, the abundance is taken as a sum of the two abundance patterns.
+    \item We begin with a simple two-component ejecta. As with our single-component model, this two-component model is described by an outer boundary luminosity $L_{\mathrm{outer}}$ and $\rho_0$. Each of the components is then described by inner and outer boundary $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$ and a $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$. Multi-component fits are thus $2 + 5 + 5 = 12$-dimensional. The components necessarily overlap in physical space because \TARDIS~cannot simulate a gap between them. The abundance in each shell is then determined by the component(s) which are in a given shell. For shells where there is overlap between two components, the abundance is taken as a sum of the two abundance patterns.
     
-    \item We demonstrate the difference between single- and multi-component ejecta in Figure X. Multiple components allow for additional complexity in the spectral synthesis.\footnote{See \cite{kawaguchi20} for a description of the diversity of kilonovae which may be produced when multiple components are present.} In particular, even in 1D with \TARDIS, we can produce the effect of re-processing, where emission from one component is absorbed and reemitted/scattered by another. We can also produce the effect of ``lanthanide curtaining'', in which some outermost lower-$Y_{\mathrm{e}$ ejecta containing the lanthanides masks an inner, bluer, lighter-element ejecta due to the considerable opacity of the lanthanides in the near-UV and optical. Some kilonova spectra may be better-described by these multi-component ejecta models. In \cite{vieira23}, we find that the 1.4 day spectrum of the GW170817 kilonova is well-described by a single-component ejecta with $Y_e \sim 0.3$. However, at later epochs, as the ejecta expands and becomes more optically thin, the photosphere recedes into the ejecta and we may unmask additional components which were hidden at early times. Light curve modelling (\eg, \citealt{villar17}) has shown that the kilonova may indeed be better-described by multiple components of different opacities, and some spectral modelling (\eg, \citealt{kasen17}) also invokes multiple components. This motivates our introduction of multi-component ejecta into \SPARK. We fit the 1.4, 2.4, and 3.4 day spectra of the GW170817 kilonova with both single- and multi-component models to assess the need for multiple components.
+    \item We demonstrate the difference between single- and multi-component ejecta in Figure X. Multiple components allow for additional complexity in the spectral synthesis.\footnote{See \cite{kawaguchi20} for a description of the diversity of kilonovae which may be produced when multiple components are present.} In particular, even in 1D with \TARDIS, we can produce the effect of re-processing, where emission from one component is absorbed and reemitted/scattered by another. We can also produce the effect of ``lanthanide curtaining'', in which some outermost lower-$Y_e$ ejecta containing the lanthanides masks an inner, bluer, lighter-element ejecta due to the considerable opacity of the lanthanides in the near-UV and optical. Some kilonova spectra may be better-described by these multi-component ejecta models. In \cite{vieira23}, we find that the 1.4 day spectrum of the GW170817 kilonova is well-described by a single-component ejecta with $Y_e \sim 0.3$. However, at later epochs, as the ejecta expands and becomes more optically thin, the photosphere recedes into the ejecta and we may unmask additional components which were hidden at early times. Light curve modelling (\eg, \citealt{villar17}) has shown that the kilonova may indeed be better-described by multiple components of different opacities, and some spectral modelling (\eg, \citealt{kasen17}) also invokes multiple components. This motivates our introduction of multi-component ejecta into \SPARK. We fit the 1.4, 2.4, and 3.4 day spectra of the GW170817 kilonova with both single- and multi-component models to assess the need for multiple components.
 
 \end{itemize}
 
@@ -202,16 +202,16 @@ In all, inference is dramatically accelerated, and we obtain (among the other ki
 
     \item All \texttt{approxposterior}/BAPE hyperparameters and optimizers used here are the same as those used in \cite{vieira23}. We again produce a baseline run of $m_{0} = 1500$ Latin Hypercube sampled points at the beginning of each \SPARK~run. However, the parameter space allowed by our priors differs for the 1.4, 2.4, and 3.4 day fits. Table~\ref{tab:priors-single} includes our priors for each fit. All priors are uniform. The bounds on the density $\rho_0$ and abundance-setting parameters $Y_e$, $v_{\mathrm{exp}}$, and $s$ are the same at all epochs. The priors differ in the bounds on the luminosity, as expected given the cooling of the ejecta over time as it expands. We further allow for wider priors on the inner and outer boundary velocities for the fits at later epochs. In \cite{vieira23}, we fixed $v_{\mathrm{outer}} = 0.35c$ during our 1.4 day fit but noted that we observed similar results for $v_{\mathrm{outer}}$ in the range $0.35 - 0.38c$. Here, we allow for greater flexibility in our fits to the later epochs. \redbf{Mention/discuss: Does this complicate the inference? Is there a degeneracy between the inner and outer boundary velocities?}
     
-    \item Our priors for our multi-component fits are given in Table~\ref{tab:priors-multi}. These are identical at all epochs. The priors for the two components in a given fit are also identical, except that the ``red'' component has $Y_{e,\mathrm{red}} \in [0.01, 0.45]$ while the ``blue'' has $Y_{e,\mathrm{blu}} \in [0.05, 0.50]$. We use the terms red and blue loosely to simplify our discussion but note that the priors do not enforce $Y_{e,\mathrm{red}} < Y_{e,\mathrm{blu}}$. The priors enforce $v_{\mathrm{inner,red}} < v_{\mathrm{outer,red}}$ and $v_{\mathrm{inner,blu}} < v_{\mathrm{outer,blu}}$. We also ensure some overlap between the two components, \ie, $v_{\mathrm{outer,red}} > v_{\mathrm{inner,blu}}$ or $v_{\mathrm{outer,blu}} > v_{\mathrm{inner,red}}$. To allow for even sampling of parameter space with this complex conditional prior, we use constrained Latin Hypercube Sampling (cLHS; \citneeded ).
+    \item Our priors for our multi-component fits are given in Table~\ref{tab:priors-multi}. These are identical at all epochs. The priors for the two components in a given fit are also identical, except that the ``red'' component has $Y_{e,\mathrm{red}} \in [0.01, 0.45]$ while the ``blue'' has $Y_{e,\mathrm{blu}} \in [0.05, 0.50]$. We use the terms red and blue loosely to simplify our discussion but note that the priors do not enforce $Y_{e,\mathrm{red}} < Y_{e,\mathrm{blu}}$. The priors enforce $v_{\mathrm{inner,red}} < v_{\mathrm{outer,red}}$ and $v_{\mathrm{inner,blu}} < v_{\mathrm{outer,blu}}$. We also ensure some overlap between the two components, \ie, $v_{\mathrm{outer,red}} > v_{\mathrm{inner,blu}}$ or $v_{\mathrm{outer,blu}} > v_{\mathrm{inner,red}}$. \redbf{Finally, we also enforce that there is some non-overlap between the two components, \ie, one component does not completely envelop another.} To allow for even sampling of parameter space with this complex conditional prior, we use constrained Latin Hypercube Sampling (cLHS; \citealt{petelet09}).
     
-    \item When attempting to fit the 3.4 day spectrum, we found that the fit converged to a blackbody with little to no absorption in order to fit the continuum of the spectrum. Since we are interested in determining the species involved in the absorption, and the employed observed line list is likely to be especially incomplete at the shortest wavelengths, we prioritize fitting the $\geqlant 6000 \AA$ region of the spectrum. The crudest way to do this would be to simply mask the shorter wavelengths during the fit. We instead use the full \cite{czekala15} formalism for introducing local covariance features into the likelihood during spectroscopic inference. We introduce a Gaussian feature with amplitude \redbf{AMPLITUDE}, central wavelength \redbf{WAVELENGTH}, and variance \redbf{VARIANCE} into the likelihood. For comparison, the amplitude of the global covariance structure is $a_{\mathrm{G}} = 10^{-34}$ in all fits. This technique effectively downweights this region of the spectrum during the computation of the likelihood, but does not completely ignore it.
+    \item When attempting to fit the 3.4 day spectrum, we found that the fit converged to a blackbody with little to no absorption in order to fit the continuum of the spectrum. Since we are interested in determining the species involved in the absorption, and the employed observed line list is likely to be especially incomplete at the shortest wavelengths, we prioritize fitting the $\geqslant 6000$~\AA~region of the spectrum. The crudest way to do this would be to simply mask the shorter wavelengths during the fit. We instead use the full \cite{czekala15} formalism for introducing local covariance features into the likelihood during spectroscopic inference. We introduce a Gaussian feature with amplitude \redbf{$a_{\mathrm{L}}^2 = 10^{-34} (\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$, central wavelength $\mu_{\mathrm{L}} = 3000$~\AA, and variance $\sigma_{\mathrm{L}}^2 = 2500$~\AA${}^2$} into the covariance kernel. This technique effectively down-weights this region of the spectrum during the computation of the likelihood, but does not completely ignore it. For comparison, the amplitude of the global covariance structure is $a_{\mathrm{G}} = 10^{-34} (\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$ in all fits.
 
 \end{itemize}
 
 
 \begin{deluxetable}{c|ccc}
 \centering
-\tablecaption{Priors for the parameters of the single-component fits at 1.4, 2.4, and 3.4 days. $v_{\mathrm{outer}}/c$ is fixed to $0.35$ in the 1.4 day fit (\citealt{vieira23}).}
+\tablecaption{Priors for the parameters of the single-component fits at 1.4, 2.4, and 3.4 days. $v_{\mathrm{outer}}$ is fixed to $0.35c$ in the 1.4 day fit (\citealt{vieira23}).}
 \tablehead{parameter & 1.4 days & 2.4 days & 3.4 days}
 \startdata\tablewidth{1.0\textwidth}
  \vspace{2pt}
@@ -262,6 +262,12 @@ Things not to forget:
     
 
 \end{itemize}
+
+\subsection{2.4 and 3.4 days, single-epoch}
+
+
+
+\subsection{1.4, 2.4, and 3.4 days, multi-epoch} 
 
 %%% === SECTION 4 === %%%
 %% DISCUSSION %%
@@ -651,7 +657,7 @@ N.V. acknowledges funding from the Bob Wares Science Innovation Prospectors Fund
 % \bibitem[Kasen et al.(2015)]{kasen15} Kasen, D., Fern{\'a}ndez, R., \& Metzger, B.~D.\ 2015, \mnras, 450, 1777
 
 
-% \bibitem[Kasen et al.(2017)]{kasen17} Kasen, D., Metzger, B., Barnes, J., et al.\ 2017, \nat, 551, 80
+\bibitem[Kasen et al.(2017)]{kasen17} Kasen, D., Metzger, B., Barnes, J., et al.\ 2017, \nat, 551, 80
 
 
 %\bibitem[Kasen \& Barnes(2019)]{kasen19} Kasen, D., \& Barnes, J.\ 2019, \apj, 876, 128
@@ -830,6 +836,9 @@ N.V. acknowledges funding from the Bob Wares Science Innovation Prospectors Fund
 % %%%%% light elements in KNe
 
 
+\bibitem[Petelet et al.(2009)]{petelet09} Petelet, M., Iooss, B., Asserin, O., et al.\ 2009, arXiv:0909.0329
+
+
 \bibitem[Pian et al.(2017)]{pian17} Pian, E., D'Avanzo, P., Benetti, S., et al.\ 2017, \nat, 551, 67
 %%%%% GW170817 SPECTRA
 
@@ -996,8 +1005,8 @@ N.V. acknowledges funding from the Bob Wares Science Innovation Prospectors Fund
 \bibitem[Vieira et al.(2023)]{vieira23} Vieira, N., Ruan, J.~J., Haggard, D., et al.\ 2023, \apj, 944, 123
 %%%% SPARK PAPER 1
 
-% \bibitem[Villar et al.(2017)]{villar17}Villar, V.~A., Guillochon, J., Berger, E., et al.\ 2017 \aj, 851, L21
-% %%%%% COMPILATION OF GW170817 PHOTOMETRY
+\bibitem[Villar et al.(2017)]{villar17}Villar, V.~A., Guillochon, J., Berger, E., et al.\ 2017 \aj, 851, L21
+%%%%% COMPILATION OF GW170817 PHOTOMETRY
 
 
 %\bibitem[Villar et al.(2018)]{villar18} Villar, V.~A., Cowperthwaite, P.~S., Berger, E., et al.\ 2018, \apjl, 862, L11
@@ -1063,368 +1072,9 @@ N.V. acknowledges funding from the Bob Wares Science Innovation Prospectors Fund
 \appendix{}
 
 %%% === APPENDIX A === %%%
-%% LINE LIST DETAILS %%
-\section{Line list details}\label{app:linelist}
-
-We provide a breakdown of our line list in Table~\ref{tab:linecounts}, which details the number of lines for each ion. We only list elements which are synthesized in part by the $r$-process ($Z \geqslant 31$), but note that we use 1,476,338 additional VALD lines for $Z \leqslant 30$, dominated by iron-group elements. For these elements with $Z \leqslant 30$, we acquire lines as available; for some doubly-ionized iron-group elements, no lines are present.
-
-
-%%% === APPENDIX B === %%%
-%% GP HYPERPARAMETERS %%
-\section{Gaussian Process Hyperparameters}\label{app:GP_hparams}
-
-To further assess the convergence of the \SPARK~run, we can plot the hyperparameters of the GP over the course of training. In Figure~\ref{fig:hparams}, we see this evolution for the mean $\mu(\theta)$ of the GP and the scale length hyperparameters $\ell_j$ in each dimension $j$ of $\theta$-space. This diagnostic is instructive both when constructing the base training set and during active learning. As with the GP test set error, during the construction of the base training set, the hyperparameters eventually converge to stable values, indicating that the GP has captured the global properties of the posterior. Once active learning begins at $m = 1500$, the hyperparameters remain stable.
-
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.47\textwidth]{figs/appendix/220808_014638_GP_hparams.png}
-    \figcaption{\textbf{Hyperparameters of the GP over the course of training.} Hyperparameters include the mean value and covariance kernel length scales of the GP, $\ell_j$, in each dimension $j$ of $\theta$-space. The mean value is normalized by $10^2$ for legibility. The hyperparameters rapidly converge and then remain stable during construction of the base training set, indicating that the optimal hyperparameters have been found. Once active learning begins at $m = 1500$, the hyperparameters remain stable.}\label{fig:hparams}
-\end{figure}
-
-
-%%% === APPENDIX C === %%%
 %% ABUNDANCES %%
 \section{Detailed Ion Abundances}\label{app:ion_abunds}
 
-In Tables~\ref{tab:ion_abunds_bluehot} and \ref{tab:ion_abunds_purplewarm}, we provide mass fractions and uncertainties for all of the relevant ions in the ejecta in our best-fit blue+hot and purple+warm models. The majority of elements are singly ionized. We also provide the total mass of each ion contained in our simulation, and, the mass of each ion under the assumption of some fiducial total ejecta mass of $0.02~M_{\odot}$ and uniform composition above and below the photosphere.
-
-
-
-
-
-
-\startlongtable
-\begin{deluxetable}{cc|c}
-\tablewidth{\textwidth}
-\centering
-\tablecaption{Number of lines for each ion, for elements with $Z \geqslant 31$. For elements with $Z<31$, an additional 1,476,338 lines (dominated by the iron group) are used.}\label{tab:linecounts} 
-\tablehead{\colhead{$Z$} & \colhead{ion} & \colhead{$N_{\mathrm{lines}}$}} 
-\startdata
-1-30 & H - Zn \ion{}{1}~-\ion{}{3}\tablenotemark{a} & 1,476,338 \\\hline
-31 & \ion{Ga}{1} & 41 \\
- & \ion{Ga}{2} & 194 \\
- & \ion{Ga}{3} & 2 \\\hline
-32 & \ion{Ge}{1} & 64 \\
- & \ion{Ge}{2} & 22 \\\hline
-33 & \ion{As}{1} & 110 \\\hline
-34 & \ion{Se}{1} & 8 \\\hline
-37 & \ion{Rb}{1} & 143 \\\hline
-38 & \ion{Sr}{1} & 110 \\
- & \ion{Sr}{2} & 695 \\\hline
-39 & \ion{Y}{1} & 5,365 \\
- & \ion{Y}{2} & 7,753 \\
- & \ion{Y}{3} & 39 \\\hline
-40 & \ion{Zr}{1} & 699 \\
- & \ion{Zr}{2} & 542 \\
- & \ion{Zr}{3} & 359 \\\hline
-41 & \ion{Nb}{1} & 1,044 \\
- & \ion{Nb}{2} & 2,988 \\
- & \ion{Nb}{3} & 76 \\\hline
-42 & \ion{Mo}{1} & 2,892 \\
- & \ion{Mo}{2} & 328 \\\hline
-43 & \ion{Tc}{1} & 52 \\\hline
-44 & \ion{Ru}{1} & 1,028 \\
- & \ion{Ru}{2} & 127  \\\hline
-45 & \ion{Rh}{1} & 440 \\
- & \ion{Rh}{2} & 94 \\\hline
-46 & \ion{Pd}{1} & 76 \\
- & \ion{Pd}{2} & 13 \\\hline
-47 & \ion{Ag}{1} & 15 \\
- & \ion{Ag}{2} & 10 \\\hline
-48 & \ion{Cd}{1} & 20  \\
- & \ion{Cd}{2} & 4 \\\hline
-49 & \ion{In}{1} & 24 \\
- & \ion{In}{2} & 16 \\\hline
-50 & \ion{Sn}{1} & 59 \\
- & \ion{Sn}{2} & 22 \\\hline
-51 & \ion{Sb}{1} & 73 \\\hline
-52 & \ion{Te}{1} & 18 \\\hline
-54 & \ion{Xe}{2} & 33 \\\hline
-55 & \ion{Cs}{1} & 150 \\\hline
-56 & \ion{Ba}{1} & 125 \\
- & \ion{Ba}{2} & 244 \\\hline
-57 & \ion{La}{1} & 267 \\
- & \ion{La}{2} & 3,938 \\
- & \ion{La}{3} & 131 \\\hline
-58 & \ion{Ce}{1} & 903 \\
- & \ion{Ce}{2} & 16,014 \\
- & \ion{Ce}{3} & 3,023 \\\hline
-59 & \ion{Pr}{1} & 127 \\
- & \ion{Pr}{2} & 7,723 \\
- & \ion{Pr}{3} & 1,151 \\\hline
-60 & \ion{Nd}{1} & 281 \\
- & \ion{Nd}{2} & 1,279 \\
- & \ion{Nd}{3} & 71 \\\hline
-62 & \ion{Sm}{1} & 520 \\
- & \ion{Sm}{2} & 1,334 \\
- & \ion{Sm}{3} & 49 \\\hline
-63 & \ion{Eu}{1} & 352 \\
- & \ion{Eu}{2} & 871 \\
- & \ion{Eu}{3} & 1,150 \\\hline
-64 & \ion{Gd}{1} & 620 \\
- & \ion{Gd}{2} & 963 \\
- & \ion{Gd}{3} & 52 \\\hline
-65 & \ion{Tb}{1} & 3 \\
- & \ion{Tb}{2} & 1,822 \\
- & \ion{Tb}{3} & 80 \\\hline
-66 & \ion{Dy}{1} & 834 \\
- & \ion{Dy}{2} & 897 \\
- & \ion{Dy}{3} & 1,337 \\\hline
-67 & \ion{Ho}{1} & 711 \\
- & \ion{Ho}{2} & 496 \\
- & \ion{Ho}{3} & 1,309 \\\hline
-68 & \ion{Er}{1} & 365 \\
- & \ion{Er}{2} & 775 \\
- & \ion{Er}{3} & 1,308 \\\hline
-69 & \ion{Tm}{1} & 532 \\
- & \ion{Tm}{2} & 7,919 \\
- & \ion{Tm}{3} & 1,479 \\\hline
-70 & \ion{Yb}{1} & 83 \\
- & \ion{Yb}{2} & 6,794  \\
- & \ion{Yb}{3} & 271 \\\hline
-71 & \ion{Lu}{1} & 247 \\
- & \ion{Lu}{2} & 125 \\
- & \ion{Lu}{3} & 59 \\\hline
-72 & \ion{Hf}{1} & 430 \\
- & \ion{Hf}{2} & 434 \\\hline
-73 & \ion{Ta}{1} & 11,470 \\
- & \ion{Ta}{2} & 3,992 \\\hline
-74 & \ion{W}{1} & 1,062 \\
- & \ion{W}{2} & 221 \\\hline
-75 & \ion{Re}{1} & 772 \\
- & \ion{Re}{2} & 47 \\\hline
-76 & \ion{Os}{1} & 891 \\
- & \ion{Os}{2} & 47 \\\hline
-77 & \ion{Ir}{1} & 501 \\
- & \ion{Ir}{2} & 28 \\\hline
-78 & \ion{Pt}{1} & 215 \\
- & \ion{Pt}{2} & 119 \\
- & \ion{Pt}{3} & 666 \\\hline
-79 & \ion{Au}{1} & 61 \\
- & \ion{Au}{2} & 498 \\
- & \ion{Au}{3} & 175 \\\hline
-80 & \ion{Hg}{1} & 27 \\
- & \ion{Hg}{2} & 446 \\
- & \ion{Hg}{3} & 42 \\\hline
-81 & \ion{Tl}{1} & 22 \\\hline
-82 & \ion{Pb}{1} & 38 \\
- & \ion{Pb}{2} & 60 \\\hline
-83 & \ion{Bi}{1} & 29 \\
- & \ion{Bi}{2} & 14 \\\hline
-90 & \ion{Th}{1} & 700 \\
- & \ion{Th}{2} & 1,448 \\
- & \ion{Th}{3} & 903 \\\hline
-92 & \ion{U}{1} & 561 \\
- & \ion{U}{2} & 622 \\\hline
- & \textbf{TOTAL} & \textbf{1,597,376}  \\
-\enddata
-\tablenotetext{a}{Lines acquired as available: for some doubly-ionized iron-group elements, lines are not available.}
-\end{deluxetable}
-
-
-
-
-\startlongtable
-\begin{deluxetable*}{cc|c|c|c}
-\tablewidth{\textwidth}
-\centering
-\tablecaption{Mass fractions and masses for all ions in the blue+hot model with a mass fraction $\mathrm{X}_i \geqslant 10^{-9}$. Columns include the atomic number $Z$, the name of the ion, the mass fraction $\mathrm{X}_i$ of the ion, and the mass of the ion in our simulation, using our inferred lower bound on the ejecta mass $M_{\mathrm{ej}} > 3.5^{+4.2}_{-3.3} \times 10^{-5}~M_{\odot}$. We also include the mass of the ion assuming some fiducial total ejecta mass of $M_{\mathrm{ej}} = 0.02~M_{\odot}$ and a uniform composition above and below the photosphere. We highlight ions of interest: \ion{Sr}{2}, \ion{Y}{2}, and \ion{Zr}{2}. }\label{tab:ion_abunds_bluehot} 
-\tablehead{\colhead{$Z$} & \colhead{ion} & \colhead{mass fraction $\mathrm{X}_i$} & \colhead{lower bound $M_{\mathrm{ej,i}}~[M_{\odot}]$} & \colhead{fiducial $M_{0.02,\mathrm{i}}$} } 
-\startdata
-1 & \ion{H}{1} & ${5.01}^{+0.04}_{-1.00} \times 10^{-5}$ & ${1.75}^{+1.20}_{-1.37} \times 10^{-9}$ & ${1.00}^{+0.04}_{-1.00} \times 10^{-6}$ \\
- & \ion{H}{2} & ${4.75}^{+0.04}_{-1.00} \times 10^{-7}$ & ${1.66}^{+1.20}_{-1.37} \times 10^{-11}$ & ${9.51}^{+0.04}_{-1.00} \times 10^{-9}$ \\\hline
-2 & \ion{He}{1} & ${8.36}^{+4.03}_{-1.00} \times 10^{-1}$ & ${2.93}^{+4.21}_{-1.37} \times 10^{-5}$ & ${1.67}^{+4.03}_{-1.00} \times 10^{-2}$ \\\hline
-3 & \ion{Li}{2} & ${2.49}^{+0.55}_{-1.00} \times 10^{-8}$ & ${8.72}^{+1.32}_{-1.37} \times 10^{-13}$ & ${4.98}^{+0.55}_{-1.00} \times 10^{-10}$ \\\hline
-4 & \ion{Be}{2} & ${8.53}^{+0.55}_{-1.00} \times 10^{-9}$ & ${2.98}^{+1.32}_{-1.37} \times 10^{-13}$ & ${1.71}^{+0.55}_{-1.00} \times 10^{-10}$ \\\hline
-6 & \ion{C}{1} & ${3.49}^{+356.60}_{-1.00} \times 10^{-7}$ & ${1.22}^{+356.60}_{-1.37} \times 10^{-11}$ & ${6.97}^{+356.60}_{-1.00} \times 10^{-9}$ \\
- & \ion{C}{2} & ${4.63}^{+356.60}_{-1.00} \times 10^{-6}$ & ${1.62}^{+356.60}_{-1.37} \times 10^{-10}$ & ${9.26}^{+356.60}_{-1.00} \times 10^{-8}$ \\\hline
-7 & \ion{N}{1} & ${5.16}^{+356.60}_{-1.00} \times 10^{-8}$ & ${1.81}^{+356.60}_{-1.37} \times 10^{-12}$ & ${1.03}^{+356.60}_{-1.00} \times 10^{-9}$ \\\hline
-8 & \ion{O}{1} & ${7.72}^{+12.24}_{-1.00} \times 10^{-7}$ & ${2.70}^{+12.30}_{-1.37} \times 10^{-11}$ & ${1.54}^{+12.24}_{-1.00} \times 10^{-8}$ \\
- & \ion{O}{2} & ${6.30}^{+12.24}_{-1.00} \times 10^{-9}$ & ${2.20}^{+12.30}_{-1.37} \times 10^{-13}$ & ${1.26}^{+12.24}_{-1.00} \times 10^{-10}$ \\\hline
-9 & \ion{F}{1} & ${9.59}^{+14.04}_{-1.00} \times 10^{-6}$ & ${3.36}^{+14.09}_{-1.37} \times 10^{-10}$ & ${1.92}^{+14.04}_{-1.00} \times 10^{-7}$ \\\hline
-10 & \ion{Ne}{1} & ${2.94}^{+14.04}_{-1.00} \times 10^{-7}$ & ${1.03}^{+14.09}_{-1.37} \times 10^{-11}$ & ${5.88}^{+14.04}_{-1.00} \times 10^{-9}$ \\\hline
-11 & \ion{Na}{2} & ${1.93}^{+33.94}_{-1.00} \times 10^{-7}$ & ${6.76}^{+33.96}_{-1.37} \times 10^{-12}$ & ${3.86}^{+33.94}_{-1.00} \times 10^{-9}$ \\\hline
-12 & \ion{Mg}{2} & ${5.89}^{+33.94}_{-1.00} \times 10^{-7}$ & ${2.06}^{+33.96}_{-1.37} \times 10^{-11}$ & ${1.18}^{+33.94}_{-1.00} \times 10^{-8}$ \\\hline
-13 & \ion{Al}{2} & ${6.60}^{+12.79}_{-1.00} \times 10^{-8}$ & ${2.31}^{+12.85}_{-1.37} \times 10^{-12}$ & ${1.32}^{+12.79}_{-1.00} \times 10^{-9}$ \\\hline
-14 & \ion{Si}{2} & ${5.21}^{+12.79}_{-1.00} \times 10^{-7}$ & ${1.82}^{+12.85}_{-1.37} \times 10^{-11}$ & ${1.04}^{+12.79}_{-1.00} \times 10^{-8}$ \\\hline
-15 & \ion{P}{1} & ${1.34}^{+12.69}_{-1.00} \times 10^{-9}$ & ${4.68}^{+12.74}_{-1.37} \times 10^{-14}$ & ${2.68}^{+12.69}_{-1.00} \times 10^{-11}$ \\
- & \ion{P}{2} & ${5.39}^{+6.06}_{-1.00} \times 10^{-7}$ & ${1.89}^{+6.18}_{-1.37} \times 10^{-11}$ & ${1.08}^{+6.06}_{-1.00} \times 10^{-8}$ \\\hline
-16 & \ion{S}{1} & ${1.07}^{+6.06}_{-1.00} \times 10^{-8}$ & ${3.74}^{+6.18}_{-1.37} \times 10^{-13}$ & ${2.14}^{+6.06}_{-1.00} \times 10^{-10}$ \\
- & \ion{S}{2} & ${1.34}^{+3.52}_{-1.00} \times 10^{-6}$ & ${4.70}^{+3.72}_{-1.37} \times 10^{-11}$ & ${2.68}^{+3.52}_{-1.00} \times 10^{-8}$ \\\hline
-17 & \ion{Cl}{1} & ${4.09}^{+3.52}_{-1.00} \times 10^{-8}$ & ${1.43}^{+3.72}_{-1.37} \times 10^{-12}$ & ${8.17}^{+3.52}_{-1.00} \times 10^{-10}$ \\
- & \ion{Cl}{2} & ${7.55}^{+3.52}_{-1.00} \times 10^{-9}$ & ${2.64}^{+3.72}_{-1.37} \times 10^{-13}$ & ${1.51}^{+3.52}_{-1.00} \times 10^{-10}$ \\\hline
-18 & \ion{Ar}{1} & ${2.05}^{+1.41}_{-1.00} \times 10^{-7}$ & ${7.16}^{+1.85}_{-1.37} \times 10^{-12}$ & ${4.09}^{+1.41}_{-1.00} \times 10^{-9}$ \\\hline
-19 & \ion{K}{2} & ${1.48}^{+1.41}_{-1.00} \times 10^{-7}$ & ${5.17}^{+1.85}_{-1.37} \times 10^{-12}$ & ${2.96}^{+1.41}_{-1.00} \times 10^{-9}$ \\\hline
-20 & \ion{Ca}{2} & ${7.18}^{+1.41}_{-1.00} \times 10^{-8}$ & ${2.51}^{+1.85}_{-1.37} \times 10^{-12}$ & ${1.44}^{+1.41}_{-1.00} \times 10^{-9}$ \\
- & \ion{Ca}{3} & ${1.10}^{+5.15}_{-1.00} \times 10^{-7}$ & ${3.86}^{+5.29}_{-1.37} \times 10^{-12}$ & ${2.21}^{+5.15}_{-1.00} \times 10^{-9}$ \\\hline
-21 & \ion{Sc}{2} & ${6.07}^{+5.15}_{-1.00} \times 10^{-9}$ & ${2.13}^{+5.29}_{-1.37} \times 10^{-13}$ & ${1.21}^{+5.15}_{-1.00} \times 10^{-10}$ \\\hline
-22 & \ion{Ti}{2} & ${3.45}^{+5.15}_{-1.00} \times 10^{-8}$ & ${1.21}^{+5.29}_{-1.37} \times 10^{-12}$ & ${6.89}^{+5.15}_{-1.00} \times 10^{-10}$ \\\hline
-23 & \ion{V}{2} & ${1.88}^{+17.02}_{-1.00} \times 10^{-7}$ & ${6.59}^{+17.06}_{-1.37} \times 10^{-12}$ & ${3.76}^{+17.02}_{-1.00} \times 10^{-9}$ \\\hline
-24 & \ion{Cr}{2} & ${9.65}^{+17.02}_{-1.00} \times 10^{-5}$ & ${3.38}^{+17.06}_{-1.37} \times 10^{-9}$ & ${1.93}^{+17.02}_{-1.00} \times 10^{-6}$ \\
- & \ion{Cr}{3} & ${1.16}^{+20.41}_{-1.00} \times 10^{-9}$ & ${4.04}^{+20.45}_{-1.37} \times 10^{-14}$ & ${2.31}^{+20.41}_{-1.00} \times 10^{-11}$ \\\hline
-25 & \ion{Mn}{2} & ${6.20}^{+20.41}_{-1.00} \times 10^{-6}$ & ${2.17}^{+20.45}_{-1.37} \times 10^{-10}$ & ${1.24}^{+20.41}_{-1.00} \times 10^{-7}$ \\\hline
-26 & \ion{Fe}{2} & ${3.66}^{+46.99}_{-1.00} \times 10^{-5}$ & ${1.28}^{+47.01}_{-1.37} \times 10^{-9}$ & ${7.32}^{+46.99}_{-1.00} \times 10^{-7}$ \\\hline
-27 & \ion{Co}{2} & ${1.24}^{+46.99}_{-1.00} \times 10^{-7}$ & ${4.35}^{+47.01}_{-1.37} \times 10^{-12}$ & ${2.48}^{+46.99}_{-1.00} \times 10^{-9}$ \\\hline
-28 & \ion{Ni}{2} & ${1.00}^{+34.30}_{-1.00} \times 10^{-4}$ & ${3.51}^{+34.32}_{-1.37} \times 10^{-9}$ & ${2.00}^{+34.30}_{-1.00} \times 10^{-6}$ \\\hline
-29 & \ion{Cu}{2} & ${2.54}^{+34.30}_{-1.00} \times 10^{-5}$ & ${8.90}^{+34.32}_{-1.37} \times 10^{-10}$ & ${5.09}^{+34.30}_{-1.00} \times 10^{-7}$ \\\hline
-30 & \ion{Zn}{1} & ${7.42}^{+73.25}_{-1.00} \times 10^{-9}$ & ${2.60}^{+73.26}_{-1.37} \times 10^{-13}$ & ${1.48}^{+73.25}_{-1.00} \times 10^{-10}$ \\
- & \ion{Zn}{2} & ${7.86}^{+3698.81}_{-0.86} \times 10^{-5}$ & ${2.75}^{+3698.81}_{-1.28} \times 10^{-9}$ & ${1.57}^{+3698.81}_{-0.86} \times 10^{-6}$ \\\hline
-31 & \ion{Ga}{2} & ${2.27}^{+3698.81}_{-0.86} \times 10^{-5}$ & ${7.93}^{+3698.81}_{-1.28} \times 10^{-10}$ & ${4.53}^{+3698.81}_{-0.86} \times 10^{-7}$ \\\hline
-32 & \ion{Ge}{2} & ${1.30}^{+3698.81}_{-0.86} \times 10^{-4}$ & ${4.54}^{+3698.81}_{-1.28} \times 10^{-9}$ & ${2.59}^{+3698.81}_{-0.86} \times 10^{-6}$ \\\hline
-33 & \ion{As}{1} & ${2.95}^{+1118.47}_{-1.00} \times 10^{-7}$ & ${1.03}^{+1118.47}_{-1.37} \times 10^{-11}$ & ${5.91}^{+1118.47}_{-1.00} \times 10^{-9}$ \\
- & \ion{As}{2} & ${1.15}^{+1118.47}_{-1.00} \times 10^{-4}$ & ${4.03}^{+1118.47}_{-1.37} \times 10^{-9}$ & ${2.30}^{+1118.47}_{-1.00} \times 10^{-6}$ \\\hline
-34 & \ion{Se}{1} & ${1.01}^{+1118.47}_{-1.00} \times 10^{-5}$ & ${3.53}^{+1118.47}_{-1.37} \times 10^{-10}$ & ${2.02}^{+1118.47}_{-1.00} \times 10^{-7}$ \\
-& \ion{Se}{2} & ${1.07}^{+18627.73}_{-0.98} \times 10^{-2}$ & ${3.76}^{+18627.73}_{-1.36} \times 10^{-7}$ & ${2.15}^{+18627.73}_{-0.98} \times 10^{-4}$ \\\hline
-35 & \ion{Br}{1} & ${2.14}^{+18627.73}_{-0.98} \times 10^{-4}$ & ${7.48}^{+18627.73}_{-1.36} \times 10^{-9}$ & ${4.28}^{+18627.73}_{-0.98} \times 10^{-6}$ \\
-& \ion{Br}{2} & ${1.04}^{+18627.73}_{-0.98} \times 10^{-3}$ & ${3.64}^{+18627.73}_{-1.36} \times 10^{-8}$ & ${2.08}^{+18627.73}_{-0.98} \times 10^{-5}$ \\\hline
-36 & \ion{Kr}{1} & ${4.06}^{+5859.54}_{-0.99} \times 10^{-2}$ & ${1.42}^{+5859.54}_{-1.37} \times 10^{-6}$ & ${8.12}^{+5859.54}_{-0.99} \times 10^{-4}$ \\
-& \ion{Kr}{2} & ${9.31}^{+5859.54}_{-0.99} \times 10^{-4}$ & ${3.26}^{+5859.54}_{-1.37} \times 10^{-8}$ & ${1.86}^{+5859.54}_{-0.99} \times 10^{-5}$ \\\hline
-37 & \ion{Rb}{2} & ${2.53}^{+5859.54}_{-0.99} \times 10^{-2}$ & ${8.84}^{+5859.54}_{-1.37} \times 10^{-7}$ & ${5.05}^{+5859.54}_{-0.99} \times 10^{-4}$ \\\hline
-38 & \textbf{\ion{Sr}{2}} & $\mathbf{{1.35}^{+920.70}_{-1.00} \times 10^{-3}}$ & $\mathbf{{4.72}^{+920.70}_{-1.37} \times 10^{-8}}$ & $\mathbf{{2.70}^{+920.70}_{-1.00} \times 10^{-5}}$ \\
-& \ion{Sr}{3} & ${2.65}^{+920.70}_{-1.00} \times 10^{-2}$ & ${9.29}^{+920.70}_{-1.37} \times 10^{-7}$ & ${5.31}^{+920.70}_{-1.00} \times 10^{-4}$ \\\hline
-39 & \textbf{\ion{Y}{2}} & $\mathbf{{3.55}^{+920.70}_{-1.00} \times 10^{-3}}$ & $\mathbf{{1.24}^{+920.70}_{-1.37} \times 10^{-7}}$ & $\mathbf{{7.10}^{+920.70}_{-1.00} \times 10^{-5}}$ \\
-& \ion{Y}{3} & ${2.68}^{+298.76}_{-1.00} \times 10^{-3}$ & ${9.37}^{+298.76}_{-1.37} \times 10^{-8}$ & ${5.35}^{+298.76}_{-1.00} \times 10^{-5}$ \\\hline
-40 & \ion{Zr}{1} & ${1.23}^{+298.76}_{-1.00} \times 10^{-9}$ & ${4.31}^{+298.76}_{-1.37} \times 10^{-14}$ & ${2.46}^{+298.76}_{-1.00} \times 10^{-11}$ \\
-& \textbf{\ion{Zr}{2}} & $\mathbf{ {3.50}^{+298.76}_{-1.00} \times 10^{-2} }$ & $\mathbf{{1.23}^{+298.76}_{-1.37} \times 10^{-6}}$ & $\mathbf{ {7.01}^{+298.76}_{-1.00} \times 10^{-4} }$ \\
-& \ion{Zr}{3} & ${1.24}^{+318.33}_{-1.00} \times 10^{-3}$ & ${4.33}^{+318.34}_{-1.37} \times 10^{-8}$ & ${2.48}^{+318.33}_{-1.00} \times 10^{-5}$ \\\hline
-41 & \ion{Nb}{2} & ${7.49}^{+318.33}_{-1.00} \times 10^{-5}$ & ${2.62}^{+318.34}_{-1.37} \times 10^{-9}$ & ${1.50}^{+318.33}_{-1.00} \times 10^{-6}$ \\
-& \ion{Nb}{3} & ${5.13}^{+318.33}_{-1.00} \times 10^{-8}$ & ${1.80}^{+318.34}_{-1.37} \times 10^{-12}$ & ${1.03}^{+318.33}_{-1.00} \times 10^{-9}$ \\\hline
-42 & \ion{Mo}{2} & ${4.40}^{+456.69}_{-1.00} \times 10^{-3}$ & ${1.54}^{+456.69}_{-1.37} \times 10^{-7}$ & ${8.80}^{+456.69}_{-1.00} \times 10^{-5}$ \\
-& \ion{Mo}{3} & ${5.93}^{+456.69}_{-1.00} \times 10^{-9}$ & ${2.08}^{+456.69}_{-1.37} \times 10^{-13}$ & ${1.19}^{+456.69}_{-1.00} \times 10^{-10}$ \\\hline
-43 & \ion{Tc}{2} & ${2.18}^{+456.69}_{-1.00} \times 10^{-4}$ & ${7.64}^{+456.69}_{-1.37} \times 10^{-9}$ & ${4.37}^{+456.69}_{-1.00} \times 10^{-6}$ \\
-& \ion{Tc}{3} & ${2.50}^{+203.20}_{-1.00} \times 10^{-8}$ & ${8.74}^{+203.20}_{-1.37} \times 10^{-13}$ & ${4.99}^{+203.20}_{-1.00} \times 10^{-10}$ \\\hline
-44 & \ion{Ru}{1} & ${5.54}^{+203.20}_{-1.00} \times 10^{-9}$ & ${1.94}^{+203.20}_{-1.37} \times 10^{-13}$ & ${1.11}^{+203.20}_{-1.00} \times 10^{-10}$ \\
-& \ion{Ru}{2} & ${7.20}^{+203.20}_{-1.00} \times 10^{-3}$ & ${2.52}^{+203.20}_{-1.37} \times 10^{-7}$ & ${1.44}^{+203.20}_{-1.00} \times 10^{-4}$ \\
-& \ion{Ru}{3} & ${5.07}^{+179.83}_{-1.00} \times 10^{-9}$ & ${1.77}^{+179.83}_{-1.37} \times 10^{-13}$ & ${1.01}^{+179.83}_{-1.00} \times 10^{-10}$ \\\hline
-45 & \ion{Rh}{2} & ${5.23}^{+179.83}_{-1.00} \times 10^{-4}$ & ${1.83}^{+179.83}_{-1.37} \times 10^{-8}$ & ${1.05}^{+179.83}_{-1.00} \times 10^{-5}$ \\\hline
-46 & \ion{Pd}{1} & ${2.55}^{+115.22}_{-1.00} \times 10^{-9}$ & ${8.91}^{+115.23}_{-1.37} \times 10^{-14}$ & ${5.09}^{+115.22}_{-1.00} \times 10^{-11}$ \\
-& \ion{Pd}{2} & ${1.10}^{+115.22}_{-1.00} \times 10^{-3}$ & ${3.84}^{+115.23}_{-1.37} \times 10^{-8}$ & ${2.19}^{+115.22}_{-1.00} \times 10^{-5}$ \\\hline
-47 & \ion{Ag}{2} & ${2.55}^{+115.22}_{-1.00} \times 10^{-4}$ & ${8.94}^{+115.23}_{-1.37} \times 10^{-9}$ & ${5.11}^{+115.22}_{-1.00} \times 10^{-6}$ \\\hline
-48 & \ion{Cd}{1} & ${6.49}^{+94.70}_{-1.00} \times 10^{-9}$ & ${2.27}^{+94.71}_{-1.37} \times 10^{-13}$ & ${1.30}^{+94.70}_{-1.00} \times 10^{-10}$ \\
-& \ion{Cd}{2} & ${2.27}^{+94.70}_{-1.00} \times 10^{-4}$ & ${7.95}^{+94.71}_{-1.37} \times 10^{-9}$ & ${4.54}^{+94.70}_{-1.00} \times 10^{-6}$ \\\hline
-49 & \ion{In}{2} & ${6.99}^{+208.53}_{-1.00} \times 10^{-6}$ & ${2.45}^{+208.54}_{-1.37} \times 10^{-10}$ & ${1.40}^{+208.53}_{-1.00} \times 10^{-7}$ \\\hline
-50 & \ion{Sn}{2} & ${6.25}^{+208.53}_{-1.00} \times 10^{-5}$ & ${2.19}^{+208.54}_{-1.37} \times 10^{-9}$ & ${1.25}^{+208.53}_{-1.00} \times 10^{-6}$ \\
-& \ion{Sn}{3} & ${1.91}^{+208.53}_{-1.00} \times 10^{-8}$ & ${6.70}^{+208.54}_{-1.37} \times 10^{-13}$ & ${3.83}^{+208.53}_{-1.00} \times 10^{-10}$ \\\hline
-51 & \ion{Sb}{2} & ${9.76}^{+38.01}_{-1.00} \times 10^{-6}$ & ${3.42}^{+38.03}_{-1.37} \times 10^{-10}$ & ${1.95}^{+38.01}_{-1.00} \times 10^{-7}$ \\\hline
-52 & \ion{Te}{2} & ${7.71}^{+38.01}_{-1.00} \times 10^{-6}$ & ${2.70}^{+38.03}_{-1.37} \times 10^{-10}$ & ${1.54}^{+38.01}_{-1.00} \times 10^{-7}$ \\\hline
-53 & \ion{I}{1} & ${1.07}^{+38.01}_{-1.00} \times 10^{-8}$ & ${3.74}^{+38.03}_{-1.37} \times 10^{-13}$ & ${2.14}^{+38.01}_{-1.00} \times 10^{-10}$ \\
-& \ion{I}{2} & ${3.03}^{+9.27}_{-1.00} \times 10^{-6}$ & ${1.06}^{+9.35}_{-1.37} \times 10^{-10}$ & ${6.05}^{+9.27}_{-1.00} \times 10^{-8}$ \\\hline
-54 & \ion{Xe}{1} & ${1.27}^{+9.27}_{-1.00} \times 10^{-9}$ & ${4.43}^{+9.35}_{-1.37} \times 10^{-14}$ & ${2.53}^{+9.27}_{-1.00} \times 10^{-11}$ \\
-& \ion{Xe}{2} & ${7.68}^{+24.70}_{-1.00} \times 10^{-9}$ & ${2.69}^{+24.73}_{-1.37} \times 10^{-13}$ & ${1.54}^{+24.70}_{-1.00} \times 10^{-10}$
-\enddata
-\end{deluxetable*}
-
-
-\startlongtable
-\begin{deluxetable*}{cc|c|c|c}
-\tablewidth{\textwidth}
-\centering
-\tablecaption{Same as Table~\ref{tab:ion_abunds_bluehot}, for the purple+warm best-fitting model. The lower bound on the total ejecta mass, which is used to compute the mass of each ion in the simulation, is $M_{\mathrm{ej}} > 4.0^{+2.9}_{-2.9} \times 10^{-5}~M_{\odot}$ for this model. We highlight ions of interest: \ion{Sr}{2}, \ion{Y}{2}, and \ion{Zr}{2}. }\label{tab:ion_abunds_purplewarm} 
-\tablehead{\colhead{$Z$} & \colhead{ion} & \colhead{mass fraction $\mathrm{X}_i$} & \colhead{lower bound $M_{\mathrm{ej,i}}~[M_{\odot}]$} & \colhead{fiducial $M_{0.02,\mathrm{i}}$} } 
-\startdata
-1 & \ion{H}{1} & ${1.69}^{+1.93}_{-0.78} \times 10^{-4}$ & ${6.74}^{+2.06}_{-1.07} \times 10^{-9}$ & ${3.37}^{+1.93}_{-0.78} \times 10^{-6}$ \\
-& \ion{H}{2} & ${8.27}^{+1.93}_{-0.78} \times 10^{-7}$ & ${3.31}^{+2.06}_{-1.07} \times 10^{-11}$ & ${1.65}^{+1.93}_{-0.78} \times 10^{-8}$ \\\hline
-2 & \ion{He}{1} & ${6.79}^{+1.20}_{-0.50} \times 10^{-2}$ & ${2.72}^{+1.40}_{-0.88} \times 10^{-6}$ & ${1.36}^{+1.20}_{-0.50} \times 10^{-3}$ \\\hline
-3 & \ion{Li}{2} & ${1.34}^{+0.90}_{-0.50} \times 10^{-7}$ & ${5.34}^{+1.16}_{-0.88} \times 10^{-12}$ & ${2.67}^{+0.90}_{-0.50} \times 10^{-9}$ \\\hline
-4 & \ion{Be}{1} & ${8.10}^{+0.90}_{-0.50} \times 10^{-9}$ & ${3.24}^{+1.16}_{-0.88} \times 10^{-13}$ & ${1.62}^{+0.90}_{-0.50} \times 10^{-10}$ \\
-& \ion{Be}{2} & ${5.56}^{+1.22}_{-0.58} \times 10^{-5}$ & ${2.23}^{+1.42}_{-0.93} \times 10^{-9}$ & ${1.11}^{+1.22}_{-0.58} \times 10^{-6}$ \\\hline
-5 & \ion{B}{2} & ${5.45}^{+1.22}_{-0.58} \times 10^{-8}$ & ${2.18}^{+1.42}_{-0.93} \times 10^{-12}$ & ${1.09}^{+1.22}_{-0.58} \times 10^{-9}$ \\\hline
-6 & \ion{C}{1} & ${3.06}^{+1.22}_{-0.58} \times 10^{-7}$ & ${1.22}^{+1.42}_{-0.93} \times 10^{-11}$ & ${6.11}^{+1.22}_{-0.58} \times 10^{-9}$ \\
-& \ion{C}{2} & ${2.12}^{+1.39}_{-0.66} \times 10^{-6}$ & ${8.47}^{+1.57}_{-0.98} \times 10^{-11}$ & ${4.23}^{+1.39}_{-0.66} \times 10^{-8}$ \\\hline
-7 & \ion{N}{1} & ${2.01}^{+1.39}_{-0.66} \times 10^{-8}$ & ${8.02}^{+1.57}_{-0.98} \times 10^{-13}$ & ${4.01}^{+1.39}_{-0.66} \times 10^{-10}$ \\\hline
-8 & \ion{O}{1} & ${1.11}^{+4.42}_{-0.74} \times 10^{-6}$ & ${4.45}^{+4.48}_{-1.03} \times 10^{-11}$ & ${2.23}^{+4.42}_{-0.74} \times 10^{-8}$ \\
-& \ion{O}{2} & ${4.70}^{+4.42}_{-0.74} \times 10^{-9}$ & ${1.88}^{+4.48}_{-1.03} \times 10^{-13}$ & ${9.40}^{+4.42}_{-0.74} \times 10^{-11}$ \\\hline
-9 & \ion{F}{1} & ${1.20}^{+18.89}_{-0.89} \times 10^{-8}$ & ${4.78}^{+18.91}_{-1.15} \times 10^{-13}$ & ${2.39}^{+18.89}_{-0.89} \times 10^{-10}$ \\\hline
-20 & \ion{Ca}{2} & ${6.75}^{+18.89}_{-0.89} \times 10^{-7}$ & ${2.70}^{+18.91}_{-1.15} \times 10^{-11}$ & ${1.35}^{+18.89}_{-0.89} \times 10^{-8}$ \\
-& \ion{Ca}{3} & ${5.41}^{+6.35}_{-0.81} \times 10^{-7}$ & ${2.16}^{+6.39}_{-1.08} \times 10^{-11}$ & ${1.08}^{+6.35}_{-0.81} \times 10^{-8}$ \\\hline
-21 & \ion{Sc}{2} & ${2.17}^{+6.35}_{-0.81} \times 10^{-8}$ & ${8.70}^{+6.39}_{-1.08} \times 10^{-13}$ & ${4.35}^{+6.35}_{-0.81} \times 10^{-10}$ \\\hline
-22 & \ion{Ti}{2} & ${1.05}^{+17.53}_{-0.88} \times 10^{-5}$ & ${4.21}^{+17.54}_{-1.14} \times 10^{-10}$ & ${2.11}^{+17.53}_{-0.88} \times 10^{-7}$ \\
-& \ion{Ti}{3} & ${4.27}^{+17.53}_{-0.88} \times 10^{-8}$ & ${1.71}^{+17.54}_{-1.14} \times 10^{-12}$ & ${8.53}^{+17.53}_{-0.88} \times 10^{-10}$ \\\hline
-23 & \ion{V}{2} & ${1.28}^{+2.72}_{-0.92} \times 10^{-4}$ & ${5.14}^{+2.81}_{-1.17} \times 10^{-9}$ & ${2.57}^{+2.72}_{-0.92} \times 10^{-6}$ \\
-& \ion{V}{3} & ${2.58}^{+2.72}_{-0.92} \times 10^{-8}$ & ${1.03}^{+2.81}_{-1.17} \times 10^{-12}$ & ${5.17}^{+2.72}_{-0.92} \times 10^{-10}$ \\\hline
-24 & \ion{Cr}{1} & ${4.43}^{+2.72}_{-0.92} \times 10^{-8}$ & ${1.77}^{+2.81}_{-1.17} \times 10^{-12}$ & ${8.85}^{+2.72}_{-0.92} \times 10^{-10}$ \\
-& \ion{Cr}{2} & ${2.33}^{+4.41}_{-0.94} \times 10^{-1}$ & ${9.31}^{+4.47}_{-1.19} \times 10^{-6}$ & ${4.65}^{+4.41}_{-0.94} \times 10^{-3}$ \\
-& \ion{Cr}{3} & ${1.43}^{+4.41}_{-0.94} \times 10^{-6}$ & ${5.71}^{+4.47}_{-1.19} \times 10^{-11}$ & ${2.85}^{+4.41}_{-0.94} \times 10^{-8}$ \\\hline
-25 & \ion{Mn}{1} & ${6.86}^{+4.41}_{-0.94} \times 10^{-9}$ & ${2.75}^{+4.47}_{-1.19} \times 10^{-13}$ & ${1.37}^{+4.41}_{-0.94} \times 10^{-10}$ \\
-& \ion{Mn}{2} & ${7.89}^{+62.39}_{-0.99} \times 10^{-3}$ & ${3.16}^{+62.39}_{-1.23} \times 10^{-7}$ & ${1.58}^{+62.39}_{-0.99} \times 10^{-4}$ \\
-& \ion{Mn}{3} & ${1.44}^{+62.39}_{-0.99} \times 10^{-7}$ & ${5.76}^{+62.39}_{-1.23} \times 10^{-12}$ & ${2.88}^{+62.39}_{-0.99} \times 10^{-9}$ \\\hline
-26 & \ion{Fe}{1} & ${2.45}^{+62.39}_{-0.99} \times 10^{-7}$ & ${9.78}^{+62.39}_{-1.23} \times 10^{-12}$ & ${4.89}^{+62.39}_{-0.99} \times 10^{-9}$ \\
-& \ion{Fe}{2} & ${9.32}^{+22.49}_{-0.76} \times 10^{-2}$ & ${3.73}^{+22.51}_{-1.05} \times 10^{-6}$ & ${1.86}^{+22.49}_{-0.76} \times 10^{-3}$ \\
-& \ion{Fe}{3} & ${2.17}^{+22.49}_{-0.76} \times 10^{-7}$ & ${8.66}^{+22.51}_{-1.05} \times 10^{-12}$ & ${4.33}^{+22.49}_{-0.76} \times 10^{-9}$ \\\hline
-27 & \ion{Co}{1} & ${1.12}^{+22.49}_{-0.76} \times 10^{-9}$ & ${4.48}^{+22.51}_{-1.05} \times 10^{-14}$ & ${2.24}^{+22.49}_{-0.76} \times 10^{-11}$ \\
-& \ion{Co}{2} & ${1.77}^{+0.60}_{-0.56} \times 10^{-4}$ & ${7.07}^{+0.94}_{-0.92} \times 10^{-9}$ & ${3.54}^{+0.60}_{-0.56} \times 10^{-6}$ \\\hline
-28 & \ion{Ni}{1} & ${7.32}^{+0.60}_{-0.56} \times 10^{-7}$ & ${2.93}^{+0.94}_{-0.92} \times 10^{-11}$ & ${1.46}^{+0.60}_{-0.56} \times 10^{-8}$ \\
-& \ion{Ni}{2} & ${1.24}^{+0.60}_{-0.56} \times 10^{-1}$ & ${4.98}^{+0.94}_{-0.92} \times 10^{-6}$ & ${2.49}^{+0.60}_{-0.56} \times 10^{-3}$ \\
-& \ion{Ni}{3} & ${2.40}^{+1.69}_{-0.58} \times 10^{-9}$ & ${9.59}^{+1.84}_{-0.93} \times 10^{-14}$ & ${4.79}^{+1.69}_{-0.58} \times 10^{-11}$ \\\hline
-29 & \ion{Cu}{1} & ${8.23}^{+1.69}_{-0.58} \times 10^{-8}$ & ${3.29}^{+1.84}_{-0.93} \times 10^{-12}$ & ${1.65}^{+1.69}_{-0.58} \times 10^{-9}$ \\
-& \ion{Cu}{2} & ${1.51}^{+1.69}_{-0.58} \times 10^{-2}$ & ${6.03}^{+1.84}_{-0.93} \times 10^{-7}$ & ${3.02}^{+1.69}_{-0.58} \times 10^{-4}$ \\\hline
-30 & \ion{Zn}{1} & ${7.30}^{+0.53}_{-0.60} \times 10^{-6}$ & ${2.92}^{+0.90}_{-0.94} \times 10^{-10}$ & ${1.46}^{+0.53}_{-0.60} \times 10^{-7}$ \\
-& \ion{Zn}{2} & ${4.06}^{+0.53}_{-0.60} \times 10^{-2}$ & ${1.62}^{+0.90}_{-0.94} \times 10^{-6}$ & ${8.12}^{+0.53}_{-0.60} \times 10^{-4}$ \\\hline
-31 & \ion{Ga}{1} & ${1.16}^{+0.53}_{-0.60} \times 10^{-9}$ & ${4.62}^{+0.90}_{-0.94} \times 10^{-14}$ & ${2.31}^{+0.53}_{-0.60} \times 10^{-11}$ \\
-& \ion{Ga}{2} & ${1.64}^{+0.43}_{-0.56} \times 10^{-2}$ & ${6.58}^{+0.84}_{-0.92} \times 10^{-7}$ & ${3.29}^{+0.43}_{-0.56} \times 10^{-4}$ \\\hline
-32 & \ion{Ge}{1} & ${2.66}^{+0.43}_{-0.56} \times 10^{-7}$ & ${1.07}^{+0.84}_{-0.92} \times 10^{-11}$ & ${5.33}^{+0.43}_{-0.56} \times 10^{-9}$ \\
-& \ion{Ge}{2} & ${3.88}^{+0.43}_{-0.56} \times 10^{-2}$ & ${1.55}^{+0.84}_{-0.92} \times 10^{-6}$ & ${7.76}^{+0.43}_{-0.56} \times 10^{-4}$ \\
-& \ion{Ge}{3} & ${8.71}^{+0.67}_{-0.63} \times 10^{-8}$ & ${3.49}^{+0.98}_{-0.96} \times 10^{-12}$ & ${1.74}^{+0.67}_{-0.63} \times 10^{-9}$ \\\hline
-33 & \ion{As}{1} & ${2.67}^{+0.67}_{-0.63} \times 10^{-5}$ & ${1.07}^{+0.98}_{-0.96} \times 10^{-9}$ & ${5.33}^{+0.67}_{-0.63} \times 10^{-7}$ \\
-& \ion{As}{2} & ${5.45}^{+0.67}_{-0.63} \times 10^{-3}$ & ${2.18}^{+0.98}_{-0.96} \times 10^{-7}$ & ${1.09}^{+0.67}_{-0.63} \times 10^{-4}$ \\\hline
-34 & \ion{Se}{1} & ${1.00}^{+0.80}_{-0.59} \times 10^{-4}$ & ${4.01}^{+1.08}_{-0.93} \times 10^{-9}$ & ${2.01}^{+0.80}_{-0.59} \times 10^{-6}$ \\
-& \ion{Se}{2} & ${5.61}^{+0.80}_{-0.59} \times 10^{-2}$ & ${2.24}^{+1.08}_{-0.93} \times 10^{-6}$ & ${1.12}^{+0.80}_{-0.59} \times 10^{-3}$ \\\hline
-35 & \ion{Br}{1} & ${1.14}^{+0.82}_{-0.65} \times 10^{-3}$ & ${4.57}^{+1.09}_{-0.97} \times 10^{-8}$ & ${2.28}^{+0.82}_{-0.65} \times 10^{-5}$ \\
-& \ion{Br}{2} & ${2.89}^{+0.82}_{-0.65} \times 10^{-3}$ & ${1.16}^{+1.09}_{-0.97} \times 10^{-7}$ & ${5.78}^{+0.82}_{-0.65} \times 10^{-5}$ \\\hline
-36 & \ion{Kr}{1} & ${6.12}^{+0.82}_{-0.65} \times 10^{-2}$ & ${2.45}^{+1.09}_{-0.97} \times 10^{-6}$ & ${1.22}^{+0.82}_{-0.65} \times 10^{-3}$ \\
-& \ion{Kr}{2} & ${7.25}^{+0.84}_{-0.65} \times 10^{-4}$ & ${2.90}^{+1.11}_{-0.98} \times 10^{-8}$ & ${1.45}^{+0.84}_{-0.65} \times 10^{-5}$ \\\hline
-37 & \ion{Rb}{2} & ${2.07}^{+0.84}_{-0.65} \times 10^{-2}$ & ${8.29}^{+1.11}_{-0.98} \times 10^{-7}$ & ${4.14}^{+0.84}_{-0.65} \times 10^{-4}$ \\\hline
-38 & \textbf{\ion{Sr}{2}} & $\mathbf{{4.62}^{+0.88}_{-0.66} \times 10^{-3}}$ & $\mathbf{{1.85}^{+1.14}_{-0.98} \times 10^{-7}}$ & $\mathbf{{9.25}^{+0.88}_{-0.66} \times 10^{-5}}$ \\
-& \ion{Sr}{3} & ${4.75}^{+0.88}_{-0.66} \times 10^{-2}$ & ${1.90}^{+1.14}_{-0.98} \times 10^{-6}$ & ${9.51}^{+0.88}_{-0.66} \times 10^{-4}$ \\\hline
-39 & \textbf{\ion{Y}{2}} & $\mathbf{{5.88}^{+0.88}_{-0.66} \times 10^{-3}}$ & $\mathbf{{2.35}^{+1.14}_{-0.98} \times 10^{-7}}$ & $\mathbf{{1.18}^{+0.88}_{-0.66} \times 10^{-4}}$ \\
-& \ion{Y}{3} & ${2.31}^{+0.89}_{-0.66} \times 10^{-3}$ & ${9.23}^{+1.15}_{-0.98} \times 10^{-8}$ & ${4.62}^{+0.89}_{-0.66} \times 10^{-5}$ \\\hline
-40 & \ion{Zr}{1} & ${4.06}^{+0.89}_{-0.66} \times 10^{-9}$ & ${1.63}^{+1.15}_{-0.98} \times 10^{-13}$ & ${8.13}^{+0.89}_{-0.66} \times 10^{-11}$ \\
-& \textbf{\ion{Zr}{2}} & $\mathbf{{6.13}^{+0.89}_{-0.66} \times 10^{-2}}$ & $\mathbf{{2.45}^{+1.15}_{-0.98} \times 10^{-6}}$ & $\mathbf{{1.23}^{+0.89}_{-0.66} \times 10^{-3}}$ \\
-& \ion{Zr}{3} & ${1.12}^{+0.41}_{-0.30} \times 10^{-3}$ & ${4.49}^{+0.83}_{-0.79} \times 10^{-8}$ & ${2.25}^{+0.41}_{-0.30} \times 10^{-5}$ \\\hline
-41 & \ion{Nb}{2} & ${2.15}^{+0.41}_{-0.30} \times 10^{-4}$ & ${8.61}^{+0.83}_{-0.79} \times 10^{-9}$ & ${4.30}^{+0.41}_{-0.30} \times 10^{-6}$ \\
-& \ion{Nb}{3} & ${7.62}^{+1.01}_{-0.15} \times 10^{-8}$ & ${3.05}^{+1.24}_{-0.74} \times 10^{-12}$ & ${1.52}^{+1.01}_{-0.15} \times 10^{-9}$ \\\hline
-42 & \ion{Mo}{1} & ${7.13}^{+1.01}_{-0.15} \times 10^{-9}$ & ${2.85}^{+1.24}_{-0.74} \times 10^{-13}$ & ${1.43}^{+1.01}_{-0.15} \times 10^{-10}$ \\
-& \ion{Mo}{2} & ${1.71}^{+0.59}_{-0.35} \times 10^{-2}$ & ${6.84}^{+0.93}_{-0.80} \times 10^{-7}$ & ${3.42}^{+0.59}_{-0.35} \times 10^{-4}$ \\
-& \ion{Mo}{3} & ${1.18}^{+0.59}_{-0.35} \times 10^{-8}$ & ${4.73}^{+0.93}_{-0.80} \times 10^{-13}$ & ${2.37}^{+0.59}_{-0.35} \times 10^{-10}$ \\\hline
-43 & \ion{Tc}{2} & ${8.75}^{+0.87}_{-0.38} \times 10^{-4}$ & ${3.50}^{+1.14}_{-0.82} \times 10^{-8}$ & ${1.75}^{+0.87}_{-0.38} \times 10^{-5}$ \\
-& \ion{Tc}{3} & ${5.15}^{+0.96}_{-0.41} \times 10^{-8}$ & ${2.06}^{+1.20}_{-0.84} \times 10^{-12}$ & ${1.03}^{+0.96}_{-0.41} \times 10^{-9}$ \\\hline
-44 & \ion{Ru}{1} & ${6.01}^{+0.96}_{-0.41} \times 10^{-8}$ & ${2.40}^{+1.20}_{-0.84} \times 10^{-12}$ & ${1.20}^{+0.96}_{-0.41} \times 10^{-9}$ \\
-& \ion{Ru}{2} & ${4.13}^{+1.20}_{-0.37} \times 10^{-2}$ & ${1.65}^{+1.41}_{-0.82} \times 10^{-6}$ & ${8.26}^{+1.20}_{-0.37} \times 10^{-4}$ \\
-& \ion{Ru}{3} & ${1.49}^{+1.20}_{-0.37} \times 10^{-8}$ & ${5.95}^{+1.41}_{-0.82} \times 10^{-13}$ & ${2.98}^{+1.20}_{-0.37} \times 10^{-10}$ \\\hline
-45 & \ion{Rh}{1} & ${8.74}^{+1.20}_{-0.37} \times 10^{-9}$ & ${3.50}^{+1.41}_{-0.82} \times 10^{-13}$ & ${1.75}^{+1.20}_{-0.37} \times 10^{-10}$ \\
-& \ion{Rh}{2} & ${4.86}^{+0.79}_{-0.37} \times 10^{-3}$ & ${1.95}^{+1.07}_{-0.82} \times 10^{-7}$ & ${9.73}^{+0.79}_{-0.37} \times 10^{-5}$ \\\hline
-46 & \ion{Pd}{1} & ${5.19}^{+0.79}_{-0.37} \times 10^{-8}$ & ${2.08}^{+1.07}_{-0.82} \times 10^{-12}$ & ${1.04}^{+0.79}_{-0.37} \times 10^{-9}$ \\
-& \ion{Pd}{2} & ${1.18}^{+0.79}_{-0.37} \times 10^{-2}$ & ${4.72}^{+1.07}_{-0.82} \times 10^{-7}$ & ${2.36}^{+0.79}_{-0.37} \times 10^{-4}$ \\\hline
-47 & \ion{Ag}{1} & ${9.45}^{+0.96}_{-0.46} \times 10^{-9}$ & ${3.78}^{+1.21}_{-0.86} \times 10^{-13}$ & ${1.89}^{+0.96}_{-0.46} \times 10^{-10}$ \\
-& \ion{Ag}{2} & ${3.00}^{+0.96}_{-0.46} \times 10^{-3}$ & ${1.20}^{+1.21}_{-0.86} \times 10^{-7}$ & ${6.00}^{+0.96}_{-0.46} \times 10^{-5}$ \\\hline
-48 & \ion{Cd}{1} & ${2.43}^{+0.96}_{-0.46} \times 10^{-7}$ & ${9.72}^{+1.21}_{-0.86} \times 10^{-12}$ & ${4.86}^{+0.96}_{-0.46} \times 10^{-9}$ \\
-& \ion{Cd}{2} & ${4.47}^{+1.07}_{-0.55} \times 10^{-3}$ & ${1.79}^{+1.29}_{-0.91} \times 10^{-7}$ & ${8.94}^{+1.07}_{-0.55} \times 10^{-5}$ \\
-& \ion{Cd}{3} & ${1.12}^{+1.07}_{-0.55} \times 10^{-9}$ & ${4.47}^{+1.29}_{-0.91} \times 10^{-14}$ & ${2.24}^{+1.07}_{-0.55} \times 10^{-11}$ \\\hline
-49 & \ion{In}{2} & ${2.22}^{+1.07}_{-0.55} \times 10^{-4}$ & ${8.87}^{+1.29}_{-0.91} \times 10^{-9}$ & ${4.43}^{+1.07}_{-0.55} \times 10^{-6}$ \\\hline
-50 & \ion{Sn}{1} & ${6.40}^{+1.26}_{-0.58} \times 10^{-9}$ & ${2.56}^{+1.46}_{-0.93} \times 10^{-13}$ & ${1.28}^{+1.26}_{-0.58} \times 10^{-10}$ \\
-& \ion{Sn}{2} & ${5.45}^{+1.26}_{-0.58} \times 10^{-3}$ & ${2.18}^{+1.46}_{-0.93} \times 10^{-7}$ & ${1.09}^{+1.26}_{-0.58} \times 10^{-4}$ \\
-& \ion{Sn}{3} & ${8.61}^{+1.26}_{-0.58} \times 10^{-7}$ & ${3.44}^{+1.46}_{-0.93} \times 10^{-11}$ & ${1.72}^{+1.26}_{-0.58} \times 10^{-8}$ \\\hline
-51 & \ion{Sb}{1} & ${1.67}^{+1.08}_{-0.59} \times 10^{-7}$ & ${6.66}^{+1.30}_{-0.94} \times 10^{-12}$ & ${3.33}^{+1.08}_{-0.59} \times 10^{-9}$ \\
-& \ion{Sb}{2} & ${1.08}^{+1.08}_{-0.59} \times 10^{-3}$ & ${4.31}^{+1.30}_{-0.94} \times 10^{-8}$ & ${2.16}^{+1.08}_{-0.59} \times 10^{-5}$ \\
-& \ion{Sb}{3} & ${2.51}^{+1.08}_{-0.59} \times 10^{-9}$ & ${1.00}^{+1.30}_{-0.94} \times 10^{-13}$ & ${5.01}^{+1.08}_{-0.59} \times 10^{-11}$ \\\hline
-52 & \ion{Te}{1} & ${1.19}^{+1.13}_{-0.63} \times 10^{-7}$ & ${4.77}^{+1.34}_{-0.96} \times 10^{-12}$ & ${2.38}^{+1.13}_{-0.63} \times 10^{-9}$ \\
-& \ion{Te}{2} & ${7.22}^{+1.13}_{-0.63} \times 10^{-4}$ & ${2.89}^{+1.34}_{-0.96} \times 10^{-8}$ & ${1.44}^{+1.13}_{-0.63} \times 10^{-5}$ \\\hline
-53 & \ion{I}{1} & ${1.88}^{+1.13}_{-0.63} \times 10^{-6}$ & ${7.51}^{+1.34}_{-0.96} \times 10^{-11}$ & ${3.76}^{+1.13}_{-0.63} \times 10^{-8}$ \\
-& \ion{I}{2} & ${2.78}^{+1.62}_{-0.69} \times 10^{-4}$ & ${1.11}^{+1.77}_{-1.00} \times 10^{-8}$ & ${5.56}^{+1.62}_{-0.69} \times 10^{-6}$ \\\hline
-54 & \ion{Xe}{1} & ${6.01}^{+1.62}_{-0.69} \times 10^{-7}$ & ${2.40}^{+1.77}_{-1.00} \times 10^{-11}$ & ${1.20}^{+1.62}_{-0.69} \times 10^{-8}$ \\
-& \ion{Xe}{2} & ${1.89}^{+1.65}_{-0.68} \times 10^{-6}$ & ${7.57}^{+1.80}_{-0.99} \times 10^{-11}$ & ${3.79}^{+1.65}_{-0.68} \times 10^{-8}$ \\\hline
-55 & \ion{Cs}{2} & ${2.87}^{+1.65}_{-0.68} \times 10^{-7}$ & ${1.15}^{+1.80}_{-0.99} \times 10^{-11}$ & ${5.74}^{+1.65}_{-0.68} \times 10^{-9}$ \\\hline
-56 & \ion{Ba}{3} & ${4.16}^{+1.97}_{-0.78} \times 10^{-8}$ & ${1.66}^{+2.10}_{-1.06} \times 10^{-12}$ & ${8.32}^{+1.97}_{-0.78} \times 10^{-10}$ \\\hline
-57 & \ion{La}{2} & ${6.19}^{+1.97}_{-0.78} \times 10^{-9}$ & ${2.47}^{+2.10}_{-1.06} \times 10^{-13}$ & ${1.24}^{+1.97}_{-0.78} \times 10^{-10}$ \\
-& \ion{La}{3} & ${2.43}^{+1.97}_{-0.78} \times 10^{-8}$ & ${9.74}^{+2.10}_{-1.06} \times 10^{-13}$ & ${4.87}^{+1.97}_{-0.78} \times 10^{-10}$ \\\hline
-58 & \ion{Ce}{3} & ${3.24}^{+2.36}_{-0.80} \times 10^{-9}$ & ${1.30}^{+2.47}_{-1.08} \times 10^{-13}$ & ${6.48}^{+2.36}_{-0.80} \times 10^{-11}$ \\\hline
-60 & \ion{Nd}{3} & ${5.09}^{+2.36}_{-0.80} \times 10^{-9}$ & ${2.04}^{+2.47}_{-1.08} \times 10^{-13}$ & ${1.02}^{+2.36}_{-0.80} \times 10^{-10}$ \\\hline
-62 & \ion{Sm}{3} & ${1.37}^{+2.36}_{-0.80} \times 10^{-9}$ & ${5.46}^{+2.47}_{-1.08} \times 10^{-14}$ & ${2.73}^{+2.36}_{-0.80} \times 10^{-11}$
-\enddata
-\end{deluxetable*}
-
- \hfill % won't render table if not present
 
 
 % ============================
