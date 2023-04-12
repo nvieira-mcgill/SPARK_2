@@ -181,32 +181,46 @@ In all, inference is dramatically accelerated, and we obtain (among the other ki
 %%% SUBECTION 2.2
 \subsection{Multi-component, stratified ejecta with \textsc{TARDIS}}\label{ssc:multi-component-TARDIS}
 
-\begin{itemize}
+In \cite{vieira23}, we model the kilonova ejecta as a single shell with a uniform abundance pattern. The plasma in this shell is also described by a single temperature and mass/electron density. This configuration is fully described by the luminosity at the outer boundary $L_{\mathrm{outer}}$, (which in fact sets the temperature at the inner boundary), the normalization in the density power law $\rho_0$, the inner and outer boundary velocities $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$, and three parameters which set the abundances: electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy $s / k_{\mathrm{B}}$. A single-component fit is thus 7-dimensional, unless one or more of the parameters are fixed, \eg, we fix $v_{\mathrm{outer}} = 0.35c$ in our fit to the 1.4 day spectrum. This setup can describe a single ejecta component, \eg, the tidal ejecta mostly confined to the equatorial plane, an outflow from a remnant accretion disk, or the squeezed polar ejecta from the collision interface during the merger. It may also describe a kilonova in which one component significantly dominates (by mass or by the strength of the absorption/emission features) over the other(s). 
+    
+Here, we implement multi-component, stratified ejecta. \TARDIS~allows for ejecta composed of stratified shells, each with a specific temperature, density, and plasma conditions. In this configuration, each shell can have a specific abundance pattern. We use 10 shells in all runs unless indicated otherwise. We also employ multiple (30) \TARDIS~iterations when generating synthetic spectra in this configuration. At each iteration, the plasma conditions are updated, and converge towards an ejecta where the outer boundary emitted luminosity matches the user-requested $L_{\mathrm{outer}}$. 
+    
+We begin with a simple two-component ejecta. As with our single-component model, this two-component model is described by an outer boundary luminosity $L_{\mathrm{outer}}$ and $\rho_0$. Each of the components is then described by inner and outer boundary $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$ and a $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$. Multi-component fits are thus $2 + 5 + 5 = 12$-dimensional. The components necessarily overlap in physical space because \TARDIS~cannot simulate a gap between them. The abundance in each shell is then determined by the component(s) which are in a given shell. For shells where there is overlap between two components, the abundance is taken as a sum of the two abundance patterns. We graphically show the difference between single- and multi-component ejecta in \redbf{Figure X}.
+    
+Multiple components allow for additional complexity in the spectral synthesis.\footnote{See \cite{kawaguchi20} for an exploration of the diversity of kilonovae which may be produced when multiple components are present.} In particular, even in 1D with \TARDIS, we can produce the effect of re-processing, where emission from one component is absorbed and reemitted/scattered by another. We can also produce the effect of ``lanthanide curtaining'', in which some outermost lower-$Y_e$ ejecta containing the lanthanides masks an inner, bluer, lighter-element ejecta due to the considerable opacity of the lanthanides in the near-UV and optical. Some kilonova spectra may be better-described by these multi-component ejecta models. In \cite{vieira23}, we find that the 1.4 day spectrum of the GW170817 kilonova is well-described by a single-component ejecta with $Y_e \sim 0.3$. However, at later epochs, as the ejecta expands and becomes more optically thin, the photosphere recedes into the ejecta and we may unmask additional components which were hidden at early times. Light curve modelling (\eg, \citealt{villar17}) has shown that the kilonova may indeed be better-described by multiple components of different opacities, and some spectral modelling (\eg, \citealt{kasen17}) also invokes multiple components. This motivates our introduction of multi-component ejecta into \SPARK. We fit the 1.4, 2.4, and 3.4 day spectra of the GW170817 kilonova with both single- and multi-component models to assess the need for multiple components.
 
-    \item In \cite{vieira23}, we model the kilonova ejecta as a single shell with a uniform abundance pattern. The plasma in this shell is also described by a single temperature and mass/electron density. This configuration is fully described by the luminosity at the outer boundary $L_{\mathrm{outer}}$, (which in fact sets the temperature at the inner boundary), the normalization in the density power law $\rho_0$, the inner and outer boundary velocities $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$, and three parameters which set the abundances: electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy $s / k_{\mathrm{B}}$. A single-component fit is thus 7-dimensional, unless one or more of the parameters are fixed, \eg, we fix $v_{\mathrm{outer}} = 0.35c$ in our fit to the 1.4 day spectrum. This setup can describe a single ejecta component, \eg, the tidal ejecta mostly confined to the equatorial plane, an outflow from a remnant accretion disk, or the squeezed polar ejecta from the collision interface during the merger. It may also describe a kilonova in which one component significantly dominates (by mass or by the strength of the absorption/emission features) over the other(s). 
-    
-    \item Here, we implement multi-component, stratified ejecta. \TARDIS~allows for ejecta composed of stratified shells, each with a specific temperature, density, and plasma conditions. In this configuration, each shell can have a specific abundance pattern. We use 10 shells in all runs unless indicated otherwise. We also employ multiple (30) \TARDIS~iterations when generating synthetic spectra in this configuration. At each iteration, the plasma conditions are updated, and converge towards an ejecta where the outer boundary emitted luminosity matches the user-requested $L_{\mathrm{outer}}$. 
-    
-    \item We begin with a simple two-component ejecta. As with our single-component model, this two-component model is described by an outer boundary luminosity $L_{\mathrm{outer}}$ and $\rho_0$. Each of the components is then described by inner and outer boundary $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$ and a $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$. Multi-component fits are thus $2 + 5 + 5 = 12$-dimensional. The components necessarily overlap in physical space because \TARDIS~cannot simulate a gap between them. The abundance in each shell is then determined by the component(s) which are in a given shell. For shells where there is overlap between two components, the abundance is taken as a sum of the two abundance patterns.
-    
-    \item We demonstrate the difference between single- and multi-component ejecta in Figure X. Multiple components allow for additional complexity in the spectral synthesis.\footnote{See \cite{kawaguchi20} for a description of the diversity of kilonovae which may be produced when multiple components are present.} In particular, even in 1D with \TARDIS, we can produce the effect of re-processing, where emission from one component is absorbed and reemitted/scattered by another. We can also produce the effect of ``lanthanide curtaining'', in which some outermost lower-$Y_e$ ejecta containing the lanthanides masks an inner, bluer, lighter-element ejecta due to the considerable opacity of the lanthanides in the near-UV and optical. Some kilonova spectra may be better-described by these multi-component ejecta models. In \cite{vieira23}, we find that the 1.4 day spectrum of the GW170817 kilonova is well-described by a single-component ejecta with $Y_e \sim 0.3$. However, at later epochs, as the ejecta expands and becomes more optically thin, the photosphere recedes into the ejecta and we may unmask additional components which were hidden at early times. Light curve modelling (\eg, \citealt{villar17}) has shown that the kilonova may indeed be better-described by multiple components of different opacities, and some spectral modelling (\eg, \citealt{kasen17}) also invokes multiple components. This motivates our introduction of multi-component ejecta into \SPARK. We fit the 1.4, 2.4, and 3.4 day spectra of the GW170817 kilonova with both single- and multi-component models to assess the need for multiple components.
+% \begin{itemize}
 
-\end{itemize}
+%     \item In \cite{vieira23}, we model the kilonova ejecta as a single shell with a uniform abundance pattern. The plasma in this shell is also described by a single temperature and mass/electron density. This configuration is fully described by the luminosity at the outer boundary $L_{\mathrm{outer}}$, (which in fact sets the temperature at the inner boundary), the normalization in the density power law $\rho_0$, the inner and outer boundary velocities $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$, and three parameters which set the abundances: electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy $s / k_{\mathrm{B}}$. A single-component fit is thus 7-dimensional, unless one or more of the parameters are fixed, \eg, we fix $v_{\mathrm{outer}} = 0.35c$ in our fit to the 1.4 day spectrum. This setup can describe a single ejecta component, \eg, the tidal ejecta mostly confined to the equatorial plane, an outflow from a remnant accretion disk, or the squeezed polar ejecta from the collision interface during the merger. It may also describe a kilonova in which one component significantly dominates (by mass or by the strength of the absorption/emission features) over the other(s). 
+    
+%     \item Here, we implement multi-component, stratified ejecta. \TARDIS~allows for ejecta composed of stratified shells, each with a specific temperature, density, and plasma conditions. In this configuration, each shell can have a specific abundance pattern. We use 10 shells in all runs unless indicated otherwise. We also employ multiple (30) \TARDIS~iterations when generating synthetic spectra in this configuration. At each iteration, the plasma conditions are updated, and converge towards an ejecta where the outer boundary emitted luminosity matches the user-requested $L_{\mathrm{outer}}$. 
+    
+%     \item We begin with a simple two-component ejecta. As with our single-component model, this two-component model is described by an outer boundary luminosity $L_{\mathrm{outer}}$ and $\rho_0$. Each of the components is then described by inner and outer boundary $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$ and a $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$. Multi-component fits are thus $2 + 5 + 5 = 12$-dimensional. The components necessarily overlap in physical space because \TARDIS~cannot simulate a gap between them. The abundance in each shell is then determined by the component(s) which are in a given shell. For shells where there is overlap between two components, the abundance is taken as a sum of the two abundance patterns. We graphically show the difference between single- and multi-component ejecta in \redbf{Figure X}.
+    
+%     \item Multiple components allow for additional complexity in the spectral synthesis.\footnote{See \cite{kawaguchi20} for a description of the diversity of kilonovae which may be produced when multiple components are present.} In particular, even in 1D with \TARDIS, we can produce the effect of re-processing, where emission from one component is absorbed and reemitted/scattered by another. We can also produce the effect of ``lanthanide curtaining'', in which some outermost lower-$Y_e$ ejecta containing the lanthanides masks an inner, bluer, lighter-element ejecta due to the considerable opacity of the lanthanides in the near-UV and optical. Some kilonova spectra may be better-described by these multi-component ejecta models. In \cite{vieira23}, we find that the 1.4 day spectrum of the GW170817 kilonova is well-described by a single-component ejecta with $Y_e \sim 0.3$. However, at later epochs, as the ejecta expands and becomes more optically thin, the photosphere recedes into the ejecta and we may unmask additional components which were hidden at early times. Light curve modelling (\eg, \citealt{villar17}) has shown that the kilonova may indeed be better-described by multiple components of different opacities, and some spectral modelling (\eg, \citealt{kasen17}) also invokes multiple components. This motivates our introduction of multi-component ejecta into \SPARK. We fit the 1.4, 2.4, and 3.4 day spectra of the GW170817 kilonova with both single- and multi-component models to assess the need for multiple components.
+
+% \end{itemize}
 
 
 
 %%% SUBSECTION 2.3
 \subsection{Inference setup}\label{ssc:inference-setup}
 
-\begin{itemize}
-
-    \item All \texttt{approxposterior}/BAPE hyperparameters and optimizers used here are the same as those used in \cite{vieira23}. We again produce a baseline run of $m_{0} = 1500$ Latin Hypercube sampled points at the beginning of each \SPARK~run. However, the parameter space allowed by our priors differs for the 1.4, 2.4, and 3.4 day fits. Table~\ref{tab:priors-single} includes our priors for each fit. All priors are uniform. The bounds on the density $\rho_0$ and abundance-setting parameters $Y_e$, $v_{\mathrm{exp}}$, and $s$ are the same at all epochs. The priors differ in the bounds on the luminosity, as expected given the cooling of the ejecta over time as it expands. We further allow for wider priors on the inner and outer boundary velocities for the fits at later epochs. In \cite{vieira23}, we fixed $v_{\mathrm{outer}} = 0.35c$ during our 1.4 day fit but noted that we observed similar results for $v_{\mathrm{outer}}$ in the range $0.35 - 0.38c$. Here, we allow for greater flexibility in our fits to the later epochs. \redbf{Mention/discuss: Does this complicate the inference? Is there a degeneracy between the inner and outer boundary velocities?}
+All \texttt{approxposterior}/BAPE hyperparameters and optimizers used here are the same as those used in \cite{vieira23}. We again produce a baseline run of $m_{0} = 1500$ Latin Hypercube sampled points at the beginning of each \SPARK~run. However, the parameter space allowed by our priors differs for the 1.4, 2.4, and 3.4 day fits. Table~\ref{tab:priors-single} includes our priors for each of our single-component fits. All priors are uniform. The bounds on the density $\rho_0$ and abundance-setting parameters $Y_e$, $v_{\mathrm{exp}}$, and $s$ are the same at all epochs. The priors differ in the bounds on the luminosity, as expected given the cooling of the ejecta over time as it expands. We further allow for wider priors on the inner and outer boundary velocities for the fits at later epochs. In \cite{vieira23}, we fixed $v_{\mathrm{outer}} = 0.35c$ during our 1.4 day fit but noted that we observed similar results for $v_{\mathrm{outer}}$ in the range $0.35 - 0.38c$. Here, we allow for greater flexibility in our fits to the later epochs. \redbf{Mention/discuss: Does this complicate the inference? Is there a degeneracy between the inner and outer boundary velocities?}
     
-    \item Our priors for our multi-component fits are given in Table~\ref{tab:priors-multi}. These are identical at all epochs. The priors for the two components in a given fit are also identical, except that the ``red'' component has $Y_{e,\mathrm{red}} \in [0.01, 0.45]$ while the ``blue'' has $Y_{e,\mathrm{blu}} \in [0.05, 0.50]$. We use the terms red and blue loosely to simplify our discussion but note that the priors do not enforce $Y_{e,\mathrm{red}} < Y_{e,\mathrm{blu}}$. The priors enforce $v_{\mathrm{inner,red}} < v_{\mathrm{outer,red}}$ and $v_{\mathrm{inner,blu}} < v_{\mathrm{outer,blu}}$. We also ensure some overlap between the two components, \ie, $v_{\mathrm{outer,red}} > v_{\mathrm{inner,blu}}$ or $v_{\mathrm{outer,blu}} > v_{\mathrm{inner,red}}$. \redbf{Finally, we also enforce that there is some non-overlap between the two components, \ie, one component does not completely envelop another.} To allow for even sampling of parameter space with this complex conditional prior, we use constrained Latin Hypercube Sampling (cLHS; \citealt{petelet09}).
+Our priors for our multi-component fits are given in Table~\ref{tab:priors-multi}. These are identical at all epochs. The priors for the two components in a given fit are also identical, except that the ``red'' component has $Y_{e,\mathrm{red}} \in [0.01, 0.45]$ while the ``blue'' has $Y_{e,\mathrm{blu}} \in [0.05, 0.50]$. We use the terms red and blue loosely to simplify our discussion but note that the priors do not enforce $Y_{e,\mathrm{red}} < Y_{e,\mathrm{blu}}$. The priors enforce $v_{\mathrm{inner,red}} < v_{\mathrm{outer,red}}$ and $v_{\mathrm{inner,blu}} < v_{\mathrm{outer,blu}}$. We also ensure some overlap between the two components, \ie, $v_{\mathrm{outer,red}} > v_{\mathrm{inner,blu}}$ or $v_{\mathrm{outer,blu}} > v_{\mathrm{inner,red}}$. \redbf{Finally, we also enforce that there is some non-overlap between the two components, \ie, one component does not completely envelop another.} To allow for even sampling of parameter space for the $m_0 = 1500$ points in the base training set with this complex conditional prior, we use constrained Latin Hypercube Sampling (cLHS; \citealt{petelet09}).
     
-    \item When attempting to fit the 3.4 day spectrum, we found that the fit converged to a blackbody with little to no absorption in order to fit the continuum of the spectrum. Since we are interested in determining the species involved in the absorption, and the employed observed line list is likely to be especially incomplete at the shortest wavelengths, we prioritize fitting the $\geqslant 6000$~\AA~region of the spectrum. The crudest way to do this would be to simply mask the shorter wavelengths during the fit. We instead use the full \cite{czekala15} formalism for introducing local covariance features into the likelihood during spectroscopic inference. We introduce a Gaussian feature with amplitude \redbf{$a_{\mathrm{L}}^2 = 10^{-34} (\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$, central wavelength $\mu_{\mathrm{L}} = 3000$~\AA, and variance $\sigma_{\mathrm{L}}^2 = 2500$~\AA${}^2$} into the covariance kernel. This technique effectively down-weights this region of the spectrum during the computation of the likelihood, but does not completely ignore it. For comparison, the amplitude of the global covariance structure is $a_{\mathrm{G}} = 10^{-34} (\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$ in all fits.
+When attempting to fit the 3.4 day spectrum, we found that the fit converged to a blackbody with little to no absorption in order to fit the continuum of the spectrum. Since we are interested in determining the species involved in the absorption, and the employed observed line list is likely to be especially incomplete at the shortest wavelengths, we prioritize fitting the $\geqslant 6000$~\AA~region of the spectrum. The crudest way to do this would be to simply mask the shorter wavelengths during the fit. We instead use the full \cite{czekala15} formalism for introducing local covariance features into the likelihood during spectroscopic inference. We introduce a Gaussian feature with amplitude \redbf{$a_{\mathrm{L}}^2 = 10^{-34} ~(\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$, central wavelength $\mu_{\mathrm{L}} = 3000$~\AA, and variance $\sigma_{\mathrm{L}}^2 = 2500$~\AA${}^2$} into the covariance kernel. This technique effectively down-weights this region of the spectrum during the computation of the likelihood, but does not completely ignore it. For comparison, the amplitude of the global covariance structure is $a_{\mathrm{G}} = 10^{-34} (\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$ in all fits.
 
-\end{itemize}
+% \begin{itemize}
+
+%     \item All \texttt{approxposterior}/BAPE hyperparameters and optimizers used here are the same as those used in \cite{vieira23}. We again produce a baseline run of $m_{0} = 1500$ Latin Hypercube sampled points at the beginning of each \SPARK~run. However, the parameter space allowed by our priors differs for the 1.4, 2.4, and 3.4 day fits. Table~\ref{tab:priors-single} includes our priors for each of our single-component fits. All priors are uniform. The bounds on the density $\rho_0$ and abundance-setting parameters $Y_e$, $v_{\mathrm{exp}}$, and $s$ are the same at all epochs. The priors differ in the bounds on the luminosity, as expected given the cooling of the ejecta over time as it expands. We further allow for wider priors on the inner and outer boundary velocities for the fits at later epochs. In \cite{vieira23}, we fixed $v_{\mathrm{outer}} = 0.35c$ during our 1.4 day fit but noted that we observed similar results for $v_{\mathrm{outer}}$ in the range $0.35 - 0.38c$. Here, we allow for greater flexibility in our fits to the later epochs. \redbf{Mention/discuss: Does this complicate the inference? Is there a degeneracy between the inner and outer boundary velocities?}
+    
+%     \item Our priors for our multi-component fits are given in Table~\ref{tab:priors-multi}. These are identical at all epochs. The priors for the two components in a given fit are also identical, except that the ``red'' component has $Y_{e,\mathrm{red}} \in [0.01, 0.45]$ while the ``blue'' has $Y_{e,\mathrm{blu}} \in [0.05, 0.50]$. We use the terms red and blue loosely to simplify our discussion but note that the priors do not enforce $Y_{e,\mathrm{red}} < Y_{e,\mathrm{blu}}$. The priors enforce $v_{\mathrm{inner,red}} < v_{\mathrm{outer,red}}$ and $v_{\mathrm{inner,blu}} < v_{\mathrm{outer,blu}}$. We also ensure some overlap between the two components, \ie, $v_{\mathrm{outer,red}} > v_{\mathrm{inner,blu}}$ or $v_{\mathrm{outer,blu}} > v_{\mathrm{inner,red}}$. \redbf{Finally, we also enforce that there is some non-overlap between the two components, \ie, one component does not completely envelop another.} To allow for even sampling of parameter space for the $m_0 = 1500$ points in the base training set with this complex conditional prior, we use constrained Latin Hypercube Sampling (cLHS; \citealt{petelet09}).
+    
+%     \item When attempting to fit the 3.4 day spectrum, we found that the fit converged to a blackbody with little to no absorption in order to fit the continuum of the spectrum. Since we are interested in determining the species involved in the absorption, and the employed observed line list is likely to be especially incomplete at the shortest wavelengths, we prioritize fitting the $\geqslant 6000$~\AA~region of the spectrum. The crudest way to do this would be to simply mask the shorter wavelengths during the fit. We instead use the full \cite{czekala15} formalism for introducing local covariance features into the likelihood during spectroscopic inference. We introduce a Gaussian feature with amplitude \redbf{$a_{\mathrm{L}}^2 = 10^{-34} (\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$, central wavelength $\mu_{\mathrm{L}} = 3000$~\AA, and variance $\sigma_{\mathrm{L}}^2 = 2500$~\AA${}^2$} into the covariance kernel. This technique effectively down-weights this region of the spectrum during the computation of the likelihood, but does not completely ignore it. For comparison, the amplitude of the global covariance structure is $a_{\mathrm{G}} = 10^{-34} (\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$ in all fits.
+
+% \end{itemize}
 
 
 \begin{deluxetable}{c|ccc}
@@ -255,26 +269,32 @@ $s_{\mathrm{blu}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
 
 
 %%% subsection: SINGLE-COMPONENT 2.4 AND 3.4 DAY FITS
-\subsection{2.4 and 3.4 days, single-component}\label{ssc:2.4_3.4_fits}
+\subsection{Single-component fits at 2.4 and 3.4 days}\label{ssc:2.4_3.4_fits}
 
 \begin{itemize}
 
-    \item All spectra, and the best fits, for 2.4 and 3.4 days
+    \item In Figure~\ref{fig:all_spec_single}, we show the $m_0 = 1500$ base Latin Hypercube sampled-spectra, \redbf{$m_{\mathrm{active}} = 600$} active learning spectra, and the best fit spectrum, for our single-component fits at 2.4 and 3.4 days.
     
-    \item Corner plots used to obtain best fit, for 2.4 and 3.4 days---in an appendix
+    \item These best fits are taken as the median of the posteriors. We include the complete posteriors in Appendix~\ref{app:corners_single}. 
     
-    \item Abundance patterns for best fit at 2.4 and 3.4 days; compared to 1.4 days
+    \item Given the best fit to the 2.4 and 3.4 day spectra, we can compute the best-fitting abundance patterns and their uncertainties. In Figure~\ref{fig:abunds_time_evolution}, we show the single-component abundance patterns at 2.4 and 3.4 days. We also include the pattern at 1.4 days (from \citealt{vieira23}), for comparison. A full ion-by-ion list of the abundances is given in Appendix~\ref{app:ion_abunds}. 
     
-    \item Leave-one-out spectra for best fit at 2.4 and 3.4 days
+    \item In Figure~\ref{fig:leave_out_single}, we show leave-one-out spectra for the best fit single-component models at 2.4 and 3.4 days. \redbf{All models show significant absorption from Sr, Y, and Zr.}
 
 \end{itemize}
 
 
 %% all spectra, and best fits; Fig. 2 a, b
-
+\begin{figure*}[!ht]
+    \centering
+    \includegraphics[width=0.47\textwidth]{figs/221024_080947_single_all_TARDIS_evals_m0-1500.png}
+    \includegraphics[width=0.47\textwidth]{figs/230323_060334_single_all_TARDIS_evals_m0-1500.png}
+    \figcaption{All spectra, and the best fits, for the single-component fits at 2.4 and 3.4 days}\label{fig:all_spec_single}
+\end{figure*}
 
 %% abundance patterns; Fig. 3
 \begin{figure*}[!ht]
+    \centering
     \includegraphics[width=0.98\textwidth]{figs/compare_abunds_220808_014638-221022_084052_posterior-50samples.png}
     \figcaption{Best-fit abundance patterns at 1.4, 2.4 and 3.4 days, as given by the single-component fits}\label{fig:abunds_time_evolution}
 \end{figure*}
@@ -282,32 +302,41 @@ $s_{\mathrm{blu}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
 
 %%% leave-one-out spectra; Fig. 4 a, b
 \begin{figure*}[!ht]
+    \centering
     \includegraphics[width=0.47\textwidth]{figs/230409_234104_leaveoneout_all_TARDIS_evals_label-interest.png}
-    \includegraphics[width=0.47\textwidth]{figs/leave_out_single_3.4d.png}
+    \includegraphics[width=0.47\textwidth]{figs/230411_123023_leaveoneout_all_TARDIS_evals_label-interest.png}
     \figcaption{Leave-one-out spectra for the 2.4 and 3.4 day single-component fits}\label{fig:leave_out_single}
 \end{figure*}
 
 
 
 %%% subsection: MULTI-COMPONENT 1.4, 2.4, AND 3.4 DAY FITS
-\subsection{1.4, 2.4, and 3.4 days, multi-component}\label{ssc:1.4_2.4_3.4_multi_fits}
+\subsection{Multi-component fits at 1.4, 2.4, and 3.4 days}\label{ssc:1.4_2.4_3.4_multi_fits}
 
 
 \begin{itemize}
 
-    \item All spectra, and the best fits, for 1.4, 2.4, and 3.4 days multi-component
+    \item In Figure~\ref{fig:all_spec_multi}, we show the $m_0 = 1500$ base Latin Hypercube sampled-spectra for our multi-component fits at 1.4, 2.4, and 3.4 days. We also show the \redbf{$m_{\mathrm{active}} = 1471,~1020,~\mathrm{TBD}$} active learning samples acquired for each respectively, and the ensuing best fits.
     
-    \item Corner plots used to obtain best fit, for 1.4, 2.4, and 3.4 days multi-component---in an appendix
+    \item These best fits are taken as the median of the posteriors. We include the complete posteriors in Appendix~\ref{app:corners_multi}. 
     
-    \item Wedge plots for 1.4, 2.4, and 3.4 days
+    \item In Figure~\ref{fig:infer_multicomp_wedges}, we show the physical setup of the ejecta in the best fit to the 1.4, 2.4, and 3.4 day spectra. 
+
+    \item Comment on the total mass of each component in each fit. Does one component dominate over another? 
     
-    \item Leave-one-out spectra for best multi-component fit at 1.4, 2.4, and 3.4 days---in an appendix
+    \item In Figure~\ref{fig:leave_out_single}, we show leave-one-out spectra for the best fit multi-component models. The elements which shape the spectra of our multi-component best fits are the same as those which shape our single-component: Sr, Y, and Zr. One exception is that the multi-component 2.4 day fit shows evidence for some absorption from the lanthanides, specifically lanthanum (${}_{57}$La) and neodymium (${}_{60}$Nd). There is also absorption from barium (${}_{56}$Ba), which is notably in the same periodic table group as ${}_{38}$Sr.
 
 \end{itemize}
 
 
 %% all spectra; Fig. 5 a, b, c
-
+\begin{figure*}[!ht]
+    \centering
+    \includegraphics[width=0.47\textwidth]{figs/230412_040127_single_all_TARDIS_evals_m0-1500.png}
+    \includegraphics[width=0.47\textwidth]{figs/230412_035244_single_all_TARDIS_evals_m0-1500.png}
+    \includegraphics[width=0.47\textwidth]{figs/all_spectra_multi_3.4.png}
+    \figcaption{All spectra, and the best fits, for the multi-component fits at 1.4, 2.4, and 3.4 days}\label{fig:all_spec_multi}
+\end{figure*}
 
 
 %% wedges; Fig. 6 a, b, c
@@ -1147,12 +1176,12 @@ In this section, we provide the full posteriors for single-component \SPARK~fits
 %% corner plots
 \begin{figure*}[!ht]
     \includegraphics[width=0.95\textwidth]{figs/appendix/221022_084052_dynesty_corner_pretty_smooth2d0.05_nodatapts_zoom.png}
-    \figcaption{2.4 day fit corner plot}\label{fig:corner_single_2.4}
+    \figcaption{2.4 day, single-component fit corner plot}\label{fig:corner_single_2.4}
 \end{figure*}
 
 \begin{figure*}[!ht]
     \includegraphics[width=0.95\textwidth]{figs/appendix/230322_013538_dynesty_corner_pretty_mactive-600_smooth2d0.05_nodatapts.png}
-    \figcaption{3.4 day fit corner plot}\label{fig:corner_single_3.4}
+    \figcaption{3.4 day, single-component fit corner plot}\label{fig:corner_single_3.4}
 \end{figure*}
 
 
@@ -1164,21 +1193,21 @@ In this section, we provide the full posteriors for single-component \SPARK~fits
 In this section, we provide the full posteriors for multi-component fits to the 1.4, 2.4, and 3.4 day spectra.
 
 
-%% corner plots
-\begin{figure*}[!ht]
-    \includegraphics[width=0.95\textwidth]{figs/appendix/230103_064024_dynesty_corner_pretty_mactive-1471_smooth2d0.05_nodatapts.png}
-    \figcaption{1.4 day, multi-component fit corner plot}\label{fig:corner_multi_1.4}
-\end{figure*}
+% %% corner plots
+% \begin{figure*}[!ht]
+%     \includegraphics[width=0.95\textwidth]{figs/appendix/230103_064024_dynesty_corner_pretty_mactive-1471_smooth2d0.05_nodatapts.png}
+%     \figcaption{1.4 day, multi-component fit corner plot}\label{fig:corner_multi_1.4}
+% \end{figure*}
 
-\begin{figure*}[!ht]
-    \includegraphics[width=0.95\textwidth]{figs/appendix/230103_060017_dynesty_corner_pretty_mactive-1020_smooth2d0.05_nodatapts.png}
-    \figcaption{\textbf{Same as Figure~\ref{fig:corner_multi_1.4d}, for the 2.4 day, multi-component fit.}}\label{fig:corner_multi_2.4}
-\end{figure*}
+% \begin{figure*}[!ht]
+%     \includegraphics[width=0.95\textwidth]{figs/appendix/230103_060017_dynesty_corner_pretty_mactive-1020_smooth2d0.05_nodatapts.png}
+%     \figcaption{\textbf{Same as Figure~\ref{fig:corner_multi_1.4}, for the 2.4 day, multi-component fit.}}\label{fig:corner_multi_2.4}
+% \end{figure*}
 
-\begin{figure*}[!ht]
-    \includegraphics[width=0.95\textwidth]{figs/appendix/corner_multi_3.4d.png}
-    \figcaption{\textbf{Same as Figure~\ref{fig:corner_multi_1.4d}, for the 3.4 day, multi-component fit.}}\label{fig:corner_multi_3.4}
-\end{figure*}
+% \begin{figure*}[!ht]
+%     \includegraphics[width=0.95\textwidth]{figs/appendix/corner_multi_3.4d.png}
+%     \figcaption{\textbf{Same as Figure~\ref{fig:corner_multi_1.4}, for the 3.4 day, multi-component fit.}}\label{fig:corner_multi_3.4}
+% \end{figure*}
 
 
 
@@ -1190,6 +1219,7 @@ In this section, we show leave-one-out spectra for the multi-component fits to t
 
 %% leave-one-out spectra
 \begin{figure*}[!ht]
+    \centering
     \includegraphics[width=0.47\textwidth]{figs/appendix/leave_out_multi_1.4d.png}
     \includegraphics[width=0.47\textwidth]{figs/appendix/leave_out_multi_2.4d.png}
     \includegraphics[width=0.47\textwidth]{figs/appendix/leave_out_multi_3.4d.png}
@@ -1202,24 +1232,25 @@ In this section, we show leave-one-out spectra for the multi-component fits to t
 
 %%% === APPENDIX E === %%%
 %% CONVERGENCE OF FITS %%
-\section{Convergence of fits}\label{app:leave_out_multi}
+\section{Convergence of fits}\label{app:convergence}
 
-In this section, we show the convergence of all fits. This includes single-component fits at 2.4 and 3.4 days, and multi-component fits at 1.4, 2.4, and 3.4 days.
+We assess the convergence of all fits. Convergence can be seen in two ways: This includes single-component fits at 2.4 and 3.4 days, and multi-component fits at 1.4, 2.4, and 3.4 days.
 
 
 %% double-column, each row showing convergence z and GP hyperparameters
 \begin{figure*}[!ht]
-    \includegraphics[width=0.47\textwidth]{figs/appendix/221022_084052_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/2.4d_single_GPhparams.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/230322_013538_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/3.4d_single_GPhparams.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/230103_064024_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/1.4d_multi_GPhparams.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/230103_060017_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/2.4d_multi_GPhparams.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/3.4d_multi_convergence_z.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/3.4d_multi_GPhparams.png}
-    \figcaption{Leave-one-out spectra for the 1.4, 2.4, and 3.4 day multi-component fits}\label{fig:convergence}
+    \centering
+    \includegraphics[width=0.2\textwidth]{figs/appendix/221022_084052_dynesty-sampling_convergence_z_eps0.5.png}
+    \includegraphics[width=0.2\textwidth]{figs/appendix/2.4d_single_GPhparams.png}
+    \\\includegraphics[width=0.2\textwidth]{figs/appendix/230322_013538_dynesty-sampling_convergence_z_eps0.5.png}
+    \includegraphics[width=0.2\textwidth]{figs/appendix/3.4d_single_GPhparams.png}
+    \\\includegraphics[width=0.2\textwidth]{figs/appendix/230103_064024_dynesty-sampling_convergence_z_eps0.5.png}
+    \includegraphics[width=0.2\textwidth]{figs/appendix/1.4d_multi_GPhparams.png}
+    \\\includegraphics[width=0.2\textwidth]{figs/appendix/230103_060017_dynesty-sampling_convergence_z_eps0.5.png}
+    \includegraphics[width=0.2\textwidth]{figs/appendix/2.4d_multi_GPhparams.png}
+    \\\includegraphics[width=0.2\textwidth]{figs/appendix/3.4d_multi_convergence_z.png}
+    \includegraphics[width=0.2\textwidth]{figs/appendix/3.4d_multi_GPhparams.png}
+    \figcaption{Convergence of the GP, measured with the convergence diagnostic $z$ and the actual optimized hyperparameters}\label{fig:convergence}
 \end{figure*}
 
 
