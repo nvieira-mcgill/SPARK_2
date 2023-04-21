@@ -188,7 +188,7 @@ We briefly describe our tool, Spectroscopic $r$-Process Abundance Retrieval for 
 
 In \SPARK, we couple the 1D \TARDIS~(\citealt{kerzendorf14})~radiative transfer code to the approximate posterior estimation scheme of \approxposterior~(\citealt{fleming18,fleming20}). We generate a set of synthetic spectra, each parameterized by some $\theta_i$ including a luminosity, density, inner/outer computational boundary velocities, and three key parameters which determine the abundances in the ejecta: the electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy per nucleon $s / k_{\mathrm{B}}$. These parameters describe different abundances from the nuclear reaction network calculations of \cite{wanajo18}. We write down a likelihood function using the full formalism of \cite{czekala15} for inference on spectroscopic data. Because of the considerable computational cost of spectral synthesis with \TARDIS, we do not use more common methods such as Markov chain Monte Carlo (MCMC) or nested sampling for inference---rather, we introduce a Gaussian Process (GP) surrogate for the posterior $L_p (\theta)$ and employ Bayesian Active Posterior Estimation (BAPE; \citealt{kandasamy17}). BAPE is a form of active learning in which we maximize an acquisition function with terms including both the mean $\mu(\theta)$ and variance $\sigma^2(\theta)$ of the GP. This acquisition function thus balances exploration (of the parameter space) and exploitation (sampling around the peak of the posterior). The GP is iteratively re-trained as new points $(\theta, L_p(\theta))$ are added to a training set and converges to an approximation of the posterior. 
 
-In all, inference is dramatically accelerated, and we obtain (among the other kilonova parameters) the $Y_e$, $v_{\mathrm{exp}}$, $s / k_{\mathrm{B}}$ which best describe the ejecta with relatively few forward model evaluations. In , we fit the VLT/X-shooter spectrum of the GW170817 kilonova at 1.4 days post-merger (\citealt{pian17, smartt17}) with a baseline of 1500 Latin Hypercube samples + 1140 BAPE active learning samples. This is a factor of $\sim 10^3$ fewer samples than might be required with a standard MCMC for a similar 6-dimensional fit.
+In all, inference is dramatically accelerated, and we obtain (among the other kilonova parameters) the $Y_e$, $v_{\mathrm{exp}}$, $s / k_{\mathrm{B}}$ which best describe the ejecta with relatively few forward model evaluations. In V23, we fit the VLT/X-shooter spectrum of the GW170817 kilonova (\citealt{pian17, smartt17}) at 1.4 days post-merger with a baseline of 1500 Latin Hypercube samples + 1140 BAPE active learning samples. This is a factor of $\sim 10^3$ fewer samples than might be required with a standard MCMC for a similar 6-dimensional fit.
 
 
 %%% SUBECTION 2.2
@@ -199,11 +199,11 @@ In all, inference is dramatically accelerated, and we obtain (among the other ki
 \begin{figure}[!ht]
     \includegraphics[width=0.47\textwidth]{figs/wedge_example_purplewarm.png}
     \includegraphics[width=0.47\textwidth]{figs/wedge_example_multicomp_redblu.png}
-    \figcaption{\textbf{Illustration of the difference between our single- and multi-component models.} \textit{Top:} A single-component ejecta, where the ejecta is not stratified and is characterized by a single $Y_e$, $v_{\mathrm{exp}}$, $s$, temperature, density, and other plasma properties. The abundance pattern is uniform in the one shell. The parameters shown here are those of the purple + warm model from V23. \textit{Bottom}: An example of multi-component ejecta, where the ejecta is stratified over 10 radial shells. A ``blue'' and ``red'' component are shown. The shells which span only the blue component have their abundance set by $Y_{e,\mathrm{blu}}$, $v_{\mathrm{exp,blu}}$, and $s_{\mathrm{blu}}$, and the red by the equivalent parameters for the red component. Where components overlap, the abundances are summed and re-normalized to sum to unity. In this physical setup, the larger amount of lanthanides in the red component might generate a lanthanide curtaining effect, where the emission from the blue component is re-processed by the red component and an overall redder kilonova is produces. This introduces additional complexity to our model.}\label{fig:wedge_examples}
+    \figcaption{\textbf{Illustration of the difference between our single- and multi-component models.} \textit{Top:} A single-component ejecta, where the ejecta is not stratified and is characterized by a single $Y_e$, $v_{\mathrm{exp}}$, $s$, temperature, density, and other plasma properties. The abundance pattern is uniform in the one shell. The parameters shown here are those of the purple + warm model from V23. \textit{Bottom}: An example of multi-component ejecta, where the ejecta is stratified over 10 radial shells. A ``blue'' and ``red'' component are shown. The shells which span only the blue component have their abundance set by $Y_{e,\mathrm{blu}}$, $v_{\mathrm{exp,blu}}$, and $s_{\mathrm{blu}}$, and the red by the equivalent parameters for the red component. Where components overlap, the abundances are summed and re-normalized to sum to unity. In this physical setup, the larger amount of lanthanides in the red component might lead to ``lanthanide curtaining'', where the emission from the blue component is re-processed by the red component and an overall redder kilonova is produced. }\label{fig:wedge_examples}
 \end{figure}
 
 
-In V23, we model the kilonova ejecta as a single shell with a uniform abundance pattern. The plasma in this shell is also described by a single temperature and mass/electron density. This configuration is fully described by the luminosity at the outer boundary $L_{\mathrm{outer}}$, (which in fact sets the temperature at the inner boundary), the normalization in the density power law $\rho_0$, the inner and outer boundary velocities $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$, and three parameters which set the abundances: electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy $s / k_{\mathrm{B}}$. A single-component fit is thus 7-dimensional, unless one or more of the parameters are fixed, \eg, we fix $v_{\mathrm{outer}} = 0.35c$ in our fit to the 1.4 day spectrum. This setup can describe a single ejecta component, \eg, the tidal ejecta mostly confined to the equatorial plane, an outflow from a remnant accretion disk, or the squeezed polar ejecta from the collision interface during the merger. It may also describe a kilonova in which one component significantly dominates (by mass or by the strength of the absorption/emission features) over the other(s). 
+In V23, we model the kilonova ejecta as a single shell with a uniform abundance pattern. The plasma in this shell is also described by a single temperature and mass/electron density. This configuration is fully described by the luminosity at the outer boundary $L_{\mathrm{outer}}$, (which in fact sets the temperature at the inner boundary), the normalization in the density power law $\rho_0$, the inner and outer boundary velocities $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$, and three parameters which set the abundances: electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy $s / k_{\mathrm{B}}$. A single-component fit is thus 7-dimensional, unless one or more of the parameters are fixed, \eg, we fix $v_{\mathrm{outer}} = 0.35c$ in our fit to the 1.4 day spectrum. This setup can describe a single ejecta component such as the tidal ejecta mostly confined to the equatorial plane, an outflow from a remnant accretion disk, or the squeezed polar ejecta from the collision interface during the merger. It may also describe a kilonova in which one component significantly dominates (by mass or by the strength of the absorption/emission features) over the other(s). 
     
 Here, we implement multi-component, stratified ejecta. \TARDIS~allows for ejecta composed of stratified shells, each with a specific temperature, density, and plasma conditions. In this configuration, each shell can have a specific abundance pattern. We use 10 shells in all runs unless indicated otherwise. We also employ multiple (30) \TARDIS~iterations when generating synthetic spectra in this configuration. At each iteration, the plasma conditions are updated, and converge towards an ejecta where the outer boundary emitted luminosity matches the user-requested $L_{\mathrm{outer}}$. 
     
@@ -247,11 +247,11 @@ When attempting to fit the 3.4 day spectrum, we found that the fit converged to 
 
 \begin{deluxetable}{c|ccc}
 \centering
-\tablecaption{Priors for the parameters of the single-component fits at 1.4, 2.4, and 3.4 days. $v_{\mathrm{outer}}$ is fixed to $0.35c$ in the 1.4 day fit (V23).}
+\tablecaption{Uniform priors for the parameters of the single-component fits at 1.4, 2.4, and 3.4 days. $v_{\mathrm{outer}}$ is fixed to $0.35c$ in the 1.4 day fit (V23).}
 \tablehead{parameter & 1.4 days & 2.4 days & 3.4 days}
 \startdata\tablewidth{1.0\textwidth}
  \vspace{2pt}
-$\log_{10}(L_\mathrm{outer}/L_{\odot})$ & $[7.6, 8.0]$ & $[7.2, 7.8]$ & TBD \\ 
+$\log_{10}(L_\mathrm{outer}/L_{\odot})$ & $[7.6, 8.0]$ & $[7.2, 7.8]$ & $[7.2, 7.8]$ \\ 
 $\log_{10}(\rho_0/\mathrm{g~cm^{-3}})$ & $[-16.0, -14.0]$ & same & same \\
 $v_{\mathrm{inner}}/c$& $[0.250, 0.340]$ & $[0.100, 0.275]$ & TBD \\
 $v_{\mathrm{outer}}/c$& - & $[0.280, 0.400]$ & TBD \\
@@ -264,7 +264,7 @@ $s~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ & same & same \\
 
 \begin{deluxetable}{c|c}
 \centering
-\tablecaption{Priors for the parameters of the multi-component fits at 1.4, 2.4, and 3.4 days.}
+\tablecaption{Uniform priors for the parameters of the multi-component fits at 1.4, 2.4, and 3.4 days.}
 \tablehead{parameter & prior}
 \startdata\tablewidth{1.0\textwidth}
  \vspace{2pt}
@@ -305,6 +305,24 @@ $s_{\mathrm{blu}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
 
 \end{itemize}
 
+\begin{deluxetable}{cccc}
+\centering
+\tablecaption{Best-fit parameters for single-component fits to the GW170817 kilonova at $1.4$, $2.4$, and $3.4$~days. The $1.4$~day fit is the ``purple + warm'' model of V23. $v_{\mathrm{outer}}$ is fixed to $0.35c$ in the 1.4 day fit. The inner boundary temperature $T_{\mathrm{inner}}$ and lanthanide mass fraction $X_{\mathrm{lan}}$ are derived parameters, \ie, they are not dimensions in $\theta$-space.}
+\tablehead{parameter & 1.4 days & 2.4 days & 3.4 days}
+\startdata\tablewidth{1.0\textwidth}
+ \vspace{2pt}
+$\log_{10}(L_\mathrm{outer}/L_{\odot})$ & $7.782^{+0.013}_{-0.014}$ & & \\ 
+$\log_{10}(\rho_0/\mathrm{g~cm^{-3}})$ & $-15.016^{+0.320}_{-0.316}$ & & \\ 
+$v_{\mathrm{inner}}/c$ & $0.313^{+0.013}_{-0.014}$ & & \\
+$v_{\mathrm{outer}}/c$ & $0.35$ & & \\
+$v_{\mathrm{exp}}/c$ & $0.240^{+0.055}_{-0.082}$ & & \\
+$Y_e$ & $0.311^{+0.013}_{-0.011}$ & & \\
+$s~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $13.6^{+4.1}_{-3.0}$ & & \\ \hline
+$T_{\mathrm{inner}}~[\mathrm{K}]$ & $3958^{+87}_{-94}$ & & \\ 
+$X_{\mathrm{lan}}$ & $1.82^{+26.3}_{-1.79}~\times 10^{-7}$ & & \\
+\enddata
+\end{deluxetable}\label{tab:bestfit}
+
 
 %% all spectra, and best fits; Fig. 2 a, b
 \begin{figure*}[!ht]
@@ -318,7 +336,7 @@ $s_{\mathrm{blu}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
 \begin{figure*}[!ht]
     \centering
     \includegraphics[width=0.98\textwidth]{figs/compare_abunds_220808_014638-221022_084052_posterior-50samples.png}
-    \figcaption{\textbf{Best-fit abundance patterns at 1.4, 2.4 and 3.4 days, as given by the single-component fits.} Uncertainty bands are obtained by taking additional samples after obtaining the posterior, effectively propagating the uncertainty on $Y_e$, $v_{\mathrm{exp}}$, and $s$. We also show the Solar $r$-process pattern, computed using data from \cite{lodders09} subtracted by the $s$-process residuals of \cite{bisterzo14}. The best-fit abundances are evidently non-Solar at each epoch. The abundances are remarkably consistent with each other, within uncertainties, indicating that we are not seeing a new kilonova component emerging, up to 3.4 days.}\label{fig:abunds_time_evolution}
+    \figcaption{\textbf{Best-fit abundance patterns at 1.4, 2.4 and 3.4 days, as given by the single-component fits.} Uncertainty bands are obtained by taking additional samples from the the posterior, effectively propagating the uncertainty on $Y_e$, $v_{\mathrm{exp}}$, and $s$ into the abundances. We also show the Solar $r$-process pattern, computed using data from \cite{lodders09} subtracted by the $s$-process residuals of \cite{bisterzo14}. The best-fit abundances are evidently non-Solar at each epoch. The abundances are remarkably consistent with each other, within uncertainties, indicating that we are not seeing a new kilonova component emerging, up to 3.4 days.}\label{fig:abunds_time_evolution}
 \end{figure*}
 
 
@@ -350,6 +368,32 @@ $s_{\mathrm{blu}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
 
 \end{itemize}
 
+\begin{deluxetable}{cccc}
+\centering
+\tablecaption{Best-fit parameters for multi-component fits to the GW170817 kilonova at $1.4$, $2.4$, and $3.4$~days. The inner boundary temperature $T_{\mathrm{inner}}$, ejecta mass in each component $M_{\mathrm{ej}}$, and lanthanide mass fraction in each component $X_{\mathrm{lan}}$ are derived parameters, \ie, they are not dimensions in $\theta$-space.}
+\tablehead{parameter & 1.4 days & 2.4 days & 3.4 days}
+\startdata\tablewidth{1.0\textwidth}
+ \vspace{2pt}
+$\log_{10}(L_\mathrm{outer}/L_{\odot})$ &  & & \\ 
+$\log_{10}(\rho_0/\mathrm{g~cm^{-3}})$ & & & \\ \hline
+$v_{\mathrm{inner,red}}/c$ & & & \\
+$v_{\mathrm{outer,red}}/c$ & & & \\
+$v_{\mathrm{exp,red}}/c$ & & & \\
+$Y_{e,\mathrm{red}}$ & & & \\
+$s_{\mathrm{red}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & & & \\ \hline
+$v_{\mathrm{inner,blu}}/c$ & & & \\
+$v_{\mathrm{outer,blu}}/c$ & & & \\
+$v_{\mathrm{exp,blu}}/c$ & & & \\
+$Y_{e,\mathrm{blu}}$ & & & \\
+$s_{\mathrm{blu}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & & & \\ \hline\hline
+$T_{\mathrm{inner}}~[\mathrm{K}]$ & & & \\ \hline
+$M_{\mathrm{ej,red}}~[M_{\odot}]$ & & & \\
+$X_{\mathrm{lan,red}}$ & & & \\ \hline
+$M_{\mathrm{ej,blu}}~[M_{\odot}]$ & & & \\
+$X_{\mathrm{lan,blu}}$ & & & \\
+\enddata
+\end{deluxetable}\label{tab:bestfit}
+
 
 %% all spectra; Fig. 5 a, b, c
 \begin{figure*}[!ht]
@@ -357,7 +401,7 @@ $s_{\mathrm{blu}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
     \includegraphics[width=0.47\textwidth]{figs/230412_040127_single_all_TARDIS_evals_m0-1500.png}
     \includegraphics[width=0.47\textwidth]{figs/230412_035244_single_all_TARDIS_evals_m0-1500.png}
     \includegraphics[width=0.47\textwidth]{figs/all_spectra_multi_3.4.png}
-    \figcaption{All spectra, and the best fits, for the multi-component fits at 1.4, 2.4, and 3.4 days}\label{fig:all_spec_multi}
+    \figcaption{\textbf{All spectra in the training set, and the best fits, for the multi-component fits.} \textit{Top left:} Spectra corresponding to the $m_0 = 1500$ initial Latin Hypercube samples to explore parameter space and $m_{\mathrm{active}} = 600$ additional active learning points selected using BAPE, for the fit to the 1.4 day spectrum of AT2017gfo. We also show the best fit, as obtained from the median of the posteriors (see Figure~\ref{fig:corner_multi_1.4}, Appendix~\ref{app:corners_multi} for the full posteriors.) \textit{Top right:} The same, for the 2.4 day fit. See Figure~\ref{fig:corner_multi_2.4} (Appendix~\ref{app:corners_multi}) for the complete posterior. \textit{Bottom center:} The same for the 3.4 day fit. See Figure~\ref{fig:corner_multi_3.4} (Appendix~\ref{app:corners_multi}) for the complete posterior.}\label{fig:all_spec_multi}
 \end{figure*}
 
 
@@ -366,7 +410,7 @@ $s_{\mathrm{blu}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
     \includegraphics[width=0.4\textwidth]{figs/multicomp_wedges_1.4d.png}
     \includegraphics[width=0.4\textwidth]{figs/multicomp_wedges_2.4d.png}
     \includegraphics[width=0.4\textwidth]{figs/multicomp_wedges_3.4d.png}
-    \figcaption\textbf{{Physical setup and composition-setting parameters for the multi-component fits.} Best fits are taken as the median of the posterior.}\label{fig:infer_multicomp_wedges}
+    \figcaption{\textbf{Physical setup and composition-setting parameters for the multi-component fits.} Best fits are taken as the median of the posterior. From top to bottom: 1.4, 2.4, and 3.4 days.}\label{fig:infer_multicomp_wedges}
 \end{figure}
 
 
@@ -410,7 +454,7 @@ Things to think about / don't forget:
 
 NV works in Tiohti{\'a}:ke / Mooniyang, also known as Montr{\'e}al, which lies on the unceded land of the Haudenosaunee and Anishinaabeg nations. This work made use of high-performance computing resources in Tiohti{\'a}:ke / Mooniyang and in Burnaby, British Columbia, the unceded land of the Coast Salish peoples, including the Tsleil-Waututh, Kwikwetlem, Squamish, and Musqueam nations. We acknowledge the ongoing struggle of Indigenous peoples on this land, and elsewhere on Turtle Island, and hope for a future marked by true reconciliation. 
 
-This work made extensive use of the \href{https://docs.alliancecan.ca/wiki/Narval/en}{\texttt{Narval}} and \href{https://docs.alliancecan.ca/wiki/Cedar}{\texttt{Cedar}} clusters of the \href{https://alliancecan.ca/en}{Digital Research Alliance of Canada} at the {\'E}cole de technologie sup{\'e}rieure and Simon Fraser University (with regional partner \href{https://www.westgrid.ca/}{WestGrid}), respectively. We thank the support staff of Calcul Qu{\'e}bec in particular for their assistance at various steps in this project. We also thank Nikolas Provatas, Victor Ionescu, and Bart Odelman.
+This work made extensive use of the \href{https://docs.alliancecan.ca/wiki/Narval/en}{\texttt{Narval}} and \href{https://docs.alliancecan.ca/wiki/Cedar}{\texttt{Cedar}} clusters of the \href{https://alliancecan.ca/en}{Digital Research Alliance of Canada} at the {\'E}cole de technologie sup{\'e}rieure and Simon Fraser University (with regional partner \href{https://www.westgrid.ca/}{WestGrid}), respectively. We thank the support staff of Calcul Qu{\'e}bec in particular for their assistance at various steps in this project. 
 
 We thank the attendees of an April 2023 workshop at University of California---Santa Cruz, and especially Erika Holmbeck, Phil Macias, and Ashley Villar, for fruitful discussions on kilonovae and the $r$-process. We are also grateful to Shinya Wanajo for kindly sharing their reaction network calculations. Finally, we thank Jessica Birky and David Fleming for useful discussions on approximate Bayesian inference and the use of \href{https://dflemin3.github.io/approxposterior/index.html}{\approxposterior}.
 
