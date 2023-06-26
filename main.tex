@@ -156,11 +156,11 @@ x
 
 About half the elements heavier than iron in the periodic table are synthesized by (r)apid neutron capture nucleosynthesis, i.e., the $r$-process. Astrophysical environments---namely, collapsars and mergers of neutron stars (NS-NS) or a neutron star and black hole (NS-BH)---are thought to be the site of this $r$-process nucleosynthesis. However, it is not yet known which of these channels, if either, dominates. The NS-NS merger GW170817, first detected in gravitational waves and then across the electromagnetic spectrum, has provided some insight. Both photometry and spectroscopy of the optical/near-infrared counterpart, AT2017gfo, matched expectations for a kilonova: an explosive transient event powered by radioactive decay of freshly-synthesized $r$-process elements. However, we do not yet know the precise abundance pattern of the ejecta over time, nor whether GW170817-like kilonovae could yield the $r$-process abundances seen across the Universe. 
 
-In \cite{vieira23} (hereafter V23), we fit the early, optically-thick spectrum of AT2017gfo at 1.4 days post-merger using our tool Spectroscopic $r$-Process Abundance Retrieval for Kilonovae (\SPARK). With this tool, we inferred the complete element-by-element abundance pattern of the ejecta with uncertainties, identified the presence of strontium (${}_{38}$Sr), and tentatively identified yttrium (${}_{39}$Y) and zirconium (${}_{40}$Zr). We found that the ejecta was best-described by a ``blue'' (lower opacity) component with electron fraction $Y_e = 0.311^{+0.013}_{-0.011}$ and specific entropy per nucleon $s / k_{\mathrm{B}} = 13.6^{+4.1}_{-3.0}$, which yielded an extremely lanthanide-poor abundance pattern with lanthanide fraction $X_{\mathrm{lan}} = 1.82^{+26.3}_{-1.79} \times 10^{-7}$. 
+In \cite{vieira23}, we fit the early, optically-thick spectrum of AT2017gfo at 1.4 days post-merger using our tool Spectroscopic $r$-Process Abundance Retrieval for Kilonovae (\SPARK). With this tool, we inferred the complete element-by-element abundance pattern of the ejecta with uncertainties, identified the presence of strontium (${}_{38}$Sr), and tentatively identified yttrium (${}_{39}$Y) and zirconium (${}_{40}$Zr). We found that the ejecta was best-described by a ``blue'' (lower opacity) component with electron fraction $Y_e = 0.311^{+0.013}_{-0.011}$ and specific entropy per nucleon $s / k_{\mathrm{B}} = 13.6^{+4.1}_{-3.0}$, which yielded an extremely lanthanide-poor abundance pattern with lanthanide fraction $X_{\mathrm{lan}} = 1.82^{+26.3}_{-1.79} \times 10^{-7}$. 
 
 However, we have not yet inferred the abundance at later epochs (2.4 days, 3.4 days, ...). At later epochs, as the kilonova ejecta expands and becomes more optically thin, we expect that the photosphere recedes into the ejecta. This may uncover additional redder or bluer components which are powering the emission at later times, after being hidden at early times. This would align with photometric modelling, which has argued for multiple ejecta components; in particular, a redder component emerging at $\sim 3$ days post-merger. These different ejecta components have different physical origins. In a NS-NS merger we expect a redder tidal dynamical component mostly confined to the plane of the initial binary from the tidal disruption of the NSs, a bluer squeezed polar component due to the collisional interface between the two objects, and a more isotropic disk wind from an accretion disk around the merger remnant. It is possible that the spectrum at later times might be better fit by a different ejecta, or, a multi-component ejecta configuration. 
 
-Here, we explore the time evolution of the abundances and the need (or lack thereof) for multi-component models to fit the spectra of AT2017gfo, at 1.4, 2.4, and 3.4 days post-merger. We first repeat our single-component fitting at 2.4 and 3.4 days to obtain the best single-component models for the ejecta. The abundances can then be examined as a function of time. We also develop a model in the radiative transfer code where the ejecta is stratified and multi-component. We compare our best multi-component fits at 1.4, 2.4, and 3.4 days to the single-component equivalents. 
+Here, we explore the time evolution of the abundances and the need (or lack thereof) for multi-component models to fit the spectra of AT2017gfo, at 1.4, 2.4, and 3.4 days post-merger. We first extend our single-component fitting at 2.4 and 3.4 days to obtain the best single-component models for the ejecta. The abundances can then be examined as a function of time. We also develop a model in the radiative transfer code where the ejecta is stratified and multi-component. We compare our best multi-component fits at 1.4, 2.4, and 3.4 days to the single-component equivalents. 
 
 This paper is organized as follows. In Section~\ref{sec:methods}, we briefly review \SPARK~and present the upgrades which have been made to enable fitting the later epochs of AT2017gfo with both single- and multi-component models. In Section~\ref{sec:results}, we present our fits. In Sections~\ref{sec:disco} and~\ref{sec:conco}, we discuss and conclude.
 
@@ -184,7 +184,7 @@ This paper is organized as follows. In Section~\ref{sec:methods}, we briefly rev
 %%% SUBSECTION 2.1
 \subsection{Spectroscopic $r$-Process Abundance Retrieval for Kilonovae (\textsc{SPARK})}\label{ssc:spark-summary}
 
-We briefly describe our tool, Spectroscopic $r$-Process Abundance Retrieval for Kilonovae (\SPARK), and refer the reader to \cite{vieira23} for more detail. \SPARK is designed as a modular inference engine for extracting key parameters of kilonovae spectra, determining the element-by-element abundance pattern of the ejecta, and associating features in the spectrum with particular species. 
+We briefly describe our tool, Spectroscopic $r$-Process Abundance Retrieval for Kilonovae (\SPARK), and refer the reader to \cite{vieira23} (hereafter V23) for more detail. \SPARK is designed as a modular inference engine for extracting key parameters of kilonovae spectra, determining the element-by-element abundance pattern of the ejecta, and associating features in the spectrum with particular species. 
 
 In \SPARK, we couple the 1D \TARDIS~(\citealt{kerzendorf14})~radiative transfer code to the approximate posterior estimation scheme of \approxposterior~(\citealt{fleming18,fleming20}). We generate a set of synthetic spectra, each parameterized by some $\theta_i$ including a luminosity, density, inner/outer computational boundary velocities, and three key parameters which determine the abundances in the ejecta: the electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy per nucleon $s / k_{\mathrm{B}}$. These parameters describe different abundances from the nuclear reaction network calculations of \cite{wanajo18}. We write down a likelihood function using the full formalism of \cite{czekala15} for inference on spectroscopic data. Because of the considerable computational cost of spectral synthesis with \TARDIS, we do not use more common methods such as Markov chain Monte Carlo (MCMC) or nested sampling for inference---rather, we introduce a Gaussian Process (GP) surrogate for the posterior $L_p (\theta)$ and employ Bayesian Active Posterior Estimation (BAPE; \citealt{kandasamy17}). BAPE is a form of active learning in which we maximize an acquisition function with terms including both the mean $\mu(\theta)$ and variance $\sigma^2(\theta)$ of the GP. This acquisition function thus balances exploration (of the parameter space) and exploitation (sampling around the peak of the posterior). The GP is iteratively re-trained as new points $(\theta, L_p(\theta))$ are added to a training set and converges to an approximation of the posterior. 
 
@@ -321,22 +321,22 @@ $s~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $13.6^{+4.1}_{-3.0}$ & & \\ \hline
 $T_{\mathrm{inner}}~[\mathrm{K}]$ & $3958^{+87}_{-94}$ & & \\ 
 $X_{\mathrm{lan}}$ & $1.82^{+26.3}_{-1.79}~\times 10^{-7}$ & & \\
 \enddata
-\end{deluxetable}\label{tab:bestfit}
+\end{deluxetable}\label{tab:bestfit_single}
 
 
 %% all spectra, and best fits; Fig. 2 a, b
 \begin{figure*}[!ht]
     \centering
     \includegraphics[width=0.47\textwidth]{figs/221024_080947_single_all_TARDIS_evals_m0-1500.png}
-    \includegraphics[width=0.47\textwidth]{figs/230323_060334_single_all_TARDIS_evals_m0-1500.png}
-    \figcaption{\textbf{All spectra in the training set, and the best fits, for the single-component fits.} \textit{Left:} Spectra corresponding to the $m_0 = 1500$ initial Latin Hypercube samples to explore parameter space and $m_{\mathrm{active}} = 600$ additional active learning points selected using BAPE, for the fit to the 2.4 day spectrum of AT2017gfo. We also show the best fit, as obtained from the median of the posteriors (see Figure~\ref{fig:corner_single_2.4}, Appendix~\ref{app:corners_single} for the full posteriors.) \textit{Right:} The same, for the 3.4 day fit. See Figure~\ref{fig:corner_single_3.4} (Appendix~\ref{app:corners_single}) for the complete posterior.}\label{fig:all_spec_single}
+    \includegraphics[width=0.47\textwidth]{figs/230621_082134_single_all_TARDIS_evals_m0-1500.png}
+    \figcaption{\textbf{All spectra in the training set, and the best fits, for the single-component fits at 2.4 and 3.4 days.} \textit{Left:} Spectra corresponding to the $m_0 = 1500$ initial Latin Hypercube samples to explore parameter space and $m_{\mathrm{active}} = 600$ additional active learning points selected using BAPE, for the fit to the 2.4 day spectrum of AT2017gfo. We also show the best fit, as obtained from the median of the posteriors. \textit{Right:} The same, for the 3.4 day fit. See Appendix~\ref{app:corners_single} for the complete posteriors.}\label{fig:all_spec_single}
 \end{figure*}
 
 %% abundance patterns; Fig. 3
 \begin{figure*}[!ht]
     \centering
-    \includegraphics[width=0.98\textwidth]{figs/compare_abunds_220808_014638-221022_084052_posterior-50samples.png}
-    \figcaption{\textbf{Best-fit abundance patterns at 1.4, 2.4 and 3.4 days, as given by the single-component fits.} Uncertainty bands are obtained by taking additional samples from the the posterior, effectively propagating the uncertainty on $Y_e$, $v_{\mathrm{exp}}$, and $s$ into the abundances. We also show the Solar $r$-process pattern, computed using data from \cite{lodders09} subtracted by the $s$-process residuals of \cite{bisterzo14}. The best-fit abundances are evidently non-Solar at each epoch. The abundances are remarkably consistent with each other, within uncertainties, indicating that we are not seeing a new kilonova component emerging, up to 3.4 days.}\label{fig:abunds_time_evolution}
+    \includegraphics[width=0.98\textwidth]{figs/compare_abunds_220808_014638-221022_084052-230622_230103_posterior_50samples.png}
+    \figcaption{\textbf{Best-fit abundance patterns at 1.4, 2.4 and 3.4 days.} The abundances at 1.4 and 2.4 days are taken from the preferred single-component fits, while the abundance at 3.4 days is taken from the multi-component fit. Uncertainty bands are obtained by taking additional samples from the the posterior, effectively propagating the uncertainty on $Y_e$, $v_{\mathrm{exp}}$, and $s$ into the abundances. We also show the Solar $r$-process pattern, computed using data from \cite{lodders09} subtracted by the $s$-process residuals of \cite{bisterzo14}. The best-fit abundances are evidently non-Solar at the first two epochs, but are closer to Solar at the third. A new, redder kilonova component emerges at 3.4 days post-merger.}\label{fig:abunds_time_evolution}
 \end{figure*}
 
 
@@ -344,7 +344,7 @@ $X_{\mathrm{lan}}$ & $1.82^{+26.3}_{-1.79}~\times 10^{-7}$ & & \\
 \begin{figure*}[!ht]
     \centering
     \includegraphics[width=0.47\textwidth]{figs/230409_234104_leaveoneout_all_TARDIS_evals_label-interest.png}
-    \includegraphics[width=0.47\textwidth]{figs/230411_123023_leaveoneout_all_TARDIS_evals_label-interest.png}
+    \includegraphics[width=0.45\textwidth]{figs/LoO_3.4d_single.png}
     \figcaption{Leave-one-out spectra for the 2.4 and 3.4 day single-component fits}\label{fig:leave_out_single}
 \end{figure*}
 
@@ -392,7 +392,7 @@ $X_{\mathrm{lan,red}}$ & & & \\ \hline
 $M_{\mathrm{ej,blu}}~[M_{\odot}]$ & & & \\
 $X_{\mathrm{lan,blu}}$ & & & \\
 \enddata
-\end{deluxetable}\label{tab:bestfit}
+\end{deluxetable}\label{tab:bestfit_multi}
 
 
 %% all spectra; Fig. 5 a, b, c
@@ -400,8 +400,8 @@ $X_{\mathrm{lan,blu}}$ & & & \\
     \centering
     \includegraphics[width=0.47\textwidth]{figs/230412_040127_single_all_TARDIS_evals_m0-1500.png}
     \includegraphics[width=0.47\textwidth]{figs/230412_035244_single_all_TARDIS_evals_m0-1500.png}
-    \includegraphics[width=0.47\textwidth]{figs/all_spectra_multi_3.4.png}
-    \figcaption{\textbf{All spectra in the training set, and the best fits, for the multi-component fits.} \textit{Top left:} Spectra corresponding to the $m_0 = 1500$ initial Latin Hypercube samples to explore parameter space and $m_{\mathrm{active}} = 600$ additional active learning points selected using BAPE, for the fit to the 1.4 day spectrum of AT2017gfo. We also show the best fit, as obtained from the median of the posteriors (see Figure~\ref{fig:corner_multi_1.4}, Appendix~\ref{app:corners_multi} for the full posteriors.) \textit{Top right:} The same, for the 2.4 day fit. See Figure~\ref{fig:corner_multi_2.4} (Appendix~\ref{app:corners_multi}) for the complete posterior. \textit{Bottom center:} The same for the 3.4 day fit. See Figure~\ref{fig:corner_multi_3.4} (Appendix~\ref{app:corners_multi}) for the complete posterior.}\label{fig:all_spec_multi}
+    \includegraphics[width=0.47\textwidth]{figs/230626_073230_single_all_TARDIS_evals_m0-1500.png}
+    \figcaption{\textbf{All spectra in the training set, and the best fits, for the multi-component fits.} \textit{Top left:} Spectra corresponding to the $m_0 = 1500$ initial Latin Hypercube samples to explore parameter space and $m_{\mathrm{active}} = 600$ additional active learning points selected using BAPE, for the fit to the 1.4 day spectrum of AT2017gfo. We also show the best fit, as obtained from the median of the posteriors \textit{Top right:} The same, for the 2.4 day fit. \textit{Bottom center:} The same for the 3.4 day fit. See Appendix~\ref{app:corners_multi} for the complete posteriors.}\label{fig:all_spec_multi}
 \end{figure*}
 
 
@@ -1248,7 +1248,7 @@ In this section, we provide the full posteriors for single-component \SPARK~fits
 \end{figure*}
 
 \begin{figure*}[!ht]
-    \includegraphics[width=0.95\textwidth]{figs/appendix/230322_013538_dynesty_corner_pretty_mactive-600_smooth2d0.05_nodatapts.png}
+    \includegraphics[width=0.95\textwidth]{figs/appendix/230618_143307_dynesty_corner_pretty_mactive-600_smooth2d0.05_nodatapts_zoom_midYe-highs-lowdens.png}
     \figcaption{3.4 day, single-component fit corner plot}\label{fig:corner_single_3.4}
 \end{figure*}
 
@@ -1273,7 +1273,7 @@ In this section, we provide the full posteriors for multi-component fits to the 
 % \end{figure*}
 
 % \begin{figure*}[!ht]
-%     \includegraphics[width=0.95\textwidth]{figs/appendix/corner_multi_3.4d.png}
+%     \includegraphics[width=0.95\textwidth]{figs/appendix/230622_230103_dynesty_corner_pretty_mactive-1140_smooth2d0.05_nodatapts}
 %     \figcaption{\textbf{Same as Figure~\ref{fig:corner_multi_1.4}, for the 3.4 day, multi-component fit.}}\label{fig:corner_multi_3.4}
 % \end{figure*}
 
@@ -1290,7 +1290,7 @@ In this section, we show leave-one-out spectra for the multi-component fits to t
     \centering
     \includegraphics[width=0.47\textwidth]{figs/appendix/230503_184337_leaveoneout_all_TARDIS_evals_label-interest.png}
     \includegraphics[width=0.47\textwidth]{figs/appendix/230504_003423_leaveoneout_all_TARDIS_evals_label-interest.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/leave_out_multi_3.4d.png}
+    \includegraphics[width=0.47\textwidth]{figs/appendix/LoO_3.4d_multi.png}
     \figcaption{Leave-one-out spectra for the 1.4, 2.4, and 3.4 day multi-component fits}\label{fig:leave_out_multi}
 \end{figure*}
 
@@ -1305,21 +1305,21 @@ In this section, we show leave-one-out spectra for the multi-component fits to t
 We assess the convergence of all fits. Convergence can be seen in two ways: This includes single-component fits at 2.4 and 3.4 days, and multi-component fits at 1.4, 2.4, and 3.4 days.
 
 
-%% double-column, each row showing convergence z and GP hyperparameters
-\begin{figure*}[!ht]
-    \centering
-    \includegraphics[width=0.2\textwidth]{figs/appendix/221022_084052_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.2\textwidth]{figs/appendix/2.4d_single_GPhparams.png}
-    \\\includegraphics[width=0.2\textwidth]{figs/appendix/230322_013538_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.2\textwidth]{figs/appendix/3.4d_single_GPhparams.png}
-    \\\includegraphics[width=0.2\textwidth]{figs/appendix/230103_064024_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.2\textwidth]{figs/appendix/1.4d_multi_GPhparams.png}
-    \\\includegraphics[width=0.2\textwidth]{figs/appendix/230103_060017_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.2\textwidth]{figs/appendix/2.4d_multi_GPhparams.png}
-    \\\includegraphics[width=0.2\textwidth]{figs/appendix/3.4d_multi_convergence_z.png}
-    \includegraphics[width=0.2\textwidth]{figs/appendix/3.4d_multi_GPhparams.png}
-    \figcaption{Convergence of the GP, measured with the convergence diagnostic $z$ and the actual optimized hyperparameters}\label{fig:convergence}
-\end{figure*}
+% %% double-column, each row showing convergence z and GP hyperparameters
+% \begin{figure*}[!ht]
+%     \centering
+%     \includegraphics[width=0.2\textwidth]{figs/appendix/221022_084052_dynesty-sampling_convergence_z_eps0.5.png}
+%     \includegraphics[width=0.2\textwidth]{figs/appendix/2.4d_single_GPhparams.png}
+%     \\\includegraphics[width=0.2\textwidth]{figs/appendix/230618_143307_dynesty-sampling_convergence_z_eps0.5.png}
+%     \includegraphics[width=0.2\textwidth]{figs/appendix/3.4d_single_GPhparams.png}
+%     \\\includegraphics[width=0.2\textwidth]{figs/appendix/230103_064024_dynesty-sampling_convergence_z_eps0.5.png}
+%     \includegraphics[width=0.2\textwidth]{figs/appendix/1.4d_multi_GPhparams.png}
+%     \\\includegraphics[width=0.2\textwidth]{figs/appendix/230103_060017_dynesty-sampling_convergence_z_eps0.5.png}
+%     \includegraphics[width=0.2\textwidth]{figs/appendix/2.4d_multi_GPhparams.png}
+%     \\\includegraphics[width=0.2\textwidth]{figs/appendix/230622_230103_dynesty-sampling_convergence_z_eps0.5}
+%     \includegraphics[width=0.2\textwidth]{figs/appendix/3.4d_multi_GPhparams.png}
+%     \figcaption{Convergence of the GP, measured with the convergence diagnostic $z$ and the actual optimized hyperparameters}\label{fig:convergence}
+% \end{figure*}
 
 
 
