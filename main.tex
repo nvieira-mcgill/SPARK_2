@@ -230,7 +230,7 @@ Multiple components allow for additional complexity in the spectral synthesis.\f
 
 All \texttt{approxposterior}/BAPE hyperparameters and optimizers used here are the same as those used in V23. We again produce a baseline run of $m_{0} = 1500$ Latin Hypercube sampled points at the beginning of each \SPARK~run. However, the parameter space allowed by our priors differs for the 1.4, 2.4, and 3.4 day fits. Table~\ref{tab:priors-single} includes our priors for each of our single-component fits. All priors are uniform. The bounds on the density $\rho_0$ and abundance-setting parameters $Y_e$, $v_{\mathrm{exp}}$, and $s$ are the same at all epochs. The priors differ in the bounds on the luminosity, as expected given the cooling of the ejecta over time as it expands. We further allow for wider priors on the inner and outer boundary velocities for the fits at later epochs. In V23, we fixed $v_{\mathrm{outer}} = 0.35c$ during our 1.4 day fit but noted that we observed similar results for $v_{\mathrm{outer}}$ in the range $0.35 - 0.38c$. Here, we allow for greater flexibility in our fits to the later epochs. \redbf{Mention/discuss: Does this complicate the inference? Is there a degeneracy between the inner and outer boundary velocities?}
     
-Our priors for our multi-component fits are given in Table~\ref{tab:priors-multi}. These are identical at all epochs. The priors for the two components in a given fit are also identical, except that the ``red'' component has $Y_{e,\mathrm{red}} \in [0.01, 0.45]$ while the ``blue'' has $Y_{e,\mathrm{blu}} \in [0.05, 0.50]$. We use the terms red and blue loosely to simplify our discussion but note that the priors do not enforce $Y_{e,\mathrm{red}} < Y_{e,\mathrm{blu}}$. The priors enforce $v_{\mathrm{inner,red}} < v_{\mathrm{outer,red}}$ and $v_{\mathrm{inner,blu}} < v_{\mathrm{outer,blu}}$. We also ensure some overlap between the two components, \ie, $v_{\mathrm{outer,red}} > v_{\mathrm{inner,blu}}$ or $v_{\mathrm{outer,blu}} > v_{\mathrm{inner,red}}$. \redbf{Finally, we also enforce that there is some non-overlap between the two components, \ie, one component does not completely envelop another.} To allow for even sampling of parameter space for the $m_0 = 1500$ points in the base training set with this complex conditional prior, we use constrained Latin Hypercube Sampling (cLHS; \citealt{petelet09}).
+Our priors for our multi-component fits are given in Table~\ref{tab:priors-multi}. These are identical at all epochs. The priors for the two components in a given fit are also identical, except that the ``red'' component has $Y_{e,\mathrm{red}} \in [0.01, 0.45]$ while the ``blue'' has $Y_{e,\mathrm{blu}} \in [0.05, 0.50]$. We use the terms red and blue loosely to simplify our discussion but note that the priors do not enforce $Y_{e,\mathrm{red}} < Y_{e,\mathrm{blu}}$. The priors enforce $v_{\mathrm{inner,red}} < v_{\mathrm{outer,red}}$ and $v_{\mathrm{inner,blu}} < v_{\mathrm{outer,blu}}$. We also ensure some overlap between the two components, \ie, $v_{\mathrm{outer,red}} > v_{\mathrm{inner,blu}}$ or $v_{\mathrm{outer,blu}} > v_{\mathrm{inner,red}}$. To allow for even sampling of parameter space for the $m_0 = 1500$ points in the base training set with this complex conditional prior, we use constrained Latin Hypercube Sampling (cLHS; \citealt{petelet09}).
     
 When attempting to fit the 3.4 day spectrum, we found that the fit converged to a blackbody with little to no absorption in order to fit the continuum of the spectrum. Since we are interested in determining the species involved in the absorption, and the employed observed line list is likely to be especially incomplete at the shortest wavelengths, we prioritize fitting the $\geqslant 6000$~\AA~region of the spectrum. The crudest way to do this would be to simply mask the shorter wavelengths during the fit. We instead use the full \cite{czekala15} formalism for introducing local covariance features into the likelihood during spectroscopic inference. We introduce a Gaussian feature with amplitude \redbf{$a_{\mathrm{L}}^2 = 10^{-34} ~(\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$, central wavelength $\mu_{\mathrm{L}} = 3000$~\AA, and variance $\sigma_{\mathrm{L}}^2 = 2500$~\AA${}^2$} into the covariance kernel. This technique effectively down-weights this region of the spectrum during the computation of the likelihood, but does not completely ignore it. For comparison, the amplitude of the global covariance structure is $a_{\mathrm{G}} = 10^{-34} (\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$ in all fits.
 
@@ -253,8 +253,8 @@ When attempting to fit the 3.4 day spectrum, we found that the fit converged to 
  \vspace{2pt}
 $\log_{10}(L_\mathrm{outer}/L_{\odot})$ & $[7.6, 8.0]$ & $[7.2, 7.8]$ & $[7.2, 7.8]$ \\ 
 $\log_{10}(\rho_0/\mathrm{g~cm^{-3}})$ & $[-16.0, -14.0]$ & same & same \\
-$v_{\mathrm{inner}}/c$& $[0.250, 0.340]$ & $[0.100, 0.275]$ & TBD \\
-$v_{\mathrm{outer}}/c$& - & $[0.280, 0.400]$ & TBD \\
+$v_{\mathrm{inner}}/c$& $[0.250, 0.340]$ & $[0.100, 0.275]$ & $[0.100, 0.275]$ \\
+$v_{\mathrm{outer}}/c$& - & $[0.280, 0.400]$ & $[0.280, 0.400]$ \\
 $v_{\mathrm{exp}}/c$ & $[0.05, 0.30]$ & same & same \\
 $Y_e$ & $[0.01, 0.40]$ & same & same \\
 $s~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ & same & same \\
@@ -273,12 +273,12 @@ $\log_{10}(\rho_0/\mathrm{g~cm^{-3}})$ & $[-16.0, -14.0]$ \\\hline
 $v_{\mathrm{inner,red}}/c$& $[0.10, 0.35]$ \\
 $v_{\mathrm{outer,red}}/c$ &  $[0.25, 0.40]$ \\
 $v_{\mathrm{exp,red}}/c$ & $[0.05, 0.30]$ \\
-$Y_{e,\mathrm{red}}$ & $[0.01, 0.45]$ \\
+$Y_{e,\mathrm{red}}$ & $[0.01, 0.50]$ \\
 $s_{\mathrm{red}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\\hline
 $v_{\mathrm{inner,blu}}/c$& $[0.10, 0.35]$ \\
 $v_{\mathrm{outer,blu}}/c$ &  $[0.25, 0.40]$ \\
 $v_{\mathrm{exp,blu}}/c$ & $[0.05, 0.30]$ \\
-$Y_{e,\mathrm{blu}}$ & $[0.05, 0.50]$ \\
+$Y_{e,\mathrm{blu}}$ & $[0.01, 0.50]$ \\
 $s_{\mathrm{blu}}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
 \enddata
 \end{deluxetable}\label{tab:priors-multi}
@@ -343,8 +343,8 @@ $X_{\mathrm{lan}}$ & $1.82^{+26.3}_{-1.79}~\times 10^{-7}$ & & \\
 %%% leave-one-out spectra; Fig. 4 a, b
 \begin{figure*}[!ht]
     \centering
-    \includegraphics[width=0.47\textwidth]{figs/230409_234104_leaveoneout_all_TARDIS_evals_label-interest.png}
-    \includegraphics[width=0.45\textwidth]{figs/LoO_3.4d_single.png}
+    \includegraphics[width=0.47\textwidth]{figs/230409_234104_leaveoneout_all_TARDIS_evals_label-interest-38-39-40.png}
+    \includegraphics[width=0.47\textwidth]{figs/230628_205804_leaveoneout_all_TARDIS_evals_label-interest-38-56.png}
     \figcaption{Leave-one-out spectra for the 2.4 and 3.4 day single-component fits}\label{fig:leave_out_single}
 \end{figure*}
 
@@ -462,7 +462,7 @@ This work has made use of the \href{http://vald.astro.uu.se/~vald/php/vald.php}{
 
 This research made use of \href{https://tardis-sn.github.io/tardis/index.html}{\TARDIS}, a community-developed software package for spectral synthesis in supernovae (\citealt{kerzendorf14}). The development of \TARDIS~received support from the Google Summer of Code initiative and from the European Space Agency (ESA)'s Summer of Code in Space program. \TARDIS~makes extensive use of \href{https://docs.astropy.org/en/stable/}{\texttt{astropy}}. We thank Andrew Fullard, Wolfgang Kerzendorf, and the entire \TARDIS~development team for their assistance and their commitment to the development and maintenance of the code. 
 
-N.V. acknowledges funding from the Bob Wares Science Innovation Prospectors Fund and the Murata Family Fellowship. J.J.R.\ and D.H.\ acknowledge support from the Canada Research Chairs (CRC) program, the NSERC Discovery Grant program, the FRQNT Nouveaux Chercheurs Grant program, and the Canadian Institute for Advanced Research (CIFAR). J.J.R.\ acknowledges funding from the Canada Foundation for Innovation (CFI), and the Qu\'{e}bec Ministère de l’\'{E}conomie et de l’Innovation.
+N.V. acknowledges funding from the National Sciences and Engineering Research Council of Canada (NSERC) Canada Graduate Scholarship - Doctoral (CGS-D), the Murata Family Fellowship, and the the Bob Wares Science Innovation Prospectors Fund. J.J.R.\ and D.H.\ acknowledge support from the Canada Research Chairs (CRC) program, the NSERC Discovery Grant program, the FRQNT Nouveaux Chercheurs Grant program, and the Canadian Institute for Advanced Research (CIFAR). J.J.R.\ acknowledges funding from the Canada Foundation for Innovation (CFI), and the Qu\'{e}bec Ministère de l’\'{E}conomie et de l’Innovation.
 \newline
 
 %%% === SOFTWARE === %%%
@@ -1248,7 +1248,7 @@ In this section, we provide the full posteriors for single-component \SPARK~fits
 \end{figure*}
 
 \begin{figure*}[!ht]
-    \includegraphics[width=0.95\textwidth]{figs/appendix/230618_143307_dynesty_corner_pretty_mactive-600_smooth2d0.05_nodatapts_zoom_midYe-highs-lowdens.png}
+    \includegraphics[width=0.95\textwidth]{figs/appendix/230618_143307_dynesty_corner_pretty_mactive-600_smooth2d0.05_nodatapts_zoom-midYe-lows-highdens.png}
     \figcaption{3.4 day, single-component fit corner plot}\label{fig:corner_single_3.4}
 \end{figure*}
 
@@ -1281,7 +1281,7 @@ In this section, we provide the full posteriors for multi-component fits to the 
 
 %%% === APPENDIX c === %%%
 %% MULTI-COMPONENT LEAVE-ONE-OUT SPECTRA %%
-\section{Leave-one-out Spectra for Multi-component Fits}\label{app:leave_out_multi}
+\section{Leave-one-out Spectra---Multi-component Models}\label{app:leave_out_multi}
 
 In this section, we show leave-one-out spectra for the multi-component fits to the 1.4, 2.4, and 3.4 day spectra.
 
@@ -1290,7 +1290,7 @@ In this section, we show leave-one-out spectra for the multi-component fits to t
     \centering
     \includegraphics[width=0.47\textwidth]{figs/appendix/230503_184337_leaveoneout_all_TARDIS_evals_label-interest.png}
     \includegraphics[width=0.47\textwidth]{figs/appendix/230504_003423_leaveoneout_all_TARDIS_evals_label-interest.png}
-    \includegraphics[width=0.47\textwidth]{figs/appendix/LoO_3.4d_multi.png}
+    \includegraphics[width=0.47\textwidth]{figs/appendix/230626_170245_leaveoneout_all_TARDIS_evals_label-interest-38-58.png}
     \figcaption{Leave-one-out spectra for the 1.4, 2.4, and 3.4 day multi-component fits}\label{fig:leave_out_multi}
 \end{figure*}
 
@@ -1301,8 +1301,8 @@ In this section, we show leave-one-out spectra for the multi-component fits to t
 %%% === APPENDIX d === %%%
 %% CONVERGENCE OF FITS %%
 \section{Convergence of fits}\label{app:convergence}
-
-We assess the convergence of all fits. Convergence can be seen in two ways: This includes single-component fits at 2.4 and 3.4 days, and multi-component fits at 1.4, 2.4, and 3.4 days.
+;
+We assess the convergence of all fits using two methods: (1) Convergence of the posterior, as measured by the \approxposterior~$z$ convergence diagnostic, and (2) Convergence of the hyperparameters of the GP surrogate for the posterior. Figure~\ref{fig:convergence} shows both diagnostics for the 2.4 and 3.4 day single-component fits, and the 1.4, 2.4, and 3.4 day multi-component fits. In all cases, convergence is obtained, and the final posterior is stable as more active learning samples are added to the training set.
 
 
 % %% double-column, each row showing convergence z and GP hyperparameters
