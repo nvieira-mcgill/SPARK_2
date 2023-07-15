@@ -274,38 +274,6 @@ $s_{2}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
 
 \section{Results}\label{sec:results}
 
-In Figure~\ref{fig:bestfits}, we compile our best-fit spectra for the GW170817 kilonova at 1.4, 2.4, and 3.4 days, for both single- and multi-component models. Compilations of all spectra which were used in training, for all new fits (all but 1.4 days, single-component), are included in Appendices~\ref{app:allspec_single} (single-component) and~\ref{app:allspec_multi} (multi-component). Posteriors for the new models are included in Appendices~\ref{app:corners_single} (single-component) and~\ref{app:corners_multi} (multi-component). Finally, we include assessments of the convergence of the GP surrogate, and the posterior, in Appendix~\ref{app:convergence}. In the following sections, we present and examine each of the best fits in turn.
-
-%%% subsection: SINGLE-COMPONENT 2.4 AND 3.4 DAY FITS
-\subsection{Single-component fits at 2.4 and 3.4 days}\label{ssc:2.4_3.4_fits}
-
-
-The best-fit parameters for 1.4 days, single-component (V23) and 2.4, 3.4 days, multi-component (this work) are given in Table~\ref{tab:bestfit_single}. We examine the 2.4 and 3.4 day models below.
-
-\subsubsection{2.4 days, single-component}\label{sssc:2.4_single}
-
-\begin{itemize}
-    \item Point to the plot of all spectra in Figure~\ref{fig:all_spec_single} (Appendix~\ref{app:allspec_single}). $m_0 = 1500$ and $m_{\mathrm{active}} = 600$ samples. 
-
-    \item In the best fit, we overestimate the absorption at the shortest wavelengths. This is on contrast with 1.4 days, where we underestimated. We accurately model the absorption at 8000\AA, but miss the higher-wavelength bump, which is the red wing of a P-Cygni feature (in the P-Cygni interpretation). 
-
-    \item Point to the posterior. The full posterior is in Figure~\ref{fig:corner_single_2.4}. We find some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. Discarding samples with $s/k_{\mathrm{B}} \geqslant 25.0$, we obtain our preferred model. This zoomed-in posterior is shown in Figure~\ref{fig:corner_single_2.4_zoom}.
-
-    \item Present $L_{\mathrm{outer}}$ and $T_{\mathrm{inner}}$. The kilonova has dimmed and the ejecta has cooled. 
-
-    \item Present the density and inner / outer boundary velocities. The photosphere has receded into the ejecta. The outer boundary velocity is consistent with $v_{\mathrm{outer}} = 0.35c$ fixed in the 1.4 day fit. Compute the total mass contained in the line-forming region of the ejecta? 
-
-    \item Highlight abundance-setting parameters: $Y_{\mathrm{e}}$, $v_{\mathrm{exp}}$, and $s$. $Y_{\mathrm{e}}$ is lower, but consistent with that inferred at 1.4 days. The expansion velocity and entropy are consistent with that of 1.4 days. In the posterior, $Y_{\mathrm{e}}$ has a tail which extends to lower electron fractions. The posterior in general is broader.
-
-    \item $X_{\mathrm{lan}}$ is smaller at 2.4 days, but still very lanthanide-poor. Inconsistent with Solar $r$-process.
-
-    
-\end{itemize}
-
-\subsubsection{3.4 days, single-component}\label{sssc:3.4_single}
-
-
-
 \begin{deluxetable}{cccc}
 \centering
 \tablecaption{Best-fit parameters for single-component fits to the GW170817 kilonova at $1.4$, $2.4$, and $3.4$~days. The $1.4$~day fit is the ``purple + warm'' model of V23. $v_{\mathrm{outer}}$ is fixed to $0.35c$ in the 1.4 day fit. The inner boundary temperature $T_{\mathrm{inner}}$ and lanthanide mass fraction $X_{\mathrm{lan}}$ are derived parameters, \ie, they are not dimensions in $\theta$-space.}
@@ -325,29 +293,61 @@ $\log_{10} X_{\mathrm{lan}}$ & ${-7.03}^{+0.46}_{-0.47}$ & $-5.64^{+1.05}_{-1.31
 \enddata
 \end{deluxetable}\label{tab:bestfit_single}
 
-
-%% compilation of all fits; Fig. 2
+%% compilation of all fits; Fig. 1
 \begin{figure*}[!ht]
     \centering
     \includegraphics[width=0.98\textwidth]{figs/bestfits_compare_all_SPARK_2.png}
     \figcaption{\textbf{Compilation of all best-fit models to the spectrum of the GW170817 kilonova, AT2017gfo, from this work: 1.4, 2.4, and 3.4 days post-merger, for both single- and multi-component models.} The single-component models are favored at 1.4 and 2.4 days. At 3.4 days, we require a multi-component ejecta to adequately fit the spectrum. The abundance patterns corresponding to these preferred models are included in Figure~\ref{fig:abunds_time_evolution}. All best fits are obtained as the median of the posterior, or the median of some mode of the posterior. The full posteriors are included in Appendices~\ref{app:corners_single}~and~\ref{app:corners_multi} for single- and multi-component models, respectively.}\label{fig:bestfits}
 \end{figure*}
 
-%% abundance patterns; Fig. 3
-\begin{figure*}[!ht]
-    \centering
-    \includegraphics[width=0.98\textwidth]{figs/compare_abunds_220808_014638-221022_084052-230622_230103_posterior_100samples_dynesty.png}
-    \figcaption{\textbf{Best-fit abundance patterns at 1.4, 2.4, and 3.4 days.} The abundances at 1.4 and 2.4 days are taken from the preferred single-component fits, while the abundance at 3.4 days is taken from the multi-component fit. The overall abundance of the multi-component ejecta at 3.4 days is the mass-weighted sum over all 10 shells in the stratified ejecta. A new, redder kilonova component emerges at 3.4 days post-merger. Uncertainty bands are obtained by taking additional samples from the the posterior, effectively propagating the uncertainty on $Y_e$, $v_{\mathrm{exp}}$, and $s$ into the abundances. We also show the Solar $r$-process pattern, computed using data from \cite{lodders09} subtracted by the $s$-process residuals of \cite{bisterzo14}. The best-fit abundances are evidently non-Solar at the first two epochs, but are closer to Solar at the third. }\label{fig:abunds_time_evolution}
-\end{figure*}
+
+In Figure~\ref{fig:bestfits}, we compile our best-fit spectra for the GW170817 kilonova at 1.4, 2.4, and 3.4 days, for both single- and multi-component models. In the following sections, we present and examine each of the best fits in turn. We assess the convergence of the GP surrogate, and the posterior, in Appendix~\ref{app:convergence}.
 
 
-%%% leave-one-out spectra; Fig. 4 a, b
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.47\textwidth]{figs/230409_234104_leaveoneout_all_TARDIS_evals_label-interest-38-39.png}
-    \includegraphics[width=0.47\textwidth]{figs/230626_170245_leaveoneout_all_TARDIS_evals_label-interest-38-56-58.png}
-    \figcaption{\textbf{Leave-one-out spectra for the favored, new models: single-component for 2.4 days, and multi-component for 3.4 days.} The preferred model for 1.4 days, not shown here, is the single-component purple+warm model of V23. All models (including at 1.4 days, V23) show clear absorption from strontium (${}_{38}$Sr) at $\sim8000$\AA. At 3.4 days, when the abundances included heavier elements, we see an over-absorption from barium (${}_{56}$Ba; an open $s$-shell element in the same group as Sr in the periodic table) at $\sim4500$\AA. We also see absorption (at $\sim7000$\AA) and emission (at $\sim8000$\AA) from the lanthanide cerium (${}_{58}$Ce) at this epoch. Spectral DEComposition (SDEC) plots, included in Appendix~\ref{app:SDEC}, provide a complementary view of the dominant species to these leave-one-out plots.}\label{fig:leave_out_pref}
-\end{figure}
+%%% subsection: SINGLE-COMPONENT 2.4 AND 3.4 DAY FITS
+\subsection{Single-component fits at 2.4 and 3.4 days}\label{ssc:2.4_3.4_fits}
+
+Appendix~\ref{app:allspec_single} contains compilations of all $m_0 + m_{\mathrm{active}}$ spectra generated in a given \SPARK~run, for the 2.4 day and 3.4 day single-component fits. The posteriors generated by these \SPARK~runs are included in Appendix~\ref{app:corners_single}. Unless stated otherwise, we use the median of the posterior, or the median of some mode of a multi-modal posterior, to determine our best fit and uncertainties. The best-fit parameters for 1.4 days, single-component (V23) and 2.4, 3.4 days, single-component (this work) are given in Table~\ref{tab:bestfit_single}. We examine the 2.4 and 3.4 day models below.
+
+
+%%% subsubsection: 2.4 DAYS, SINGLE-COMPONENT
+\subsubsection{2.4 days, single-component}\label{sssc:2.4_single}
+
+We require $m_0 = m_{\mathrm{active}} = 1500 + 600$ points to obtain a good fit and converged posterior in our 2.4 day, single-component \SPARK~run. Interestingly, the resultant posterior shows some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. Discarding samples from the posterior with $s/k_{\mathrm{B}} \geqslant 25.0$, we obtain our preferred fit. This fit captures most of the continuum of the observed spectrum, and most of the $\sim8000$~\AA~absorption. If this absorption indeed belongs to a P Cygni feature, we do partially miss the longer-wavelength ``wing'' of this feature. Furthermore, we overestimate the absorption, or underestimate the continuum, at the shortest wavelengths. 
+
+We infer an outer boundary luminosity of $\log_{10} (L_{\mathrm{outer}}/L_{\odot}) = 7.594^{+0.040}_{-0.061}$, or equivalently, $L_{\mathrm{outer}} = $. In the case of single-shell, single-\TARDIS~iteration, we use these values to determine an inner boundary temperature of $T_{\mathrm{inner}} = 3050^{+126}_{-223}~\mathrm{K}$. As expected, the kilonova has dimmed and cooled since the previous epoch at 1.4 days. Inferring the structure of the ejecta, we find $\log_{10} (\rho_0 / \mathrm{g~cm^{-3}}) = -15.443^{+0.742}_{-0.463}$, or equivalently $\rho_0 = $. We also obtain the inner and outer boundary velocities, $v_{\mathrm{inner}}/c = 0.249^{+0.017}_{-0.032}$ and $v_{\mathrm{outer}} = 0.342^{+0.047}_{-0.050}$. This $v_{\mathrm{outer}}$ is consistent with the fixed $v_{\mathrm{outer}} = 0.35c$ from 1.4 days. In contrast, $v_{\mathrm{inner}}$---effectively the photospheric velocity---has receded into the ejecta. This is evidence for the ejecta expanding, cooling, and become optically thinner, as expected.  
+
+Finally, we obtain an electron fraction $Y_e = 0.306^{+0.055}_{-0.204}$, expansion velocity $v_{\mathrm{exp}}/c = 0.172^{+0.107}_{-0.101}$, and specific entropy $s/k_{\mathrm{B}} = 17.6^{+7.1}_{-6.3}$. As at 1.4 days, $v_{\mathrm{exp}}$ is poorly constrained. $s$ is better-constrained, but is also consistent with the earlier epoch. The posterior distribution in all dimensions is wider at this epoch; in particular, $Y_e$ includes a tail extending to smaller electron fractions. The posterior is nonetheless peaked at $Y_e = 0.306^{+0.055}_{-0.204}$, which is slightly lower than at 1.4 days, but consistent within uncertainties. This can be seen in the lanthanide fraction: we find $\log_{10} X_{\mathrm{lan}} = -5.64^{+1.05}_{-1.31}$, too small to match the Solar $r$-process abundance pattern, as is the case at 1.4 days.
+
+% \begin{itemize}
+%     \item Point to the plot of all spectra in Figure~\ref{fig:all_spec_single} (Appendix~\ref{app:allspec_single}). $m_0 = 1500$ and $m_{\mathrm{active}} = 600$ samples. 
+
+%     \item In the best fit, we overestimate the absorption at the shortest wavelengths. This is on contrast with 1.4 days, where we underestimated. We accurately model the absorption at 8000\AA, but miss the higher-wavelength bump, which is the red wing of a P-Cygni feature (in the P-Cygni interpretation). 
+
+%     \item Point to the posterior. The full posterior is in Figure~\ref{fig:corner_single_2.4}. We find some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. Discarding samples with $s/k_{\mathrm{B}} \geqslant 25.0$, we obtain our preferred model. This zoomed-in posterior is shown in Figure~\ref{fig:corner_single_2.4_zoom}.
+
+%     \item Present $L_{\mathrm{outer}}$ and $T_{\mathrm{inner}}$. The kilonova has dimmed and the ejecta has cooled. 
+
+%     \item Present the density and inner / outer boundary velocities. The photosphere has receded into the ejecta. The outer boundary velocity is consistent with $v_{\mathrm{outer}} = 0.35c$ fixed in the 1.4 day fit. Compute the total mass contained in the line-forming region of the ejecta? 
+
+%     \item Highlight abundance-setting parameters: $Y_{\mathrm{e}}$, $v_{\mathrm{exp}}$, and $s$. $Y_{\mathrm{e}}$ is lower, but consistent with that inferred at 1.4 days. The expansion velocity and entropy are consistent with that of 1.4 days. In the posterior, $Y_{\mathrm{e}}$ has a tail which extends to lower electron fractions. The posterior in general is broader.
+
+%     \item $X_{\mathrm{lan}}$ is smaller at 2.4 days, but still very lanthanide-poor. Inconsistent with Solar $r$-process.
+    
+% \end{itemize}
+
+
+%%% subsubsection: 3.4 DAYS, SINGLE-COMPONENT
+\subsubsection{3.4 days, single-component}\label{sssc:3.4_single}
+
+Our best single-component model for 3.4 days is in general a poor fit to the observed spectrum of AT2017gfo. Nonetheless, we review it here for completeness. The reader may skip to Section~\ref{sssc:3.4_multi} to see the preferred, multi-component model for this epoch. 
+
+As at 2.4 days, we require $m_0 + m_{\mathrm{active}} = 1500 + 600$ points to obtain a converged posterior. The resultant posterior shows a high degree of multi-modality, most evident in the $\rho_0$, $Y_e$, and $s / k_{\mathrm{B}}$ dimensions. Of the multiple modes, we obtain our best (but still poor) fit to the observed spectrum by discarding samples from the posterior outside of the range $\log_{10}(\rho_0 / \mathrm{g~cm^{-3}}) \in [-15.0, -14.0] \cup Y_{\mathrm{e}} \in [0.13, 0.29] \cup s/k_{\mathrm{B}} \in [10.0, 25.0]$. This higher-$\rho_0$, mid-$Y_e$, low-$s$ mode produces some of the dominant absorption feature at $\sim8000$ \AA, but not all. This fit also overstimates the absorption or underestimates the continuum, for wavelengths $\lesssim 5500$ \AA. 
+
+We infer an outer boundary luminosity of $\log_{10} (L_{\mathrm{outer}}/L_{\odot}) = 7.531^{+0.017}_{-0.016}$, or equivalently, $L_{\mathrm{outer}} = $. This luminosity corresponds to an inner boundary temperature $T_{\mathrm{inner}} = 2455^{+59}_{-104}~\mathrm{K}$. We find $\log_{10} (\rho_0 / \mathrm{g~cm^{-3}}) = -14.586^{+0.313}_{-0.384}$, or equivalently $\rho_0 = $. This density is inconsistent with (larger than) that inferred at earlier epochs, which may explain some of the poorness of the fit. We also obtain the inner and outer boundary velocities, $v_{\mathrm{inner}}/c = 0.253^{+0.032}_{-0.023}$ and $v_{\mathrm{outer}} = 0.309^{+0.032}_{-0.023}$. This $v_{\mathrm{outer}}$ is much smaller than is fixed at 1.4 days or inferred at 2.4 days. This may explain the insufficient absorption at $\sim8000$ \AA, if the photon packets are not interacting with enough matter to be absorbed in large numbers before escaping the ejecta.
+
+Finally, we find an electron fraction $Y_e = 0.226^{+0.062}_{-0.067}$, expansion velocity $v_{\mathrm{exp}}/c = 0.132^{+0.094}_{-0.056}$, and specific entropy $s/k_{\mathrm{B}} = 15.4^{+7.2}_{-3.1}$ at this epoch. $v_{\mathrm{exp}}$ is once again poorly constrained, and $s$ is once again consistent with earlier epochs. In contrast, $Y_e$ is lower and inconsistent with both previous epochs. Interestingly, despite the lower $Y_e$, the abundance of Sr---which has been identified as the source of the $\sim 8000$ \AA~absorption---is within a factor of $1$\% that of our single-component model at 1.4 days, and only $\sim 25$\% larger than that of our single-component model at 2.4 days. This suggests that the shortcomings of this model may be due to the differing densities and velocity structures, rather than the abundance-setting parameters.
+
 
 
 
@@ -384,7 +384,10 @@ $\log_{10} X_{\mathrm{lan,total}}$ & $-12.97^{+9.17}_{-2.37}$ & $-3.39^{+1.34}_{
 \end{deluxetable*}\label{tab:bestfit_multi}
 
 
-%% wedges; Fig. 6 a, b, c
+Appendix~\ref{app:allspec_multi} contains compilations of all $m_0 + m_{\mathrm{active}}$ spectra generated in a given \SPARK~run, for the 1.4, 2.4, and 3.4 day multi-component fits. The posteriors generated by these \SPARK~runs are included in Appendix~\ref{app:corners_multi}. The best-fit parameters for 1.4, 2.4, 3.4 days, multi-component are given in Table~\ref{tab:bestfit_multi}. We examine these new models below.
+
+
+%% wedges; Fig 2
 \begin{figure}[!ht]
     \includegraphics[width=0.4\textwidth]{figs/multicomp_wedges_1.4d.png}
     \includegraphics[width=0.4\textwidth]{figs/multicomp_wedges_2.4d.png}
@@ -406,8 +409,25 @@ $\log_{10} X_{\mathrm{lan,total}}$ & $-12.97^{+9.17}_{-2.37}$ & $-3.39^{+1.34}_{
 \subsection{Abundances of favored models}\label{ssc:results-abundances}
 
 
+%% abundance patterns; Fig. 3
+\begin{figure*}[!ht]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figs/compare_abunds_220808_014638-221022_084052-230622_230103_posterior_100samples_dynesty.png}
+    \figcaption{\textbf{Best-fit abundance patterns at 1.4, 2.4, and 3.4 days.} The abundances at 1.4 and 2.4 days are taken from the preferred single-component fits, while the abundance at 3.4 days is taken from the multi-component fit. The overall abundance of the multi-component ejecta at 3.4 days is the mass-weighted sum over all 10 shells in the stratified ejecta. A new, redder kilonova component emerges at 3.4 days post-merger. Uncertainty bands are obtained by taking additional samples from the the posterior, effectively propagating the uncertainty on $Y_e$, $v_{\mathrm{exp}}$, and $s$ into the abundances. We also show the Solar $r$-process pattern, computed using data from \cite{lodders09} subtracted by the $s$-process residuals of \cite{bisterzo14}. The best-fit abundances are evidently non-Solar at the first two epochs, but are closer to Solar at the third. }\label{fig:abunds_time_evolution}
+\end{figure*}
+
+
 %%% subsection: LoO AND SDEC
 \subsection{Elements present in favored models}\label{ssc:results-lines}
+
+
+%%% leave-one-out spectra; Fig. 4
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.47\textwidth]{figs/230409_234104_leaveoneout_all_TARDIS_evals_label-interest-38-39.png}
+    \includegraphics[width=0.47\textwidth]{figs/230626_170245_leaveoneout_all_TARDIS_evals_label-interest-38-56-58.png}
+    \figcaption{\textbf{Leave-one-out spectra for the favored, new models: single-component for 2.4 days, and multi-component for 3.4 days.} The preferred model for 1.4 days, not shown here, is the single-component purple+warm model of V23. All models (including at 1.4 days, V23) show clear absorption from strontium (${}_{38}$Sr) at $\sim8000$\AA. At 3.4 days, when the abundances included heavier elements, we see an over-absorption from barium (${}_{56}$Ba; an open $s$-shell element in the same group as Sr in the periodic table) at $\sim4500$\AA. We also see absorption (at $\sim7000$\AA) and emission (at $\sim8000$\AA) from the lanthanide cerium (${}_{58}$Ce) at this epoch. Spectral DEComposition (SDEC) plots, included in Appendix~\ref{app:SDEC}, provide a complementary view of the dominant species to these leave-one-out plots.}\label{fig:leave_out_pref}
+\end{figure}
 
 
 %%% === SECTION 4 === %%%
