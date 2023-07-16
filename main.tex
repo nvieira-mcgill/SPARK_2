@@ -311,9 +311,9 @@ Appendix~\ref{app:allspec_single} contains compilations of all $m_0 + m_{\mathrm
 
 
 %%% subsubsection: 2.4 DAYS, SINGLE-COMPONENT
-\subsubsection{2.4 days, single-component}\label{sssc:2.4_single}
+\subsubsection{Single-component, 2.4 days}\label{sssc:2.4_single}
 
-We require $m_0 = m_{\mathrm{active}} = 1500 + 600$ points to obtain a good fit and converged posterior in our 2.4 day, single-component \SPARK~run. Interestingly, the resultant posterior shows some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. Discarding samples from the posterior with $s/k_{\mathrm{B}} \geqslant 25.0$, we obtain our preferred fit. This fit captures most of the continuum of the observed spectrum, and most of the $\sim8000$~\AA~absorption. If this absorption indeed belongs to a P Cygni feature, we do partially miss the longer-wavelength ``wing'' of this feature. Furthermore, we overestimate the absorption, or underestimate the continuum, at the shortest wavelengths. 
+We require $m_0 + m_{\mathrm{active}} = 1500 + 600$ points to obtain a good fit and converged posterior in our 2.4 day, single-component \SPARK~run. Interestingly, the resultant posterior shows some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. Discarding samples from the posterior with $s/k_{\mathrm{B}} \geqslant 25.0$, we obtain our preferred fit. This fit captures most of the continuum of the observed spectrum, and most of the $\sim8000$~\AA~absorption. If this absorption indeed belongs to a P Cygni feature, we do partially miss the longer-wavelength ``wing'' of this feature. Furthermore, we overestimate the absorption, or underestimate the continuum, at the shortest wavelengths. 
 
 We infer an outer boundary luminosity of $\log_{10} (L_{\mathrm{outer}}/L_{\odot}) = 7.594^{+0.040}_{-0.061}$, or equivalently, $L_{\mathrm{outer}} = $. In the case of single-shell, single-\TARDIS~iteration, we use these values to determine an inner boundary temperature of $T_{\mathrm{inner}} = 3050^{+126}_{-223}~\mathrm{K}$. As expected, the kilonova has dimmed and cooled since the previous epoch at 1.4 days. Inferring the structure of the ejecta, we find $\log_{10} (\rho_0 / \mathrm{g~cm^{-3}}) = -15.443^{+0.742}_{-0.463}$, or equivalently $\rho_0 = $. We also obtain the inner and outer boundary velocities, $v_{\mathrm{inner}}/c = 0.249^{+0.017}_{-0.032}$ and $v_{\mathrm{outer}} = 0.342^{+0.047}_{-0.050}$. This $v_{\mathrm{outer}}$ is consistent with the fixed $v_{\mathrm{outer}} = 0.35c$ from 1.4 days. In contrast, $v_{\mathrm{inner}}$---effectively the photospheric velocity---has receded into the ejecta. This is evidence for the ejecta expanding, cooling, and become optically thinner, as expected.  
 
@@ -338,7 +338,7 @@ Finally, we obtain an electron fraction $Y_e = 0.306^{+0.055}_{-0.204}$, expansi
 
 
 %%% subsubsection: 3.4 DAYS, SINGLE-COMPONENT
-\subsubsection{3.4 days, single-component}\label{sssc:3.4_single}
+\subsubsection{Single-component, 3.4 days}\label{sssc:3.4_single}
 
 Our best single-component model for 3.4 days is in general a poor fit to the observed spectrum of AT2017gfo. Nonetheless, we review it here for completeness. The reader may skip to Section~\ref{sssc:3.4_multi} to see the preferred, multi-component model for this epoch. 
 
@@ -396,12 +396,31 @@ Appendix~\ref{app:allspec_multi} contains compilations of all $m_0 + m_{\mathrm{
 \end{figure}
 
 
-\subsubsection{1.4 days, multi-component}\label{sssc:1.4_multi}
+\subsubsection{Multi-component, 1.4 days}\label{sssc:1.4_multi}
 
-\subsubsection{2.4 days, multi-component}\label{sssc:2.4_multi}
+We require $m_0 + m_{\mathrm{active}} = 1500 + 1471$ points to obtain a good fit and converged posterior in our 1.4 day, multi-component \SPARK~run. Due to the increased dimensionality of the multi-component fits, more active learning samples are required than for single-component. The resultant fit is of similar quality to the single-component equivalent. However, the depth of the absorption feature (due to Sr) is greater, and the redder wing of the P Cygni feature is more pronounced. However, the fit does not capture the continuum at wavelengths $\gtrsim 10,500$ \AA~or wavelengths in the range $\sim[3500, 5000]$ \AA. The fit does a marginally better job at the shortest wavelengths, $\lesssim 3500$ \AA. 
 
-\subsubsection{3.4 days, multi-component}\label{sssc:3.4_multi}
+We infer an outer boundary luminosity of $\log_{10} (L_{\mathrm{outer}}/L_{\odot}) = 7.853^{+0.014}_{-0.023}$, or equivalently, $L_{\mathrm{outer}} = $. This is brighter than is inferred in the single-component equivalent; however, due to the use of 10 radial shells (as opposed to 1) and 30 \TARDIS~iterations (rather than 1), the meaning of $L_{\mathrm{outer}}$ is different and cannot be mapped directly to $T_{\mathrm{inner}}$. 
 
+We find $\log_{10} (\rho_0 / \mathrm{g~cm^{-3}}) = -15.106^{+0.140}_{-0.586}$, or equivalently $\rho_0 = $. The two components in the ejecta are bounded by $v_{\mathrm{inner,1}}/c = 0.322^{+0.007}_{-0.031}$, $v_{\mathrm{outer,1}}/c = 0.325^{+0.009}_{-0.016}$ and $v_{\mathrm{inner,2}}/c = 0.281^{+0.012}_{-0.017}$, $v_{\mathrm{outer,2}}/c = 0.356^{+0.015}_{-0.015}$. This first component is described by electron fraction $Y_{e,1} = 0.133^{+0.033}_{-0.120}$, expansion velocity $v_{\mathrm{exp},1}/c = 0.120^{+0.027}_{-0.026}$, and specific entropy $s_1 / k_{\mathrm{B}} = 24.4^{+3.6}_{-5.3}$, and could thus be described as ``red''. The latter has $Y_{e,2} = 0.338^{+0.021}_{-0.021}$, $v_{\mathrm{exp},2}/c = 0.193^{+0.036}_{-0.037}$, and $s_2 / k_{\mathrm{B}} = 20.0^{+3.9}_{-3.5}$, and is bluer. As in the single-component fits, expansion velocities ($v_{\mathrm{exp},1}$ and $v_{\mathrm{exp},2}$) are poorly constrained. The entropies ($s_1$ and $s_2$) of both components are higher than, and inconsistent with, the single-component equivalent at 1.4 days. However, the $Y_{e,2}$ of the second, bluer component is consistent with that of the single-component equivalent. Indeed, the $(Y_{e,2},~v_{\mathrm{exp},2},~s_2)$ of this bluer component can be replaced by the $(Y_e,~v_{\mathrm{exp}},~s)$ of the purple + warm single-component model at 1.4 days, with minimal impact on the spectrum. 
+
+A physical picture for the components is included in Figure~\ref{fig:infer_multicomp_wedges}. We see that the red is confined to a single shell, while the blue component extends over a greater radius. The mass contained in these two components is $M_1/M_{\odot} = 2.7^{+0.9}_{-3.6} \times 10^{-6}$ and $M_2/M_{\odot} = 6.9^{+2.2}_{-9.3} \times 10^{-5}$, respectively. This second, bluer component thus contains $\sim 25 \times$ as much mass as the redder, and dominates the absorption/emission in the synthetic spectrum. In this sense, we interpret this model as effectively being single-component.
+
+
+
+\subsubsection{Multi-component, 2.4 days}\label{sssc:2.4_multi}
+
+As in the 1.4 day, multi-component fit, we require more active learning points than for the single-component equivalent at 2.4 days: we require $m_0 + m_{\mathrm{active}} = 1500 + 1020$ points to obtain a good fit and converged posterior in our 2.4 day, multi-component \SPARK~run. The resultant fit is of similar quality to the single-component equivalent. However, the depth of the absorption feature (due to Sr) is overestimated. The multi-component fit does achieve a better fit to the continuum at wavelengths $\lesssim 7000$ \AA. 
+
+We infer an outer boundary luminosity of $\log_{10} (L_{\mathrm{outer}}/L_{\odot}) = 7.700^{+0.065}_{-0.073}$, or equivalently, $L_{\mathrm{outer}} = $. As expected, the kilonova has dimmed, compared to the 1.4 day, multi-component model. We find $\log_{10} (\rho_0 / \mathrm{g~cm^{-3}}) = -15.440^{+0.813}_{-0.467}$, or equivalently $\rho_0 = $. The two components in the ejecta are bounded by $v_{\mathrm{inner,1}}/c = 0.260^{+0.061}_{-0.039}$, $v_{\mathrm{outer,1}}/c = 0.335^{+0.054}_{-0.065}$ and $v_{\mathrm{inner,2}}/c = 0.268^{+0.049}_{-0.045}$, $v_{\mathrm{outer,2}}/c = 0.335^{+0.045}_{-0.070}$. This first component is described by electron fraction $Y_{e,1} = 0.288^{+0.129}_{-0.187}$, expansion velocity $v_{\mathrm{exp},1}/c = 0.170^{+0.108}_{-0.100}$, and specific entropy $s_1 / k_{\mathrm{B}} = 21.1^{+10.5}_{-9.5}$, while the latter has $Y_{e,2} = 0.261^{+0.163}_{-0.124}$, $v_{\mathrm{exp},2}/c = 0.183^{+0.089}_{-0.110}$, and $s_2 / k_{\mathrm{B}} = 22.0^{+10.0}_{-10.1}$. Again, expansion velocities are poorly constrained, and entropies are higher than, and inconsistent with, the single-component equivalent at 2.4 days. However, both entropies are consistent with the entropies inferred in the 1.4 day, multi-component model. Finally, $Y_{e,1}$ and $Y_{e,2}$ are both lower than, but still consistent with, that of the dominant blue component in the 1.4 day, multi-component model and the 1.4 day, single-component model. Once again, we can swap out the bluer $(Y_{e,1},~v_{\mathrm{exp},1},~s_1)$ component of the model for the $(Y_e,~v_{\mathrm{exp}},~s)$ of the purple + warm single-component model at 1.4 days, with minimal impact on the spectrum. 
+
+A physical picture for the components is included in Figure~\ref{fig:infer_multicomp_wedges}. The two components almost completely overlap in physical space. Indeed, the mass contained in these two components is $M_1/M_{\odot} = 3.4^{+6.4}_{-3.7} \times 10^{-5}$ and $M_2/M_{\odot} = 3.0^{+5.6}_{-3.3} \times 10^{-5}$, respectively; the ejecta is effectively equally partitioned into these two components. Furthermore, the similarity between $(Y_{e,1},~v_{\mathrm{exp},1},~s_1)$ and $(Y_{e,2},~v_{\mathrm{exp},2},~s_2)$ yields similar compositions for both components. For these reasons, we also interpret this model as effectively being single-component.
+
+
+
+\subsubsection{Multi-component, 3.4 days}\label{sssc:3.4_multi}
+
+x
 
 
 
