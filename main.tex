@@ -130,6 +130,9 @@
 \author[0000-0001-8921-3624]{Nicole M. Ford}
 \affil{Trottier Space Institute at McGill and Department of Physics, McGill University, 3600 rue University, Montreal, Qu{\'e}bec, H3A 2T8, Canada}
 
+% \author[X]{Élodie L'Esclure}
+% \affil{Department of Physics and Astronomy, Bishop's University, 2600 rue College, Sherbrooke, Qu{\'e}bec, J1M 1Z7, Canada}
+
 % \author[0000-0001-7081-0082]{Maria~R.~Drout}
 % \affil{Department of Astronomy and Astrophysics, University of Toronto, 50 St. George St., Toronto, Ontario, M5S 3H4, Canada}
 
@@ -199,18 +202,6 @@ Here, we implement multi-component, stratified ejecta. \TARDIS~allows for ejecta
 We begin with a simple two-component ejecta. As with our single-component model, this two-component model is described by an outer boundary luminosity $L_{\mathrm{outer}}$ and $\rho_0$. Each of the components is then described by inner and outer boundary $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$ and a $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$. Multi-component fits are thus $2 + 5 + 5 = 12$-dimensional. The components necessarily overlap in physical space because \TARDIS~cannot simulate a gap between them. The abundance in each shell is then determined by the component(s) which are in a given shell. For shells where there is overlap between two components, the abundance is taken as a sum of the two abundance patterns and re-normalized to unity. %We graphically show the difference between single- and multi-component ejecta in Figure~\ref{fig:wedge_examples}.
     
 Multiple components allow for additional complexity in the spectral synthesis.\footnote{See \cite{kawaguchi20} for an exploration of the diversity of kilonovae which may be produced when multiple components are present.} In particular, even in 1D with \TARDIS, we can produce the effect of re-processing, where emission from one component is absorbed and reemitted/scattered by another. We can also produce the effect of ``lanthanide curtaining'', in which some outermost lower-$Y_e$ ejecta containing the lanthanides masks an inner, bluer, lighter-element ejecta due to the considerable opacity of the lanthanides in the near-UV and optical. Some kilonova spectra may be better-described by these multi-component ejecta models. In V23, we find that the 1.4 day spectrum of the GW170817 kilonova is well-described by a single-component ejecta with $Y_e \sim 0.3-0.35$. However, at later epochs, as the ejecta expands and becomes more optically thin, the photosphere recedes into the ejecta and we may unmask additional components which were hidden at early times. Light curve modelling (\eg, \citealt{villar17}) has shown that the kilonova may indeed be better-described by multiple components of different opacities, and some spectral modelling (\eg, \citealt{kasen17}) also invokes multiple components. This motivates our introduction of multi-component ejecta into \SPARK. We fit the 1.4, 2.4, and 3.4 day spectra of the GW170817 kilonova with both single- and multi-component models to assess the need for multiple components.
-
-% \begin{itemize}
-
-%     \item In V23, we model the kilonova ejecta as a single shell with a uniform abundance pattern. The plasma in this shell is also described by a single temperature and mass/electron density. This configuration is fully described by the luminosity at the outer boundary $L_{\mathrm{outer}}$, (which in fact sets the temperature at the inner boundary), the normalization in the density power law $\rho_0$, the inner and outer boundary velocities $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$, and three parameters which set the abundances: electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy $s / k_{\mathrm{B}}$. A single-component fit is thus 7-dimensional, unless one or more of the parameters are fixed, \eg, we fix $v_{\mathrm{outer}} = 0.35c$ in our fit to the 1.4 day spectrum. This setup can describe a single ejecta component, \eg, the tidal ejecta mostly confined to the equatorial plane, an outflow from a remnant accretion disk, or the squeezed polar ejecta from the collision interface during the merger. It may also describe a kilonova in which one component significantly dominates (by mass or by the strength of the absorption/emission features) over the other(s). 
-    
-%     \item Here, we implement multi-component, stratified ejecta. \TARDIS~allows for ejecta composed of stratified shells, each with a specific temperature, density, and plasma conditions. In this configuration, each shell can have a specific abundance pattern. We use 10 shells in all runs unless indicated otherwise. We also employ multiple (30) \TARDIS~iterations when generating synthetic spectra in this configuration. At each iteration, the plasma conditions are updated, and converge towards an ejecta where the outer boundary emitted luminosity matches the user-requested $L_{\mathrm{outer}}$. 
-    
-%     \item We begin with a simple two-component ejecta. As with our single-component model, this two-component model is described by an outer boundary luminosity $L_{\mathrm{outer}}$ and $\rho_0$. Each of the components is then described by inner and outer boundary $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$ and a $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$. Multi-component fits are thus $2 + 5 + 5 = 12$-dimensional. The components necessarily overlap in physical space because \TARDIS~cannot simulate a gap between them. The abundance in each shell is then determined by the component(s) which are in a given shell. For shells where there is overlap between two components, the abundance is taken as a sum of the two abundance patterns. We graphically show the difference between single- and multi-component ejecta in \redbf{Figure X}.
-    
-%     \item Multiple components allow for additional complexity in the spectral synthesis.\footnote{See \cite{kawaguchi20} for a description of the diversity of kilonovae which may be produced when multiple components are present.} In particular, even in 1D with \TARDIS, we can produce the effect of re-processing, where emission from one component is absorbed and reemitted/scattered by another. We can also produce the effect of ``lanthanide curtaining'', in which some outermost lower-$Y_e$ ejecta containing the lanthanides masks an inner, bluer, lighter-element ejecta due to the considerable opacity of the lanthanides in the near-UV and optical. Some kilonova spectra may be better-described by these multi-component ejecta models. In V23, we find that the 1.4 day spectrum of the GW170817 kilonova is well-described by a single-component ejecta with $Y_e \sim 0.3$. However, at later epochs, as the ejecta expands and becomes more optically thin, the photosphere recedes into the ejecta and we may unmask additional components which were hidden at early times. Light curve modelling (\eg, \citealt{villar17}) has shown that the kilonova may indeed be better-described by multiple components of different opacities, and some spectral modelling (\eg, \citealt{kasen17}) also invokes multiple components. This motivates our introduction of multi-component ejecta into \SPARK. We fit the 1.4, 2.4, and 3.4 day spectra of the GW170817 kilonova with both single- and multi-component models to assess the need for multiple components.
-
-% \end{itemize}
 
 
 
@@ -317,22 +308,6 @@ We infer an outer boundary luminosity of $\log_{10} (L_{\mathrm{outer}}/L_{\odot
 
 Finally, we obtain an electron fraction $Y_e = 0.306^{+0.055}_{-0.204}$, expansion velocity $v_{\mathrm{exp}}/c = 0.172^{+0.107}_{-0.101}$, and specific entropy $s/k_{\mathrm{B}} = 17.6^{+7.1}_{-6.3}$. As at 1.4 days, $v_{\mathrm{exp}}$ is poorly constrained. $s$ is better-constrained, but is also consistent with the earlier epoch. The posterior distribution in all dimensions is wider at this epoch; in particular, $Y_e$ includes a tail extending to smaller electron fractions. The posterior is nonetheless peaked at $Y_e = 0.306^{+0.055}_{-0.204}$, which is slightly lower than at 1.4 days, but consistent within uncertainties. This can be seen in the lanthanide fraction: we find $\log_{10} X_{\mathrm{lan}} = -5.64^{+1.05}_{-1.31}$, too small to match the Solar $r$-process abundance pattern, as is the case at 1.4 days.
 
-% \begin{itemize}
-%     \item Point to the plot of all spectra in Figure~\ref{fig:all_spec_single} (Appendix~\ref{app:allspec_single}). $m_0 = 1500$ and $m_{\mathrm{active}} = 600$ samples. 
-
-%     \item In the best fit, we overestimate the absorption at the shortest wavelengths. This is on contrast with 1.4 days, where we underestimated. We accurately model the absorption at 8000\AA, but miss the higher-wavelength bump, which is the red wing of a P-Cygni feature (in the P-Cygni interpretation). 
-
-%     \item Point to the posterior. The full posterior is in Figure~\ref{fig:corner_single_2.4}. We find some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. Discarding samples with $s/k_{\mathrm{B}} \geqslant 25.0$, we obtain our preferred model. This zoomed-in posterior is shown in Figure~\ref{fig:corner_single_2.4_zoom}.
-
-%     \item Present $L_{\mathrm{outer}}$ and $T_{\mathrm{inner}}$. The kilonova has dimmed and the ejecta has cooled. 
-
-%     \item Present the density and inner / outer boundary velocities. The photosphere has receded into the ejecta. The outer boundary velocity is consistent with $v_{\mathrm{outer}} = 0.35c$ fixed in the 1.4 day fit. Compute the total mass contained in the line-forming region of the ejecta? 
-
-%     \item Highlight abundance-setting parameters: $Y_{\mathrm{e}}$, $v_{\mathrm{exp}}$, and $s$. $Y_{\mathrm{e}}$ is lower, but consistent with that inferred at 1.4 days. The expansion velocity and entropy are consistent with that of 1.4 days. In the posterior, $Y_{\mathrm{e}}$ has a tail which extends to lower electron fractions. The posterior in general is broader.
-
-%     \item $X_{\mathrm{lan}}$ is smaller at 2.4 days, but still very lanthanide-poor. Inconsistent with Solar $r$-process.
-    
-% \end{itemize}
 
 
 %%% subsubsection: 3.4 DAYS, SINGLE-COMPONENT
@@ -438,7 +413,7 @@ Finally, $Y_{e,1}$ and $Y_{e,2}$ are both substantially lower than, and inconsis
 
 
 %%% subsection: LoO AND SDEC
-\subsection{Elements present in favored models}\label{ssc:results-lines}
+\subsection{Elements \& ions present in favored models}\label{ssc:results-lines}
 
 
 %%% leave-one-out spectra; Fig. 4
