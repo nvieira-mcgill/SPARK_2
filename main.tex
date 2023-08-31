@@ -22,6 +22,10 @@
 \renewcommand*{\sectionautorefname}{Section} %for \autoref
 \renewcommand*{\subsectionautorefname}{Section} %for \autoref
 
+% % line numbers
+% \usepackage{lineno}
+% \linenumbers
+
 %%% software mentioned again and again
 \def\SPARK{\texttt{SPARK}}
 \def\TARDIS{\texttt{TARDIS}}
@@ -32,13 +36,14 @@
 \def\citneeded{\textcolor{red}{\textbf{(citation needed)}}}
 \newcommand\redbf[1]{\textbf{\textcolor{red}{#1}}}
 
-\newcommand{\crf}[1]{{\color{violet} RF: #1}} %comment from Rodrigo
 \usepackage{soul}
-\newcommand{\remove}[1]{{\color{red} \st{#1}}}
-\newcommand{\addtext}[1]{{\color{blue} #1}}
+\newcommand{\crf}[1]{{\color{violet} RF: #1}} %comment from Rodrigo
+\newcommand{\remove}[1]{{\color{magenta} \st{#1}}}
+\newcommand{\addtext}[1]{{\color{brown} #1}}
 
-% %%% alias for Vieira+23
-% \defcitealias{vieira23}{V23}
+%%% alias for Vieira+23
+\defcitealias{vieira23}{V23}
+\def\V23{\citetalias{vieira23}}
 
 \def\lbol{${L}_{\rm bol}$}
 \def\ledd{${L}_{\rm Edd}$}
@@ -107,10 +112,11 @@
 %\def\Swift{{\it Swift}}
 %\def\Nustar{{\it NuSTAR}}
 
+
+
 \hypersetup{linkcolor=magenta}
 
-\submitjournal{ApJ}
-%\received{(ApJ) September 14, 2022}
+\submitjournal{ApJ}\received{\today}
 %\accepted{on December 22, 2022}
 
 \shorttitle{Lanthanides in the Inferred Abundance Patterns from the GW170817 Kilonova} 
@@ -139,7 +145,7 @@
 % \affil{Department of Physics and Astronomy, Bishop's University, 2600 rue College, Sherbrooke, Qu{\'e}bec, J1M 1Z7, Canada}
 
 \author[0000-0001-7081-0082]{Maria~R.~Drout}
-\affil{Department of Astronomy and Astrophysics, University of Toronto, 50 St. George St., Toronto, Ontario, M5S 3H4, Canada}
+\affil{David A. Dunlap Department of Astronomy and Astrophysics, University of Toronto, 50 St. George St., Toronto, Ontario, M5S 3H4, Canada}
 
 \author[0000-0003-4619-339X]{Rodrigo Fern{\'a}ndez}
 \affil{Department of Physics, University of Alberta, Edmonton, Alberta, T6G 2E1, Canada}
@@ -150,7 +156,7 @@
 
 
 \begin{abstract}
-In kilonovae, freshly-synthesized $r$-process elements imprint absorption features on optical spectra, as observed in AT2017gfo, the optical counterpart to the GW170817 binary neutron star merger. These spectra provide insights into the physical conditions of the $r$-process, but measuring the detailed composition of the ejecta is challenging. \cite{vieira23} introduced Spectroscopic r-Process Abundance Retrieval for Kilonovae (\SPARK), a tool for performing Bayesian inference on kilonova spectra to (1) retrieve element-by-element abundance patterns of the ejecta, and (2) associate individual spectral features with particular species. We have applied \SPARK~to the 1.4 day spectrum of AT2017gfo and recovered the first element-by-element abundance patterns, characterized by high electron $Y_e = 0.31$, leading to a dearth of lanthanides and heavier elements. This component is consistent with a viscously-driven wind from a remnant accretion disk. We now extend our inference on AT2017gfo to 2.4 and 3.4 days, and present the inferred abundance pattern over this optically thick phase. In addition, we test the need for multi-component models, where the ejecta is radially stratified in elemental composition. The ejecta at 1.4 and 2.4 days is best described by the single blue component, while at 3.4 days, a new redder component with lower electron fraction $Y_e = 0.16$ and a significant abundance of lanthanides emerges. This new component, which is consistent with \redbf{[some component]}, emerges as the ejecta expands, the photosphere recedes into the ejecta, and the earlier bluer component dims. In addition to previous identifications of strontium at 1.4 days, we find strontium at subsequent epochs. At 3.4 days, we find evidence for an ensemble of lanthanides, with the identification of cerium most concrete. The higher inferred lanthanide fraction at 3.4 days has important implications for the ability of kilonovae to produce the Universal $r$-process abundance pattern seen in the Solar system and beyond.  
+In kilonovae, freshly-synthesized $r$-process elements imprint features on optical spectra, as observed in AT2017gfo, the counterpart to the GW170817 binary neutron star merger. However, measuring the $r$-process compositions of the merger ejecta is computationally challenging. \cite{vieira23} introduced Spectroscopic $r$-Process Abundance Retrieval for Kilonovae (\SPARK), a software tool to infer elemental abundance patterns of the ejecta, and associate spectral features with particular species. Previously, we applied \SPARK~to the 1.4 day spectrum of AT2017gfo and inferred its abundance pattern for the first time, characterized by electron fraction $Y_e=0.31$, a substantial abundance of strontium, and a dearth of lanthanides and heavier elements. This ejecta is consistent with wind from a remnant hypermassive neutron star and/or accretion disk. We now extend our inference to spectra at 2.4 and 3.4 days, and test the need for multi-component ejecta, where we stratify the ejecta in composition. The ejecta at 1.4 and 2.4 days is described by the same single blue component. At 3.4 days, a new redder component with lower $Y_e=0.16$ and a significant abundance of lanthanides emerges. This new redder component is consistent with dynamical ejecta and/or neutron-rich ejecta from a magnetized accretion disk. As expected from photometric modelling, this component emerges as the ejecta expands, the photosphere recedes, and the earlier bluer component dims. At 3.4 days, we find an ensemble of lanthanides, with the presence of cerium most concrete. This presence of lanthanides has important implications for the contribution of kilonovae to the $r$-process abundances observed in the Universe.
 
 \end{abstract}
 \keywords{Nuclear abundances (1128) --- R-process (1324) --- Radiative transfer simulations (1967) --- Spectral line identification (2073)}
@@ -158,23 +164,28 @@ In kilonovae, freshly-synthesized $r$-process elements imprint absorption featur
 % ====================================================
 
 
+
+
+
 %%% === SECTION 1 === %%%
 %% INTRODUCTION %%
 \section{Introduction}\label{sec:intro}
 
-About half of the elements in the Universe heavier than iron are synthesized by rapid neutron capture nucleosynthesis: the $r$-process (see \citealt{cowan21} for a review). Extreme astrophysical environments---namely, those created by collapsars and mergers of neutron stars (NS-NS) or a neutron star and black hole (NS-BH)---offer leading candidate sites for this $r$-process nucleosynthesis due to their exceptionally high densities of free neutrons (\citealt{lattimer74, symbalisty82, eichler89, freiburghaus99, goriely11, korobkin12, bauswein13}). However, it is still unclear which of these channels dominates. The NS-NS merger GW170817, first detected in gravitational waves and then across the electromagnetic spectrum (\citealt{abbottLIGO17a, abbottLIGO17b}), has provided some insight. Both photometry (\citealt{andreoni17, arcavi17, coulter17, diaz17, drout17, evans17, hu17, kasliwal17, lipunov17, tanvir17, troja17, utsumi17, valenti17})\footnote{See \cite{villar17} for a compilation of this photometry considering inter-instrument variation.} and spectroscopy (\citealt{chornock17, kasen17, pian17, shappee17, smartt17}) of the optical/near-infrared counterpart, AT2017gfo, matched theoretical expectations for a kilonova: an explosive transient event powered by radioactive decay of freshly-synthesized $r$-process elements. However, we do not yet know the precise abundances of these $r$-process elements in the ejecta, nor whether GW170817-like kilonovae could yield the $r$-process abundances seen across the Universe. 
+Approximately half of the elements in the Universe heavier than iron are synthesized by rapid neutron capture nucleosynthesis: the $r$-process (see \citealt{cowan21} for a review). Extreme astrophysical environments---namely, mergers of neutron stars (NS-NS) or a neutron star and black hole (NS-BH) and other proposed sources like collapsars or magnetorotational supernovae---offer leading candidate sites for this $r$-process nucleosynthesis due to their exceptionally high densities of free neutrons (\citealt{lattimer74, symbalisty82, eichler89, freiburghaus99, goriely11, korobkin12, bauswein13}). However, it is still unclear which of these channels dominates. The NS-NS merger GW170817, first detected in gravitational waves and then across the electromagnetic spectrum (\citealt{abbottLIGO17a, abbottLIGO17b}), has provided some insight. Both photometry (\citealt{andreoni17, arcavi17, coulter17, diaz17, drout17, evans17, hu17, kasliwal17, lipunov17, tanvir17, troja17, utsumi17, valenti17})\footnote{See \cite{villar17} for a compilation of this photometry considering inter-instrument variation.} and spectroscopy (\citealt{chornock17, kasen17, pian17, shappee17, smartt17}) of the optical/near-infrared counterpart, AT2017gfo, matched theoretical expectations for a kilonova: an explosive transient event powered by radioactive decay of freshly-synthesized $r$-process elements. However, we do not yet know the precise abundance pattern of the $r$-process elements in the ejecta, nor whether GW170817-like kilonovae could yield the $r$-process abundances seen across the Universe (\citealt{ji19, cowan21}).
 
-Inferring the abundance pattern of the ejecta allows us to tackle the question of collapsars versus kilonovae as the source of the Universal $r$-process, and, to gain insight into the physical ejection mechanisms at play during NS-NS/BH mergers. By measuring the abundance pattern of the ejecta, we can determine whether we observe dynamical ejecta from tidal disruption, disk winds, or some other ejection mechanism. We also gain insight into the fundamental conditions of $r$-process nucleosynthesis, which occurs in the first $\sim$1 second post-merger. The spectra of kilonovae, which are marked by the presence of a suite of $r$-process elements, are key to this inference. Insights gained from spectra are independent of and complementary to light curve modelling, which has served mostly to infer macroscopic properties of the kilonova such as the heating rates, total ejecta masses, average ejecta velocities, and temperatures of the ejecta (\eg, \citealt{villar17, almualla21, breschi21, ristic22}).
+The spectra of kilonovae in particular are marked by absorption and emission features from a suite of $r$-process elements, and are key for determining the detailed composition of the merger ejecta. Insights gained from spectra are independent of and complementary to light curve modelling, which has served mostly to infer macroscopic properties of the kilonova such as the heating rates, total ejecta masses, average ejecta velocities, and temperatures of the ejecta (\eg, \citealt{villar17, almualla21, breschi21, ristic22}). By modelling the spectra, we can directly infer the abundances and the conditions of $r$-process nucleosynthesis. These insights further allow us to assess the importance of mergers versus other proposed sites as the source of these elements, and, the physical ejection mechanisms at play during these mergers. 
 
-Spectral modelling has already provided evidence that the GW170817 kilonova ejecta contained $r$-process elements, and, enabled associations of certain spectral features with individual species. \cite{watson19} analyzed the early time, optically thick spectra of AT2017gfo, and found the imprint of a P Cygni feature arising from \ion{Sr}{2} (strontium, ${}_{38}$Sr) at $\sim$8000~\AA, at 1.4, 2.4, and 3.4 days post-merger. \cite{domoto21, domoto22} similarly ascribe this feature to \ion{Sr}{2}, and find tentative evidence for doubly-ionized lanthanides \ion{La}{3} and \ion{Ce}{3} (lanthanum, ${}_{57}$La and cerium, ${}_{58}$Ce) in the near-infrared ($\sim$12,000-14,000 \AA). Similarly, \cite{gillanders22} argues for the presence of \ion{Sr}{2}, but also ions of adjacent first $r$-process peak elements \ion{Y}{2} and \ion{Zr}{2} (yttrium, ${}_{39}$Y and zirconium, ${}_{39}$Zr) at wavelengths $\lesssim$ 6000 \AA. They also suggest the presence of a modest amount of lanthanide material beyond $\sim$3-4 days. \cite{sneppenwatson23} argues that another P Cygni feature, from \ion{Y}{2}, emerges at 4.4 and 5.4 days post-merger at $\sim$7600~\AA. 
+Spectral modelling has already provided evidence that the GW170817 kilonova ejecta contained $r$-process elements, and, has enabled associations of certain absorption and/or emission features with individual species. \cite{watson19} analyzed the early time, optically thick spectra of AT2017gfo, and found the imprint of a P Cygni feature arising from \ion{Sr}{2} (strontium, ${}_{38}$Sr) at $\sim$8000~\AA, at 1.4, 2.4, and 3.4 days post-merger. \cite{domoto21, domoto22} similarly ascribe this feature to \ion{Sr}{2}, and find tentative evidence for doubly-ionized lanthanides \ion{La}{3} and \ion{Ce}{3} (lanthanum, ${}_{57}$La and cerium, ${}_{58}$Ce) in the near-infrared ($\sim$12,000-14,000 \AA). Similarly, \cite{gillanders22} argues for the presence of \ion{Sr}{2}, but also ions of adjacent first $r$-process peak elements \ion{Y}{2} and \ion{Zr}{2} (yttrium, ${}_{39}$Y and zirconium, ${}_{39}$Zr) at wavelengths $\lesssim$ 6000 \AA. \cite{sneppenwatson23} find that \ion{Y}{2} is present at 4.4 and 5.4 days, producing a P Cygni feature at $\sim$7600~\AA. \cite{gillanders22} also suggests the presence of a modest amount of lanthanide material at these times.  At later times, when the ejecta enters an optically thin regime, the spectrum is dominated by emission features. \cite{gillanders23} find that \ion{Ce}{3} may produce emission at $\sim$15,800~\AA~and $\sim$20,700~\AA~beyond 3.4 days, up to 10.4 days. At $\gtrsim$ 7 days, these may instead arise from intrinsically weak lines, with ions \ion{Te}{3} and \ion{Te}{1} (tellurium, ${}_{52}$Te) and \ion{I}{2} (iodine, ${}_{53}$I) given as the most likely candidates (\citealt{gillanders23, hotokezaka23}). 
 
-While these studies have shed valuable light on some of the species present in the ejecta of AT2017gfo, the abundances of \textit{all} elements in the ejecta are not known. In \cite{vieira23}, we fit the spectrum of AT2017gfo at 1.4 days post-merger, in the early, optically-thick phase of the ejecta, using our inference approach and software tool Spectroscopic $r$-Process Abundance Retrieval for Kilonovae (\SPARK). With \SPARK, we inferred the complete element-by-element abundance pattern of the ejecta with uncertainties, identified the presence of \ion{Sr}{2}, and tentatively identified \ion{Y}{2} and \ion{Zr}{2}. We found that the ejecta was best-described by a ``blue'' (lower opacity in the UV and optical, in contrast with ``red'') ejecta component with electron fraction $Y_e = 0.311^{+0.013}_{-0.011}$ and specific entropy per nucleon $s / k_{\mathrm{B}} = 13.6^{+4.1}_{-3.0}$, which yielded an extremely lanthanide-poor abundance pattern with lanthanide fraction $\log_{10} X_{\mathrm{lan}} = {-7.03}^{+0.46}_{-0.47}$. This lanthanide fraction is inconsistent with the $r$-process abundance pattern seen in the Solar system and beyond (\citealt{ji19}). 
+While these studies have shed valuable light on some of the species present in the ejecta of AT2017gfo, the abundances of \textit{all} elements in the ejecta are not known. In \cite{vieira23} (hereafter \V23), we fit the spectrum of AT2017gfo at 1.4 days post-merger, using our inference approach and software tool Spectroscopic $r$-Process Abundance Retrieval for Kilonovae (\SPARK). With \SPARK, we inferred the complete elemental abundance pattern of the ejecta. We found that the ejecta was dominated by lighter $r$-process elements, generating a bluer (relatively lower opacity in the UV and optical) kilonova. This ejecta had electron fraction $Y_e = 0.311^{+0.013}_{-0.011}$ and specific entropy per nucleon $s / k_{\mathrm{B}} = 13.6^{+4.1}_{-3.0}$, which yielded an extremely low lanthanide fraction $\log_{10} X_{\mathrm{lan}} = {-7.03}^{+0.46}_{-0.47}$. This lanthanide fraction is inconsistent with the $r$-process abundance pattern seen in the Solar system and beyond (\citealt{ji19}). 
 
-However, we have not previously inferred the abundances at later epochs: 2.4 days, 3.4 days, and beyond. At later epochs, as the kilonova ejecta expands and becomes more optically thin, we expect that the photosphere recedes into the ejecta. This may uncover additional redder or bluer components which power the kilonova at later times, after being hidden at early times. The emergence of new components would align with photometric light curve modelling (\eg, \citealt{villar17}), which has indicated multiple ejecta components; in particular, a redder component emerging at $\sim 3$ days post-merger. These different ejecta components have different physical origins. In a NS-NS merger, we expect a redder component mostly confined to the plane of the initial binary from the tidal ejecta, a bluer squeezed polar component due to the collisional interface between the two objects, and a more isotropic disk wind from an accretion disk around the merger remnant. Our inferred $Y_e$ and $s$ at 1.4 days are consistent with a viscously-driven accretion disk wind. Importantly, different components are characterized by different velocities, masses, and heating rates as a function of time. It is thus possible that the spectrum at later times might be dominated or better described by a different ejecta, or, a multi-component ejecta configuration. 
+We have not yet inferred the abundances at later epochs: 2.4 days, 3.4 days, and beyond. At later epochs, as the kilonova ejecta expands and becomes more optically thin, we expect that the photosphere recedes into the ejecta. This may uncover additional components which power the kilonova at later times, after being physically hidden underneath the photosphere at early times and/or out-shined by the early blue emission. The emergence of new components at later times would be consistent with results from light curve modeling (\eg, \citealt{villar17}), which has indicated the presence of multiple ejecta components; in particular, a redder component emerging at $\sim$3 days post-merger. These different components may originate from different ejection mechanisms during the merger, and are characterized by different masses, velocities, and heating rates as a function of time. In a NS-NS merger, we expect a redder component mostly confined to the plane of the initial binary from the tidal ejecta, with little neutrino reprocessing, a bluer squeezed polar component from the collisional interface between the two NSs, and a more isotropic red/blue disk wind from an accretion disk around a merger remnant. Our inferred $Y_e$ and $s$ at 1.4 days are consistent with an outflow produced over timescales longer than the dynamical time which has been substantially reprocessed by neutrinos, \eg, winds from a hypermassive neutron star remnant or an accretion disk. At later times, the spectrum might be dominated or better described by a different ejecta or a multi-component ejecta configuration. 
 
-Here, we explore the time evolution of the inferred abundance pattern and the need for multi-component models to fit the spectra of AT2017gfo, at 1.4, 2.4, and 3.4 days post-merger. We first extend our single-component fitting to 2.4 and 3.4 days to obtain the best single-component models for the ejecta. We then develop a model in the radiative transfer code where the ejecta is stratified and multi-component. We compare our best multi-component fits at 1.4, 2.4, and 3.4 days to their single-component equivalents. The abundances of these single- and multi-component models are then examined to paint a picture of the inferred abundance pattern as a function of time. 
+Here, we explore the time evolution of the inferred abundance pattern and the need for multi-component ejecta models to fit the spectra of AT2017gfo, at 1.4, 2.4, and 3.4 days post-merger. We first extend our single-component fitting to 2.4 and 3.4 days to obtain the best single-component models for the ejecta. We then develop a model in the radiative transfer code where the ejecta is stratified and multi-component. We compare our best multi-component fits at 1.4, 2.4, and 3.4 days to their single-component equivalents. The abundances of these single- and multi-component models are then examined to paint a picture of the inferred abundance pattern as a function of time. 
 
-This paper is organized as follows. In Section~\ref{sec:methods}, we briefly review \SPARK~and present the upgrades which enable fitting the later epochs of AT2017gfo with both single- and multi-component models. In Section~\ref{sec:results}, we present our fits. In Section~\ref{sec:disco}, we explore the time evolution of the inferred abundance pattern, the species present in the ejecta, and the physical origin of different components. In Section~\ref{sec:conco}, we conclude.
+This paper is organized as follows. In Section~\ref{sec:methods}, we briefly review \SPARK~and present the upgrades which enable fitting the later epochs of AT2017gfo with both single- and multi-component models. In Section~\ref{sec:results}, we present our fits. In Section~\ref{sec:disco}, we explore the time evolution of the inferred abundance pattern, the species present in the ejecta, and the physical origin of different components. We briefly conclude in Section~\ref{sec:conco}.
+
+% ====================================================
 
 
 
@@ -182,19 +193,18 @@ This paper is organized as follows. In Section~\ref{sec:methods}, we briefly rev
 
 %%% === SECTION 2 === %%%
 %% METHODS %%
-
 \section{Methods}\label{sec:methods}
 
 %%% subsection 2.1: SPARK OVERVIEW
 \subsection{Spectroscopic $r$-Process Abundance Retrieval for Kilonovae (\textsc{SPARK})}\label{ssc:spark-summary}
 
-We briefly describe our tool, \SPARK, and refer the reader to \cite{vieira23} (hereafter V23) for more detail. \SPARK~(Spectroscopic $r$-Process Abundance Retrieval for Kilonovae) is designed as a modular inference engine for extracting key parameters of kilonovae spectra, determining the element-by-element abundance pattern of the ejecta, and associating features in the spectra with particular species. 
+We briefly describe our tool, \SPARK, and refer the reader to \V23 for more detail. \SPARK~(Spectroscopic $r$-Process Abundance Retrieval for Kilonovae) is designed as a modular inference engine for extracting key kilonova parameters from optical spectra, determining the element-by-element abundance pattern of the ejecta, and associating absorption features in the spectra with particular species. 
 
-In \SPARK, we use the 1D \TARDIS~(\citealt{kerzendorf14, kerzendorf23})~radiative transfer code to generate a set of synthetic spectra. In \TARDIS, photon packets are propagated through shell(s) of plasma, where they may undergo either bound-bound processes or electron scattering. To handle bound-bound (matter-radiation) interactions in the ejecta, we require a list of lines for the species in the ejecta. We use a line list of observed lines, obtained through the Vienna Atomic Line Database (VALD; \citealt{ryabchikova15, pakhomov19}). Each spectrum is parameterized by some $\theta_i$ including a luminosity, density, inner/outer computational boundary velocities, and three key parameters which set the abundances in the ejecta: the electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy per nucleon $s / k_{\mathrm{B}}$. These latter three parameters describe different abundance patterns output by the nuclear reaction network calculations of \cite{wanajo18}, allowing us to infer the abundance pattern of the ejecta.  
+In \SPARK, we use the 1D \TARDIS~(\citealt{kerzendorf14, kerzendorf23})~radiative transfer code to generate a set of synthetic spectra. In \TARDIS, photon packets are propagated through shell(s) of plasma, where they may undergo either bound-bound processes or electron scattering. To handle bound-bound (matter-radiation) interactions in the ejecta, we require a list of lines for the species in the ejecta. We use a line list of observed lines, obtained through the Vienna Atomic Line Database (VALD; \citealt{ryabchikova15, pakhomov19}). Each spectrum is parameterized by a set $\theta_i$ of parameters, including a luminosity, density, inner/outer computational boundary velocities, and three key parameters which set the abundances in the ejecta: the electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy per nucleon $s / k_{\mathrm{B}}$. These latter three parameters describe different abundance patterns output by the nuclear reaction network calculations of \cite{wanajo18}, which use parametric outflow trajectories, allowing us to infer the abundance pattern of the ejecta.  
 
-To perform this inference, we express our likelihood function using the full formalism of \cite{czekala15} for likelihoods involving spectroscopic data. However, because of the considerable computational cost of spectral synthesis with \TARDIS, we do not use more common methods such as Markov chain Monte Carlo (MCMC) or nested sampling for inference---rather, we couple \TARDIS~to the approximate posterior estimation scheme of \approxposterior~(\citealt{fleming18,fleming20}). In this scheme, we introduce a Gaussian Process (GP) surrogate for the posterior $L_p (\theta)$ and employ Bayesian Active Posterior Estimation (BAPE; \citealt{kandasamy17}). BAPE is a form of active learning in which we maximize an acquisition function with terms including both the mean $\mu(\theta)$ and variance $\sigma^2(\theta)$ of the GP. This acquisition function thus balances exploration (of the parameter space) and exploitation (sampling around the peak(s) of the posterior). The GP is iteratively re-trained as new points $(\theta, L_p(\theta))$ are added to a training set, and this GP converges to an approximation of the posterior. 
+To perform this inference, we express our likelihood function using the full formalism of \cite{czekala15} for likelihoods involving spectroscopic data. However, because of the considerable computational cost of spectral synthesis with \TARDIS, we do not use more common methods such as Markov chain Monte Carlo (MCMC) or nested sampling for inference---rather, we couple \TARDIS~to the approximate posterior estimation scheme of \approxposterior~(\citealt{fleming18,fleming20}). In this scheme, we introduce a Gaussian Process (GP) surrogate for the posterior $L_p (\theta)$ and employ Bayesian Active Posterior Estimation (BAPE; \citealt{kandasamy17}). BAPE is a form of active learning in which we maximize an acquisition function with terms including both the mean $\mu(\theta)$ and variance $\sigma^2(\theta)$ of the GP. This acquisition function thus balances exploration (of the parameter space) and exploitation (sampling around the peak(s) of the posterior). The GP is iteratively retrained as new points $(\theta, L_p(\theta))$ are added to a training set, and this GP converges to an approximation of the posterior. 
 
-In all, inference is dramatically accelerated, and we obtain (among the other kilonova parameters) the $Y_e$, $v_{\mathrm{exp}}$, $s / k_{\mathrm{B}}$ which best describe the ejecta with relatively few forward model evaluations. In V23, we fit the VLT/X-shooter spectrum of AT2017fgfo (\citealt{pian17, smartt17}) at 1.4 days with a baseline of 1500 Latin Hypercube samples + 1140 BAPE active learning samples. This is a factor of $\sim 10^3$ fewer samples than might be required with a standard MCMC for a similar 6-dimensional fit. We refer the reader to V23 for additional details.
+In all, inference is dramatically accelerated, and we obtain (among the other parameters) the $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$ which best describe the ejecta, with relatively few forward model evaluations. In \V23, we fit the VLT/X-shooter spectrum of AT2017fgfo (\citealt{pian17, smartt17}) at 1.4 days with a base set of 1500 Latin Hypercube samples + 1140 BAPE active learning samples. This is a factor of $\sim 10^3$ fewer samples than might be required with a standard MCMC for a similar 6-dimensional fit. 
 
 
 
@@ -202,13 +212,14 @@ In all, inference is dramatically accelerated, and we obtain (among the other ki
 %%% subsection 2.2: MULTI-COMPONENT EJECTA
 \subsection{Multi-component, stratified ejecta with \textsc{TARDIS}}\label{ssc:multi-component-TARDIS}
 
-In V23, we model the kilonova ejecta as a single shell with a uniform abundance pattern. The plasma in this shell is also described by a single temperature and mass/electron density. This configuration is fully described by the luminosity at the outer boundary $L_{\mathrm{outer}}$, (which in fact sets the initial guess for the temperature at the inner boundary), the normalization in the density power law $\rho_0$, the inner and outer boundary velocities $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$, and three parameters which set the abundances: electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy $s / k_{\mathrm{B}}$. A single-component fit is thus 7-dimensional, unless one or more of the parameters are fixed. For example, we fix $v_{\mathrm{outer}} = 0.35c$ in our fit to the 1.4 day spectrum. This setup can describe a single ejecta component such as dynamical ejecta or some remnant accretion disk wind. It may also describe a kilonova in which one component significantly dominates (by mass or by the strength of the absorption/emission features) over the other(s). 
+In \V23, we modeled the kilonova ejecta as a single shell with a uniform abundance pattern. The plasma in this shell is also described by a single temperature and mass/electron density. This configuration is fully described by the luminosity at the outer boundary $L_{\mathrm{outer}}$, (which in fact sets the initial guess for the temperature at the inner boundary), the normalization in the density power law $\rho_0$, the inner and outer boundary velocities $v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$\footnote{\TARDIS~assumes homologous expansion, in which $v \propto r$, such that velocity can be understood as a spatial coordinate. Given 
+a density profile, the velocity range sets the mass of the ejecta.}, and three parameters which set the abundance pattern: electron fraction $Y_e$, expansion velocity $v_{\mathrm{exp}}$, and specific entropy $s / k_{\mathrm{B}}$. A single-component fit is thus 7-dimensional, unless one or more of the parameters are fixed. For example, we fixed $v_{\mathrm{outer}} = 0.35c$ in our fit to the 1.4 day spectrum. This setup can describe a single ejecta component such as dynamical ejecta or some outflow. It may also describe a kilonova in which one component significantly dominates (by mass or by the strength of the absorption/emission features) over the other(s). 
     
-Here, we implement multi-component, stratified ejecta. \TARDIS~allows for ejecta composed of stratified radial shells, each with a specific temperature, density, plasma conditions, and composition. In this configuration, each shell can have a specific abundance pattern. We use 10 shells in all runs. We also employ multiple (30) \TARDIS~iterations when generating synthetic spectra in this configuration. At each iteration, the plasma conditions are updated, and converge towards an ejecta where the luminosity emitted at the outer boundary matches the user-requested $L_{\mathrm{outer}}$. 
+Here, we implement multi-component ejecta. \TARDIS~allows for ejecta composed of stratified radial shells, each with a specific temperature, density, plasma conditions, and composition. In this configuration, each shell can have a specific abundance pattern. In single-shell runs, we compute the plasma state only once given $L_{\mathrm{outer}}$. For these multi-shell runs, we must employ multiple \TARDIS~iterations when generating synthetic spectra. At each iteration, the plasma conditions are updated, and converge towards an ejecta where the luminosity emitted at the outer boundary matches the user-requested $L_{\mathrm{outer}}$. We use 10 such shells and 30 such iterations in all runs.
     
-We begin with a simple two-component ejecta. As with our single-component model, this two-component model is described by an outer boundary luminosity $L_{\mathrm{outer}}$ and density $\rho_0$. Each of the components is then described by inner and outer boundary velocity ($v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$) and a $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$. Multi-component fits are thus $2 + 5 + 5 = 12$-dimensional. The components necessarily overlap in physical space because \TARDIS~cannot simulate a gap between them. The abundance in each shell is then determined by the component(s) which are in a given shell. For shells where there is overlap between two components, the abundance is taken as a sum of the two abundance patterns and re-normalized to unity. %We graphically show the difference between single- and multi-component ejecta in Figure~\ref{fig:wedge_examples}.
-    
-Multiple components allow for additional complexity in the spectral synthesis.\footnote{See \cite{kawaguchi20} for an exploration of the diversity of kilonovae which may be produced when multiple components are present.} In particular, even in 1D with \TARDIS, we can produce the effect of re-processing, where emission from one component is absorbed and reemitted/scattered by another. We can also produce the effect of ``lanthanide curtaining'', in which some outermost lower-$Y_e$ ejecta containing the lanthanides masks an inner, bluer, lighter-element ejecta due to the considerable opacity of the lanthanides in the near-UV and optical. Some kilonova spectra may be better-described by these multi-component ejecta models. In V23, we find that the 1.4 day of AT2017gfo is well-described by a single-component ejecta with $Y_e \sim 0.3-0.35$. However, at later epochs, as the ejecta expands and becomes more optically thin, the photosphere recedes into the ejecta and we may unmask additional components which were hidden at early times. Light curve modelling (\eg, \citealt{villar17}) has shown that the kilonova may indeed be better-described by multiple components of different opacities, and some spectral modelling (\eg, \citealt{kasen17}) also invokes multiple components. This motivates our introduction of multi-component ejecta into \SPARK.
+We begin with a simple two-component ejecta. As with our single-component model, this two-component model has an outer boundary luminosity $L_{\mathrm{outer}}$ and density $\rho_0$. Each of the components is then described by inner and outer boundary velocity ($v_{\mathrm{inner}}$ and $v_{\mathrm{outer}}$) and a $Y_e$, $v_{\mathrm{exp}}$, and $s / k_{\mathrm{B}}$. Two-component fits are thus $2 + 5 + 5 = 12$-dimensional. The two components necessarily overlap in physical space because \TARDIS~cannot simulate a gap between them. The abundance in each shell is then determined by the component(s) which are in a given shell. For shells where there is overlap between two components, the abundance is taken as a sum of the two abundance patterns and renormalized to unity. 
+
+Multiple components allow for additional complexity in the spectral synthesis.\footnote{See \cite{kawaguchi20} for an exploration of the diversity of kilonovae which may be produced when multiple components are present.} In particular, we can produce the effect of reprocessing, where emission from one component is absorbed and re-emitted/scattered by another. We can also produce the effect of lanthanide curtaining, in which some outer lower-$Y_e$ ejecta containing the lanthanides masks an inner, bluer, lighter-element ejecta, generating a redder kilonova due to the considerable opacity of the lanthanides in the near-UV and optical. Some kilonova spectra may be better-described by these multi-component ejecta models. In \V23, we find that the 1.4 day of AT2017gfo is well-described by a single-component ejecta with $Y_e = 0.31$. However, at later epochs, as the ejecta expands and becomes more optically thin, the photosphere recedes into the ejecta and we may unmask additional components which were hidden or out-shined at early times. Light curve modelling (\eg, \citealt{villar17}) has shown that the kilonova may indeed be better-described by multiple components of different opacities, and some spectral modelling (\eg, \citealt{kasen17}) also invokes multiple components. This motivates our introduction of multi-component ejecta into \SPARK.
 
 
 
@@ -216,54 +227,56 @@ Multiple components allow for additional complexity in the spectral synthesis.\f
 %%% subsection 2.3: INFERENCE SETUP
 \subsection{Inference setup}\label{ssc:inference-setup}
 
-All \texttt{approxposterior}/BAPE hyperparameters and optimizers used in this work are the same as those used in V23. We again produce a baseline run of $m_{0} = 1500$ Latin Hypercube sampled points at the beginning of each \SPARK~run. However, the parameter space allowed by our priors differs for the 1.4, 2.4, and 3.4 day fits. Table~\ref{tab:priors-single} includes our priors for each of our single-component fits. All priors are uniform. The bounds on the density $\rho_0$ and abundance-setting parameters $Y_e$, $v_{\mathrm{exp}}$, and $s$ are the same at all epochs. The priors differ in the bounds on the luminosity, as expected given the cooling of the ejecta over time as it expands. We further allow for wider priors on the inner and outer boundary velocities for the fits at later epochs. In V23, we fixed $v_{\mathrm{outer}} = 0.35c$ during our 1.4 day fit but noted that we observed similar results for $v_{\mathrm{outer}}$ in the range $0.35 - 0.38c$. Here, we allow for greater flexibility in our fits to the later epochs.
+All \texttt{approxposterior}/BAPE hyperparameters and optimizers used in this work are the same as those used in \V23. We again produce a base set of $m_{0} = 1500$ Latin Hypercube sampled points at the beginning of each \SPARK~run. However, the parameter space allowed by our priors differs for the 1.4, 2.4, and 3.4 day fits. Table~\ref{tab:priors-single} includes our (all uniform) priors for each of our single-component fits. The bounds on the density $\rho_0$ and abundance-setting parameters $Y_e$, $v_{\mathrm{exp}}$, and $s$ are the same at all epochs. The priors differ in the bounds on the luminosity, as expected given the cooling of the ejecta over time as it expands. We further allow for wider priors on the inner and outer boundary velocities for the fits at later epochs. In \V23, we fixed $v_{\mathrm{outer}} = 0.35c$ during our 1.4 day fit but noted that we observed similar results for $v_{\mathrm{outer}}$ in the range $0.35 - 0.38c$. Here, we allow for greater flexibility in $v_{\mathrm{outer}}$ later epochs.
     
-Our priors for our multi-component fits are given in Table~\ref{tab:priors-multi}. These are identical at all epochs, and the priors for the two components in a given fit are also identical. Aside from requiring $v_{\mathrm{inner,i}} < v_{\mathrm{outer,i}}$, our priors also require some overlap between the two components, \ie, $v_{\mathrm{inner},1} < v_{\mathrm{outer},2}$ or $v_{\mathrm{inner},2} < v_{\mathrm{outer},1}$. To allow for even sampling of parameter space for the $m_0 = 1500$ points in the base training set with these complex conditional constraints from the prior, we use constrained Latin Hypercube Sampling (cLHS; \citealt{petelet09}).
+Our priors for our multi-component fits are given in Table~\ref{tab:priors-multi}. These are broad, and identical, at 1.4 and 2.4 days. Aside from requiring $v_{\mathrm{inner,i}} < v_{\mathrm{outer,i}}$, our priors also require some overlap between the two components, \ie, $v_{\mathrm{outer},2} > v_{\mathrm{inner},1}$ or $v_{\mathrm{outer},1} > v_{\mathrm{inner},2}$. To allow for even sampling of parameter space for the $m_0 = 1500$ points in the base training set with these conditional constraints, we use constrained Latin Hypercube Sampling (\citealt{petelet09}). At 3.4 days, we encounter challenges with the convergence of the posterior for these broad, conditional priors in velocities. We thus use tighter priors on the velocities at this epoch, but all other priors are the same as those at 1.4 and 2.4 days.
     
-When attempting to fit the full 3.4 day spectrum, we find that the fit converges to a blackbody with little to no absorption to fit the continuum of the spectrum, especially at the shortest wavelengths $\lesssim$6400~\AA. Since we are interested in determining the species involved in the absorption, and the employed line list is likely especially incomplete at the shortest wavelengths, we prioritize fitting the $\geqslant$6400~\AA~region of the spectrum by excluding shorter wavelengths in the computation of the likelihood. We perform this exclusion for both single- and multi-component fits.
+When attempting to fit the full 3.4 day spectrum, we find that the fit converges to a blackbody with little to no absorption to fit the continuum of the spectrum, especially at the shortest wavelengths $\lesssim$6400~\AA. Since we are interested in determining the species involved in the absorption, and especially the prominent feature at $\sim$8000~\AA, we prioritize fitting the $\geqslant$6400~\AA~region of the spectrum by excluding shorter wavelengths in the computation of the likelihood. We perform this exclusion for both single- and multi-component fits.
 
-Finally, when expressing the likelihood using the \cite{czekala15} formalism, we use a global covariance term with amplitude $a_{\mathrm{G}} = 10^{-34}~(\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$ and a correlation length scale $\ell = 0.025c$ for all 1.4 and 2.4 day fits. For 3.4 day fits, after some trial and error, we find that a smaller $a_{\mathrm{G}} = 10^{-35}~(\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$ better uncertainties on the observed spectrum at this epoch.
+Finally, when expressing the likelihood using the \cite{czekala15} formalism, we use a global covariance term with amplitude $a_{\mathrm{G}} = 10^{-34}~(\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$ and a correlation length scale $\ell = 0.025c$ for all 1.4 and 2.4 day fits. For 3.4 day fits, after some trial and error, we find that a smaller $a_{\mathrm{G}} = 10^{-35}~(\mathrm{erg~s^{-1}~cm^{-2}}$~\text{\AA}${}^{-1})^{2}$ better matches the uncertainties on the observed spectrum at this epoch.
 
 
 %% single-component priors; Table 1
-\begin{deluxetable}{c|ccc}
+\begin{deluxetable}{c|cc}
 \centering
-\tablecaption{Uniform priors for the single-component fits at 1.4, 2.4, and 3.4 days. $v_{\mathrm{outer}}$ is fixed to $0.35c$ in the 1.4 day fit (see V23).}
-\tablehead{parameter & 1.4 days & 2.4 days & 3.4 days}
+\tablecaption{Uniform priors for the single-component fits at 1.4, 2.4, and 3.4 days. $v_{\mathrm{outer}}$ is fixed to $0.35c$ in the 1.4 day fit (see \V23).}
+\tablehead{parameter & 1.4 days & 2.4, 3.4 days}
 \startdata\tablewidth{1.0\textwidth}
  \vspace{2pt}
-$\log_{10}(\frac{L_\mathrm{outer}}{L_{\odot}})$ & $[7.6, 8.0]$ & $[7.2, 7.8]$ & $[7.2, 7.8]$ \\ 
-$\log_{10}(\frac{\rho_0}{\mathrm{g~cm^{-3}}})$ & $[-16.0, -14.0]$ & same & same \\
-$v_{\mathrm{inner}}/c$& $[0.250, 0.340]$ & $[0.100, 0.275]$ & $[0.100, 0.275]$ \\
-$v_{\mathrm{outer}}/c$& - & $[0.280, 0.400]$ & $[0.280, 0.400]$ \\
-$v_{\mathrm{exp}}/c$ & $[0.05, 0.30]$ & same & same \\
-$Y_e$ & $[0.01, 0.40]$ & same & same \\
-$s~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ & same & same \\
+$\log_{10}(L_{\mathrm{outer}} / L_{\odot})$ & $[7.6, 8.0]$ & $[7.2, 7.8]$ \\ 
+$\log_{10}(\rho_0 / \mathrm{g~cm^{-3}})$ & $[-16.0, -14.0]$ & same \\
+$v_{\mathrm{inner}}/c$& $[0.250, 0.340]$ & $[0.100, 0.275]$ \\
+$v_{\mathrm{outer}}/c$& $0.35c$ & $[0.280, 0.400]$\\
+$v_{\mathrm{exp}}/c$ & $[0.05, 0.30]$ & same \\
+$Y_e$ & $[0.01, 0.40]$ & same \\
+$s~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ & same \\
 \enddata
 \end{deluxetable}\label{tab:priors-single}
 
 
 %% multi-component priors; Table 2
-\begin{deluxetable}{c|c}
+\begin{deluxetable}{c|cc}
 \centering
-\tablecaption{Uniform priors for the multi-component fits at 1.4, 2.4, and 3.4 days.}
-\tablehead{parameter & prior}
+\tablecaption{Uniform priors for the multi-component fits at 1.4, 2.4, and 3.4 days. The priors on the velocities are tighter at 3.4 days.}
+\tablehead{parameter & 1.4, 2.4 days & 3.4 days}
 \startdata\tablewidth{1.0\textwidth}
  \vspace{2pt}
-$\log_{10}(\frac{L_\mathrm{outer}}{L_{\odot}})$ & $[7.0, 8.0]$ \\ 
-$\log_{10}(\frac{\rho_0}{\mathrm{g~cm^{-3}}})$ & $[-16.0, -14.0]$ \\\hline
-$v_{\mathrm{inner,1}}/c$& $[0.10, 0.35]$ \\
-$v_{\mathrm{outer,1}}/c$ &  $[0.25, 0.40]$ \\
-$v_{\mathrm{exp,1}}/c$ & $[0.05, 0.30]$ \\
-$Y_{e,1}$ & $[0.01, 0.50]$ \\
-$s_{1}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\\hline
-$v_{\mathrm{inner,2}}/c$& $[0.10, 0.35]$ \\
-$v_{\mathrm{outer,2}}/c$ &  $[0.25, 0.40]$ \\
-$v_{\mathrm{exp,2}}/c$ & $[0.05, 0.30]$ \\
-$Y_{e,2}$ & $[0.01, 0.50]$ \\
-$s_{2}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
+$\log_{10}(L_{\mathrm{outer}} / L_{\odot})$ & $[7.0, 8.0]$ & same \\ 
+$\log_{10}(\rho_0 / \mathrm{g~cm^{-3}})$ & $[-16.0, -14.0]$ & same \\\hline
+$v_{\mathrm{inner,1}}/c$& $[0.10, 0.35]$ & $[0.10, 0.29]$ \\
+$v_{\mathrm{outer,1}}/c$ &  $[0.25, 0.40]$ & $[0.30, 0.40]$ \\
+$v_{\mathrm{exp,1}}/c$ & $[0.05, 0.30]$ & same \\
+$Y_{e,1}$ & $[0.01, 0.50]$ & same \\
+$s_{1}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ & same \\\hline
+$v_{\mathrm{inner,2}}/c$& $[0.10, 0.35]$ & $[0.20, 0.30]$ \\
+$v_{\mathrm{outer,2}}/c$ &  $[0.25, 0.40]$ & $[0.31, 0.40]$ \\
+$v_{\mathrm{exp,2}}/c$ & $[0.05, 0.30]$ & same \\
+$Y_{e,2}$ & $[0.01, 0.50]$ & same \\
+$s_{2}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ & same \\
 \enddata
 \end{deluxetable}\label{tab:priors-multi}
+
+% ====================================================
 
 
 
@@ -271,14 +284,13 @@ $s_{2}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
 
 %%% === SECTION 3 === %%%
 %% RESULTS %%
-
 \section{Fitting Later Epochs and Multi-Component Ejecta}\label{sec:results}
 
 %% compilation of all fits; Fig. 1
 \begin{figure*}[!ht]
     \centering
     \includegraphics[width=0.98\textwidth]{figs/bestfits_compare_all_SPARK_2_highlighted.png}
-    \figcaption{\textbf{Compilation of all best fit models to the spectrum of the GW170817 kilonova, AT2017gfo, from this work at 1.4, 2.4, and 3.4 days post-merger, for both single- and multi-component models.} The preferred models are highlighted; disfavored are more translucent. The single-component models are favored at 1.4 and 2.4 days (solid blue and purple lines). At 3.4 days, we require a multi-component ejecta to adequately fit the spectrum (dashed red line). The abundance patterns corresponding to these preferred models are included in Figure~\ref{fig:abunds_time_evolution}. Zoomed in versions of these best fits are included in Figures~\ref{fig:all_spec_single}~and~\ref{fig:all_spec_multi} (Appendix~\ref{app:allspec_posteriors}). Best fits are obtained as the median of the posterior, or the median of some mode of the posterior; these full posteriors are also included in Appendix~\ref{app:allspec_posteriors}.}\label{fig:bestfits}
+    \figcaption{\textbf{Compilation of all best fit models to the spectrum of the GW170817 kilonova from this work: 1.4, 2.4, and 3.4 days post-merger, for both single- and multi-component models.} The preferred models are highlighted; disfavored are more translucent. The single-component models are favored at 1.4 and 2.4 days (solid blue and purple lines). At 3.4 days, we require a multi-component ejecta to adequately fit the spectrum (dashed red line). The abundance patterns corresponding to these preferred models are included in Figure~\ref{fig:abunds_time_evolution}. Zoomed in versions of these best fits are included in Figures~\ref{fig:all_spec_single}~and~\ref{fig:all_spec_multi} (Appendix~\ref{app:allspec_posteriors}). Best fits are obtained as the median of the posterior, or the median of some mode of the posterior; these full posteriors are also included in Appendix~\ref{app:allspec_posteriors}.}\label{fig:bestfits}
 \end{figure*}
 
 
@@ -286,7 +298,7 @@ $s_{2}~[k_{\mathrm{B}}/\mathrm{nucleon}]$ & $[10, 35]$ \\
 %% best fit single-component parameters; Table 3
 \begin{deluxetable}{cccc}
 \centering
-\tablecaption{Best fit parameters for single-component fits to the GW170817 kilonova at $1.4$, $2.4$, and $3.4$~days. The $1.4$~day fit is the ``purple + warm'' model of V23. $v_{\mathrm{outer}}$ is fixed to $0.35c$ in the 1.4 day fit. The inner boundary temperature $T_{\mathrm{inner}}$ and lanthanide mass fraction $X_{\mathrm{lan}}$ are derived parameters, \ie, they are not dimensions in $\theta$-space.}
+\tablecaption{Best fit parameters for single-component fits to the GW170817 kilonova at $1.4$, $2.4$, and $3.4$~days. The $1.4$~day fit is the ``purple + warm'' model of \V23. $v_{\mathrm{outer}}$ is fixed to $0.35c$ in the 1.4 day fit. The inner boundary temperature $T_{\mathrm{inner}}$ and lanthanide mass fraction $X_{\mathrm{lan}}$ are derived parameters, \ie, they are not dimensions in $\theta$-space.}
 \tablehead{parameter & 1.4 days & 2.4 days & 3.4 days}
 \startdata\tablewidth{1.0\textwidth}
  \vspace{2pt}
@@ -308,7 +320,7 @@ $\log_{10} X_{\mathrm{lan}}$ & ${-7.03}^{+0.46}_{-0.47}$ & $-5.64^{+1.05}_{-1.31
 %% best fit multi-component parameters; Table 4
 \begin{deluxetable*}{cccc}
 \centering
-\tablecaption{Best fit parameters for multi-component fits to the GW170817 kilonova at $1.4$, $2.4$, and $3.4$~days. The ejecta mass in each component $M_{\mathrm{1; 2}}$, lanthanide mass fraction in each component $X_{\mathrm{lan,1; 2}}$, and the total $X_{\mathrm{lan,total}}$ are derived parameters.}
+\tablecaption{Best fit parameters for multi-component fits to the GW170817 kilonova at $1.4$, $2.4$, and $3.4$~days. The ejecta mass above the photosphere $M_{\mathrm{phot},1;2}$ (not the total ejecta mass), lanthanide mass fractions $X_{\mathrm{lan,1; 2}}$, and the total $X_{\mathrm{lan,total}}$ are derived parameters.}
 \tablehead{parameter & 1.4 days & 2.4 days & 3.4 days}
 \startdata\tablewidth{1.0\textwidth}
  \vspace{2pt}
@@ -324,15 +336,16 @@ $v_{\mathrm{outer,2}}/c$ & $0.355^{+0.015}_{-0.015}$ & $0.335^{+0.045}_{-0.070}$
 $v_{\mathrm{exp,2}}/c$ & $0.195^{+0.034}_{-0.036}$ & $0.183^{+0.089}_{-0.110}$ & $0.134^{+0.091}_{-0.069}$ \\
 $Y_{e,2}$ & $0.340^{+0.022}_{-0.021}$ & $0.261^{+0.163}_{-0.124}$ & $0.161^{+0.149}_{-0.104}$ \\
 $s_{2}~[k_{\mathrm{B}}/\mathrm{nuc}]$ & $20.1^{+3.8}_{-3.6}$ & $22.0^{+10.0}_{-10.1}$ & $21.5^{+8.3}_{-9.5}$ \\ \hline\hline
-$M_{1}~[M_{\odot}]$ & $6.9^{+22.1}_{-6.0} \times 10^{-7}$ & $2.3^{+12.5}_{-0.7}\times 10^{-5}$ & $5.3^{+1.8}_{-1.3}~\times 10^{-4}$ \\
+$M_{\mathrm{phot},1}~[M_{\odot}]$ & $6.9^{+22.1}_{-6.0} \times 10^{-7}$ & $2.3^{+12.5}_{-0.7}\times 10^{-5}$ & $5.3^{+1.8}_{-1.3}~\times 10^{-4}$ \\
 %$X_{\mathrm{lan,1}}$ & & $\sim1.1\times10^{-5}$ & $\geqslant 1.67 \times 10^{-2}$ \\ \hline
 $\log_{10} X_{\mathrm{lan,1}}$ & $-1.08^{+0.34}_{-0.34}$ & $-0.63^{+0.26}_{-11.1}$ & $-0.97^{+0.23}_{-0.32}$ \\ \hline
-$M_{2}~[M_{\odot}]$ & $7.0^{+0.8}_{-1.0} \times 10^{-5}$ & $4.0^{+4.8}_{-0.9}\times 10^{-5}$ & $3.8^{+1.1}_{-0.9}~\times 10^{-4}$ \\
+$M_{\mathrm{phot},2}~[M_{\odot}]$ & $7.0^{+0.8}_{-1.0} \times 10^{-5}$ & $4.0^{+4.8}_{-0.9}\times 10^{-5}$ & $3.8^{+1.1}_{-0.9}~\times 10^{-4}$ \\
 % $X_{\mathrm{lan,2}}$ & & $\sim2.4\times10^{-3}$ & $2.8^{+26.3}_{-1.1}\times10^{-2}$ \\ \hline
 $\log_{10} X_{\mathrm{lan,2}}$ & ${-12.99}^{+3.15}_{-3.45}$ & $-4.53^{+2.61}_{-3.53}$ & $-0.88^{+0.32}_{-0.55}$ \\ \hline
 $\log_{10} X_{\mathrm{lan,total}}$ & $-12.99^{+8.82}_{-3.45}$ & $-3.39^{+1.34}_{-1.75}$ & $-0.97^{+0.23}_{-0.32}$ \\
 \enddata
 \end{deluxetable*}\label{tab:bestfit_multi}
+
 
 
 %% abundance patterns; Fig. 2
@@ -343,36 +356,38 @@ $\log_{10} X_{\mathrm{lan,total}}$ & $-12.99^{+8.82}_{-3.45}$ & $-3.39^{+1.34}_{
 \end{figure*}
 
 
+
 %% wedges; Fig 3
-\begin{figure}[!ht]
-    \includegraphics[width=0.35\textwidth]{figs/multicomp_wedges_1.4d.png}
-    \includegraphics[width=0.35\textwidth]{figs/multicomp_wedges_2.4d.png}
-    \includegraphics[width=0.35\textwidth]{figs/multicomp_wedges_3.4d.png}
-    \figcaption{\textbf{Inferred ejecta configuration and composition-setting parameters for the multi-component fits.} Best fits are taken as the median of the posteriors, included in Appendix~\ref{app:allspec_posteriors}. The abundance patterns of each component are compared in Appendix~\ref{app:compare_components}. \textit{Top to bottom:} 1.4, 2.4, and 3.4 days. At 1.4 days, a thin ``red'' component which contains $\sim1$\% of the total ejecta mass is seen. This component has a negligible impact on the emergent spectrum, indicating that this model is effectively single-component. At 2.4 days, two components with remarkably similar compositions completely overlap in space, also effectively indicating a single-component ejecta. At 3.4 days, two components with different compositions are present; the ejecta is multi-component. }\label{fig:infer_multicomp_wedges}
+\begin{figure}[!t]
+    \centering 1.4 days \\
+    \includegraphics[width=0.33\textwidth]{figs/multicomp_wedges_1.4d.png} \\
+    2.4 days \\
+    \includegraphics[width=0.33\textwidth]{figs/multicomp_wedges_2.4d.png} \\ 
+    3.4 days \\
+    \includegraphics[width=0.33\textwidth]{figs/multicomp_wedges_3.4d.png}
+    \figcaption{\textbf{Inferred physical ejecta configuration, and the composition-setting parameters, for the multi-component fits.} \textit{Top to bottom:} 1.4, 2.4, and 3.4 days. At 1.4 days, a thin red component containing $\sim1$\% of the total mass is inferred. This component has a negligible impact on the emergent spectrum, indicating that this model is effectively single-component. At 2.4 days, two components with highly similar compositions completely overlap in space, also effectively indicating a single-component ejecta. At 3.4 days, two components with different compositions are present; the ejecta is multi-component. The 1.4 and 2.4 day fits are disfavored compared to the single-component equivalents, while the multi-component fit shown here is favored for 3.4 days.}\label{fig:infer_multicomp_wedges}
 \end{figure}
 
 
+We model the 1.4, 2.4, and 3.4 day spectra of AT2017gfo with both single- and multi-component (2-component) models, and compare the results at each epoch. In Figure~\ref{fig:bestfits}, we compile our best fit spectra, and highlight our favored models. The parameters for our best fit single- and multi-component models are included in Tables~\ref{tab:bestfit_single}~and~\ref{tab:bestfit_multi}, respectively. We find that a single-component blue ejecta model best describes the 1.4 and 2.4 day spectra. At 3.4 days, we require an additional red, lanthanide-rich component in a multi-component ejecta configuration. In the following sections, we present and examine each of the best fits in turn, at each epoch. 
 
+Appendix~\ref{app:allspec_posteriors} contains compilations of all $m_0 + m_{\mathrm{active}}$ spectra generated in a given \SPARK~run, for the 1.4, 2.4, and 3.4 day single- and multi-component runs. Posteriors generated by the single- and multi-component runs are also included. Unless stated otherwise, we use the median and 2.5\% / 97.5\% quantiles of the posterior, or the median and these quantiles of some mode of a multi-modal posterior, to determine our best fit and uncertainties. All posteriors converge with sufficient $m_{\mathrm{active}}$ active learning samples, according to the $z$ convergence diagnostic given in \cite{fleming20}.
 
-
-We model the 1.4, 2.4, and 3.4 day spectra of AT2017gfo with single- and multi-component (2-component) models, and compare the models at each epoch. In Figure~\ref{fig:bestfits}, we compile our best fit spectra, and highlight our favored models. The parameters for our best fit single- and multi-component models are included in Tables~\ref{tab:bestfit_single}~and~\ref{tab:bestfit_multi}, respectively. We find that a single-component blue ejecta model best describes the 1.4 and 2.4 day spectra, while at 3.4 days, we require an additional red, lanthanide-rich component in a multi-component ejecta configuration. In the following sections, we present and examine each of the best fits in turn, at each epoch. 
-
-Appendix~\ref{app:allspec_posteriors} contains compilations of all $m_0 + m_{\mathrm{active}}$ spectra generated in a given \SPARK~run, for the 1.4, 2.4, and 3.4 day single- and multi-component runs. Posteriors generated by the single- and multi-component runs are also included. Unless stated otherwise, we use the median and 2.5\% / 97.5\% quantiles of the posterior, or the median and these quantiles of some mode of a multi-modal posterior, to determine our best fit and uncertainties. The convergence of the posteriors is assessed in Appendix~\ref{app:convergence}.
 
 
 
 %%% subsection 3.1: 1.4 DAYS
 \subsection{Single-and multi-component modelling at 1.4 days}\label{ssc:1.4}
 
-In V23, we fit the 1.4 day spectrum of AT2017gfo with a single-component ejecta model. This fit required $m_0 + m_{\mathrm{active}} = 1500 + 1140$ points to obtain a good fit and converged posterior (see Figure~\ref{fig:all_spec_single}). We describe the best fit ``purple + warm'' model here, and refer the reader to V23 for greater details. The purple + warm model is characterized by a photospheric velocity of $v_{\mathrm{inner}}/c = 0.313^{+0.013}_{-0.014}$; while the outer boundary velocity was fixed to $v_{\mathrm{outer}} = 0.35c$. For abundance-setting parameters, we find an electron fraction $Y_e = 0.311^{+0.013}_{-0.011}$, expansion velocity of $v_{\mathrm{exp}}/c = 0.240^{+0.055}_{-0.082}$, and entropy of $s / k_{\mathrm{B}} = 13.6^{+4.1}_{-3.0}$. In V23, we referred to this model as ``purple + warm'', but emphasize that this is nonetheless substantially blue ejecta within the broader context of kilonova components. These parameters point to an abundance pattern which is poor in lanthanides, but rich in strontium (${}_{38}$Sr), allowing for a good fit to the prominent $\sim$8000~\AA~feature. The fit struggles at shorter wavelengths: over $3500-4500$~\AA, we overestimate the absorption from yttrium (${}_{39}$Y) and zirconium (${}_{40}$Zr), while at $\lesssim$3500~\AA, we underestimate. Nonetheless, the single-component model remains our preferred model at 1.4 days, as we elaborate on below.
+In \V23, we fit the 1.4 day spectrum of AT2017gfo with a single-component ejecta model. This fit required $m_0 + m_{\mathrm{active}} = 1500 + 1140$ points to obtain a good fit and converged posterior (see Figure~\ref{fig:all_spec_single}). We describe the best fit ``purple + warm'' model here, and refer the reader to \V23 for details. The purple + warm model is characterized by a photospheric velocity of $v_{\mathrm{inner}}/c = 0.313^{+0.013}_{-0.014}$; while the outer boundary velocity was fixed to $v_{\mathrm{outer}} = 0.35c$. For abundance-setting parameters, we found an electron fraction $Y_e = 0.311^{+0.013}_{-0.011}$, expansion velocity of $v_{\mathrm{exp}}/c = 0.240^{+0.055}_{-0.082}$, and entropy of $s / k_{\mathrm{B}} = 13.6^{+4.1}_{-3.0}$. In \V23, we referred to this model as ``purple + warm'', but emphasize that this is nonetheless substantially blue ejecta within the broader context of kilonova components. These parameters correspond to an abundance pattern that is poor in lanthanides, but rich in strontium (${}_{38}$Sr), allowing for a good fit to the prominent $\sim$8000~\AA~feature. The fit struggled at shorter wavelengths: over $3500-4500$~\AA, we overestimated the absorption from yttrium (${}_{39}$Y) and zirconium (${}_{40}$Zr), while at $\lesssim$3500~\AA, we underestimated. Nonetheless, the single-component model remains our preferred model at 1.4 days, as we elaborate on below.
 
-We require $m_0 + m_{\mathrm{active}} = 1500 + 1440$ points to obtain a good fit and converged posterior in our 1.4 day, multi-component \SPARK~run (see Figure~\ref{fig:all_spec_multi}). Due to the increased dimensionality of the multi-component fits, more active learning samples are required than for single-component. The resultant fit generally captures the shape of the spectrum, and the broad absorption at $\sim$8000~\AA, like the single-component equivalent. However, the fit does not capture the continuum at wavelengths $\gtrsim$10,500 \AA~nor wavelengths in the range $\sim$3500 - 5000~\AA. The fit is marginally closer to the observed spectrum at the shortest wavelengths ($\lesssim$ 3500 \AA) but this region lies at the edge of the X-shooter spectrograph's sensitivity, and overall the single-component model is favored by visual inspection. 
+In our 1.4 day multi-component \SPARK~run, we require $m_0 + m_{\mathrm{active}} = 1500 + 1440$ points to obtain a good fit and converged posterior (see Figure~\ref{fig:all_spec_multi}). More active learning samples are required than for single-component due to the increased dimensionality of the multi-component fits. The resultant fit generally captures the shape of the spectrum, and the broad absorption at $\sim$8000~\AA, like the single-component equivalent. However, the fit does not capture the continuum at wavelengths $\gtrsim$10,500~\AA~nor $\sim$ 3500 - 5000~\AA. The fit is marginally closer to the observed spectrum at the shortest wavelengths ($\lesssim$ 3500 \AA) but this region lies at the edge of the X-shooter spectrograph sensitivity, and overall the single-component model is favored by visual inspection. 
 
-We infer an outer boundary luminosity of $\log_{10} (L_{\mathrm{outer}}/L_{\odot}) = 7.854^{+0.012}_{-0.017}$, or equivalently, $L_{\mathrm{outer}} = 2.74^{+0.03}_{-0.02}~\times 10^{41}~\mathrm{erg~s^{-1}}$. This is brighter than is inferred in the single-component equivalent. This is as expected: due to the use of 30 \TARDIS~iterations (rather than 1), $L_{\mathrm{outer}}$ is updated at each iteration. Hence, in our multi-component models, the meaning of $L_{\mathrm{outer}}$ is different and cannot be mapped directly to $T_{\mathrm{inner}}$. ($L_{\mathrm{outer}}$ is also higher in the 2.4 and 3.4 day multi-component models, compared to the single-component equivalents).
+We infer an outer boundary luminosity of $\log_{10} (L_{\mathrm{outer}}/L_{\odot}) = 7.854^{+0.012}_{-0.017}$. This is brighter than is inferred in the single-component equivalent. This is as expected: due to the use of 30 \TARDIS~iterations (rather than 1), $L_{\mathrm{outer}}$ is updated at each iteration. Hence, in our multi-component models, the meaning of $L_{\mathrm{outer}}$ is different and cannot be mapped directly to $T_{\mathrm{inner}}$. ($L_{\mathrm{outer}}$ is also higher in the 2.4 and 3.4 day multi-component models, compared to the single-component equivalents).
 
-We infer two components with different abundance-setting parameters, but find that one of these components dominates over the other. This first component is described by a low electron fraction $Y_{e,1} = 0.139^{+0.028}_{-0.114}$ and specific entropy $s_1 / k_{\mathrm{B}} = 24.6^{+3.4}_{-5.1}$, and could thus be described as red. The latter has $Y_{e,2} = 0.340^{+0.022}_{-0.021}$ and $s_2 / k_{\mathrm{B}} = 20.1^{+3.8}_{-3.6}$, and is bluer. As in the single-component fits, expansion velocities ($v_{\mathrm{exp},1}$ and $v_{\mathrm{exp},2}$) are poorly constrained. The entropies ($s_1$ and $s_2$), although better constrained, are both higher than and inconsistent with the single-component equivalent at 1.4 days. The $Y_{e,2}$ of the second, bluer component is consistent with the purple + warm model.  
+This multi-component run yields two components with substantially different abundance patterns. The first component has a lower electron fraction $Y_{e,1} = 0.139^{+0.028}_{-0.114}$ (and specific entropy $s_1 / k_{\mathrm{B}} = 24.6^{+3.4}_{-5.1}$), yielding. The second has higher $Y_{e,2} = 0.340^{+0.022}_{-0.021}$ (and $s_2 / k_{\mathrm{B}} = 20.1^{+3.8}_{-3.6}$), distinctly bluer. Indeed, the $Y_{e,2}$ of this second, bluer component is consistent with the single-component fit at 1.4 days. As in the single-component fit, expansion velocities ($v_{\mathrm{exp},1}$ and $v_{\mathrm{exp},2}$) are poorly constrained. Interestingly, the better-constrained entropies ($s_1$ and $s_2$) are both higher than and inconsistent with the single-component equivalent.
 
-A physical picture for the components is included in Figure~\ref{fig:infer_multicomp_wedges}. We see that the red component is confined to only 2 shells, while the blue component extends over a greater radius. The mass contained in these two components is $M_1/M_{\odot} = 6.9^{+22.1}_{-6.0} \times 10^{-7}$ and $M_2/M_{\odot} = 7.0^{+0.8}_{-1.0} \times 10^{-5}$, respectively. The bluer component thus contains $\sim$100$\times$ as much mass as the redder, and dominates the absorption/emission in the spectrum. In this sense, despite the different compositions of the two components (Figure~\ref{fig:abunds_components_compare}, Appendix~\ref{app:compare_components}), we interpret this multi-component \SPARK~run as converging to an effectively single-component model.
+However, despite the substantial differences between the two components, one component dominates over the other in producing the emergent spectrum. A physical picture for the components is included in Figure~\ref{fig:infer_multicomp_wedges}. We see that the red component is confined to only 2 shells, while the blue component extends over a greater radius. The mass contained in these two components is $M_{\mathrm{phot},1}/M_{\odot} = 6.9^{+22.1}_{-6.0} \times 10^{-7}$ and $M_{\mathrm{phot},2}/M_{\odot} = 7.0^{+0.8}_{-1.0} \times 10^{-5}$, respectively. We emphasize that this is the mass above the photosphere, and not the total ejecta mass. Nonetheless, the bluer component contains $\sim$100$\times$ as much mass as the redder, and dominates the absorption/emission in the spectrum. In this sense, despite the different compositions of the two components (Figure~\ref{fig:abunds_components_compare}, Appendix~\ref{app:compare_components}), this multi-component \SPARK~run has effectively converged to a single-component model.
 
 
 
@@ -380,17 +395,17 @@ A physical picture for the components is included in Figure~\ref{fig:infer_multi
 %%% subsection 3.2: 2.4 DAYS
 \subsection{Single-and multi-component modelling at 2.4 days}\label{ssc:2.4}
 
-We require $m_0 + m_{\mathrm{active}} = 1500 + 600$ points to obtain a good fit and converged posterior in our 2.4 day, single-component \SPARK~run (see Figure~\ref{fig:all_spec_single}). The resultant posterior shows some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. Discarding samples from the posterior with $s/k_{\mathrm{B}} \geqslant 25.0$, we obtain a superior fit, and use this as our preferred model. This fit captures most of the continuum of the observed spectrum, and most of the $\sim$8000 \AA~absorption. If this absorption belongs to a P Cygni feature (as has been argued in \citealt{watson19, sneppen23}), we partially miss the red wing of this feature. Furthermore, we overestimate the absorption, or underestimate the continuum, at wavelengths $\lesssim$4500 \AA. 
+In our 2.4 day single-component \SPARK~run, We require $m_0 + m_{\mathrm{active}} = 1500 + 600$ points to obtain a good fit and converged posterior (see Figure~\ref{fig:all_spec_single}). The resultant posterior shows some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. Discarding samples from the posterior with $s/k_{\mathrm{B}} \geqslant 25.0$, we obtain a superior fit, and use this as our preferred model. This fit captures most of the continuum of the observed spectrum, and most of the $\sim$8000 \AA~absorption. If this absorption belongs to a P Cygni feature (as has been argued in \citealt{watson19, sneppen23}), we partially miss the red wing of this feature. Furthermore, we overestimate the absorption, or underestimate the continuum, at wavelengths $\lesssim$4500 \AA. 
 
 We infer an $\log_{10} (L_{\mathrm{outer}}/L_{\odot}) = 7.594^{+0.040}_{-0.061}$. In the case of single-shell, single-iteration \TARDIS~runs, we can use these values to determine an inner boundary temperature of $T_{\mathrm{inner}} = 3050^{+126}_{-223}~\mathrm{K}$. As expected, the kilonova has dimmed and cooled since the previous epoch. The inferred velocities also match expectations: we obtain inner and outer boundary velocities $v_{\mathrm{inner}}/c = 0.249^{+0.017}_{-0.032}$ and $v_{\mathrm{outer}} = 0.342^{+0.047}_{-0.050}$. This $v_{\mathrm{outer}}$ is consistent with the fixed $v_{\mathrm{outer}} = 0.35c$ from 1.4 days, while $v_{\mathrm{inner}}$ (effectively the photospheric velocity) has receded into the ejecta, compared to $0.31c$ at 1.4 days. This is evidence for the ejecta expanding, cooling, and become optically thinner, as expected.
 
-Finally, we obtain $Y_e = 0.306^{+0.055}_{-0.204}$ and $s/k_{\mathrm{B}} = 17.6^{+7.1}_{-6.3}$. As at 1.4 days, $v_{\mathrm{exp}}$ is poorly constrained. $s$ is better-constrained, and is also consistent with the earlier epoch. The posterior distribution in all dimensions is wider at this epoch; in particular, $Y_e$ exhibits a tail extending to smaller electron fractions. The posterior is nonetheless peaked at $Y_e = 0.306^{+0.055}_{-0.204}$, which is slightly lower than at 1.4 days, but consistent within uncertainties. 
+Finally, we obtain $Y_e = 0.306^{+0.055}_{-0.204}$ and $s/k_{\mathrm{B}} = 17.6^{+7.1}_{-6.3}$. Similar to our results at 1.4 days, $v_{\mathrm{exp}}$ is poorly constrained, while $s$ is better-constrained. This $s$ is also consistent with the previous epoch. The posterior distribution in all dimensions is wider at 2.4 days; in particular, $Y_e$ exhibits a tail extending to smaller electron fractions. The posterior is nonetheless peaked at $Y_e = 0.306^{+0.055}_{-0.204}$, which is slightly lower than at 1.4 days, but consistent to within the uncertainties. 
 
-We require $m_0 + m_{\mathrm{active}} = 1500 + 1020$ points to obtain a good fit and converged posterior in our 2.4 day, multi-component \SPARK~run (see Figure~\ref{fig:all_spec_multi}). The resultant fit once again captures the broad shape and some of the $\sim$8000~\AA~absorption. However, the depth of the $\sim$8000~\AA~absorption feature is overestimated. The multi-component fit does achieve a better fit to the continuum, at wavelengths $\lesssim$7000~\AA. 
+In our 2.4 day, multi-component \SPARK~run, we require $m_0 + m_{\mathrm{active}} = 1500 + 1020$ points to obtain a good fit and converged posterior (see Figure~\ref{fig:all_spec_multi}). The resultant fit once again captures the broad shape and $\sim$8000~\AA~absorption, but the depth of the $\sim$8000~\AA~absorption feature is overestimated. The multi-component fit does, however, achieve a better fit to the continuum at wavelengths $\lesssim$7000~\AA. 
 
-The posterior for the multi-component, 2.4 day run is broader than the other epochs, as is the case for the single-component equivalent. As expected, the inferred model is dimmer than at 1.4 days. The two inferred components are remarkably similar: the first component is described by $Y_{e,1} = 0.288^{+0.129}_{-0.187}$ and $s_1 / k_{\mathrm{B}} = 21.1^{+10.5}_{-9.5}$, while the latter has $Y_{e,2} = 0.261^{+0.163}_{-0.124}$ and $s_2 / k_{\mathrm{B}} = 22.0^{+10.0}_{-10.1}$. Again, expansion velocities are poorly constrained, while the better-constrained entropies are higher than and inconsistent with the single-component equivalent. However, both entropies are consistent with the entropies inferred in the 1.4 day, multi-component model. Finally, $Y_{e,1}$ and $Y_{e,2}$ are both lower than, but still consistent with, the dominant blue component in the 1.4 day, multi-component model and the 1.4 day, single-component model.
+In contrast with the 1.4 day, multi-component run, we see that the two inferred components are remarkably similar. The first component is described by $Y_{e,1} = 0.288^{+0.129}_{-0.187}$ and $s_1 / k_{\mathrm{B}} = 21.1^{+10.5}_{-9.5}$, while the latter has $Y_{e,2} = 0.261^{+0.163}_{-0.124}$ and $s_2 / k_{\mathrm{B}} = 22.0^{+10.0}_{-10.1}$. Again, expansion velocities are poorly constrained, while the better-constrained entropies are higher than and inconsistent with the single-component equivalent. Both entropies are consistent with the entropies inferred in the 1.4 day, multi-component model. Finally, $Y_{e,1}$ and $Y_{e,2}$ are both lower than, but still consistent with, the dominant blue component in the 1.4 day, multi-component model and the 1.4 day, single-component (purple+warm) model.
 
-A physical picture for the components is included in Figure~\ref{fig:infer_multicomp_wedges}. As expected, the photosphere recedes into the ejecta. The two components almost completely overlap in physical space. Indeed, the mass contained in these two components is $M_1/M_{\odot} = 2.3^{+12.5}_{-0.7} \times 10^{-5}$ and $M_2/M_{\odot} = 4.0^{+4.8}_{-0.9} \times 10^{-5}$, respectively; the ejecta mass is nearly equally partitioned into these two components. Furthermore, the similarity between $(Y_{e,1},~v_{\mathrm{exp},1},~s_1)$ and $(Y_{e,2},~v_{\mathrm{exp},2},~s_2)$ yields extremely similar compositions for both components (see Figure~\ref{fig:abunds_components_compare} in Appendix~\ref{app:compare_components}). For these reasons, we also interpret this model as effectively being single-component.
+Our inferred geometry for the two components is shown in Figure~\ref{fig:infer_multicomp_wedges}. As expected, the photosphere recedes into the ejecta. The two components almost completely overlap in physical space; indeed, the mass contained in these two components is roughly equally split into $M_{\mathrm{phot},1}/M_{\odot} = 2.3^{+12.5}_{-0.7} \times 10^{-5}$ and $M_{\mathrm{phot},2}/M_{\odot} = 4.0^{+4.8}_{-0.9} \times 10^{-5}$, respectively. Furthermore, the similarity between $(Y_{e,1},~v_{\mathrm{exp},1},~s_1)$ and $(Y_{e,2},~v_{\mathrm{exp},2},~s_2)$ yields similar compositions for both components (Figure~\ref{fig:abunds_components_compare}, Appendix~\ref{app:compare_components}). Given the two components' similar compositions and equal contributions to the emergent spectrum, this multi-\SPARK~run has also converged to an effectively single-component model.
 
 
 
@@ -398,19 +413,17 @@ A physical picture for the components is included in Figure~\ref{fig:infer_multi
 %%% subsection 3.3: 3.4 DAYS
 \subsection{Single-and multi-component modelling at 3.4 days}\label{ssc:3.4}
 
-Our best single-component model for 3.4 days is in general a poor fit to the observed spectrum of AT2017gfo. Nonetheless, we review it here for completeness.
+Our best single-component model for 3.4 days is in general a poor fit to AT2017gfo. Nonetheless, we review it here for completeness. As at 2.4 days, we require $m_0 + m_{\mathrm{active}} = 1500 + 600$ points (see Figure~\ref{fig:all_spec_single}) to obtain a converged posterior. The resultant posterior shows a high degree of multi-modality, most evident in the $\rho_0$, $Y_e$, and $s / k_{\mathrm{B}}$ dimensions. Of the multiple modes, we obtain our best (but still poor) fit with a higher-$\rho_0$, mid-$Y_e$, lower-$s$ mode. This fit produces some, but not all, of the dominant absorption feature at $\sim$8000 \AA. This fit also overestimates the absorption, or underestimates the continuum, for wavelengths $\lesssim$5500 \AA. 
 
-As at 2.4 days, we require $m_0 + m_{\mathrm{active}} = 1500 + 600$ points (see Figure~\ref{fig:all_spec_single}) to obtain a converged posterior. The resultant posterior shows a high degree of multi-modality, most evident in the $\rho_0$, $Y_e$, and $s / k_{\mathrm{B}}$ dimensions. Of the multiple modes, we obtain our best (but still poor) fit to the observed spectrum by discarding samples from the posterior outside of the range $\log_{10}(\rho_0 / \mathrm{g~cm^{-3}}) \in [-15.0, -14.0] \cup Y_{\mathrm{e}} \in [0.13, 0.29] \cup s/k_{\mathrm{B}} \in [10.0, 25.0]$. This higher-$\rho_0$, mid-$Y_e$, lower-$s$ mode produces some of the dominant absorption feature at $\sim$8000 \AA, but not all. This fit also overestimates the absorption, or underestimates the continuum, for wavelengths $\lesssim$5500 \AA. 
+We find $\log_{10} (\rho_0 / \mathrm{g~cm^{-3}}) = -14.586^{+0.313}_{-0.384}$. This density is larger than that inferred at earlier epochs. We also infer $v_{\mathrm{outer}} = 0.309^{+0.032}_{-0.023}$. This $v_{\mathrm{outer}}$ is much smaller than the fixed value at 1.4 days or the inferred at 2.4 days. This may explain the insufficient absorption at $\sim$8000 \AA, if the photon packets are not interacting with enough matter to be absorbed in large numbers before escaping the ejecta. Finally, we find $Y_e = 0.226^{+0.062}_{-0.067}$ and $s/k_{\mathrm{B}} = 15.4^{+7.2}_{-3.1}$ at this epoch. $Y_e$ is lower and inconsistent with both previous epochs. Interestingly, despite the lower $Y_e$, the inferred abundance of Sr is within $1$\% of that of our single-component model at 1.4 days, and in fact $\sim$25\% larger than that of our single-component model at 2.4 days. Nonetheless, Sr does not yield the expected prominent absorption feature at $\sim$8000 \AA. This suggests that the shortcomings of this model may not be due to the inferred abundance pattern, but rather the density, velocity structure, and/or some inherent shortcoming of the single-component model.
 
-Interestingly, we find $\log_{10} (\rho_0 / \mathrm{g~cm^{-3}}) = -14.586^{+0.313}_{-0.384}$. This density is larger than that inferred at earlier epochs. We also infer $v_{\mathrm{outer}} = 0.309^{+0.032}_{-0.023}$. This $v_{\mathrm{outer}}$ is much smaller than the fixed value at 1.4 days or the inferred at 2.4 days. This may explain the insufficient absorption at $\sim8000$ \AA, if the photon packets are not interacting with enough matter to be absorbed in large numbers before escaping the ejecta.
+For our preferred, multi-component model, we require $m_0 + m_{\mathrm{active}} = 1500 + 1140$ points to obtain a good fit and converged posterior at 3.4 days (see Figure~\ref{fig:all_spec_multi}). The resultant fit is better than the single-component equivalent. This fit better captures the $\sim$8000 \AA~absorption, and the red wing of the nominal P Cygni feature. However, this fit also overestimates the absorption, or underestimates the continuum, for wavelengths $\lesssim$5500 \AA. This over/underestimation is more severe than in the single-component model.
 
-Finally, we find $Y_e = 0.226^{+0.062}_{-0.067}$ and $s/k_{\mathrm{B}} = 15.4^{+7.2}_{-3.1}$ at this epoch. $v_{\mathrm{exp}}$ is once again poorly constrained, while $s$ is better constrained and consistent with earlier epochs. In contrast, $Y_e$ is lower and inconsistent with both previous epochs. Interestingly, despite the lower $Y_e$, the abundance of Sr is within a factor of $1$\% that of our single-component model at 1.4 days, and $\sim 25$\% larger than that of our single-component model at 2.4 days; nonetheless, Sr does not yield the expected prominent absorption feature at $\sim$8000 \AA. This suggests that the shortcomings of this model may not be due to the inferred abundance pattern, but rather the density, velocity structure, and/or some inherent shortcoming of the single-component model.
+Interestingly, we find $\log_{10} (\rho_0 / \mathrm{g~cm^{-3}}) = -14.505^{+0.323}_{-0.372}$, which is higher than, and inconsistent with, the density inferred at 1.4 and 2.4 days. This inconsistency (also present in the disfavored single-component model at 3.4 days) may arise from the emergence of a new component, with a different density profile (either in functional form or in normalization), at this epoch. 
 
-For our preferred, multi-component model, we require $m_0 + m_{\mathrm{active}} = 1500 + 1140$ points to obtain a good fit and converged posterior at 3.4 days (see Figure~\ref{fig:all_spec_multi}). The resultant fit is better than the single-component equivalent. This fit better captures the $\sim$8000 \AA~absorption, and the red wing of the nominal P Cygni feature. However, this fit also overestimates the absorption, or underestimates the continuum, for wavelengths $\lesssim$5500 \AA. This over/underestimation is more severe than in the single-component model. As expected, the kilonova dims, compared to the 1.4 and 2.4 day multi-component models. Interestingly, we find $\log_{10} (\rho_0 / \mathrm{g~cm^{-3}}) = -14.505^{+0.323}_{-0.372}$, which is higher than, and inconsistent with, the density inferred at 1.4 and 2.4 days. 
+Most significantly, we infer two components with substantially different properties. The first component is described by $Y_{e,1} = 0.228^{+0.073}_{-0.088}$ and $s_1 / k_{\mathrm{B}} = 14.9^{+8.0}_{-4.5}$, while the latter has $Y_{e,2} = 0.161^{+0.149}_{-0.104}$ and $s_2 / k_{\mathrm{B}} = 21.5^{+8.3}_{-9.5}$. Again, expansion velocities are poorly constrained. Both entropies are better-constrained and consistent with the entropies inferred in the single-component (and multi-component) models at 1.4 and 2.4 days. The $Y_{e,1}$ and $Y_{e,2}$ are both substantially lower than, and inconsistent with, those of the single- and multi-component fits at 1.4 and 2.4 days. This leads to an ejecta that is substantially more lanthanide-rich: The two components have $\log_{10} X_{\mathrm{lan},1} = -0.97^{+0.23}_{-0.32}$ and $\log_{10} X_{\mathrm{lan},2} = -0.88^{+0.32}_{-0.55}$, respectively. This yields a total lanthanide fraction of $\log_{10} X_{\mathrm{lan,total}} = -0.97^{+0.23}_{-0.32}$ (the same as $\log_{10} X_{\mathrm{lan},1}$ after rounding). Figure~\ref{fig:abunds_components_compare} (Appendix~\ref{app:compare_components}) shows the abundances of the two components, with uncertainties. Both components contain some substantial abundance of lanthanides, but the higher-$Y_e$ of the two has $\sim$10$\times$ more of the crucial element Sr.
 
-Most significantly, we infer two components with substantially different properties. The first component is described by $Y_{e,1} = 0.228^{+0.073}_{-0.088}$ and $s_1 / k_{\mathrm{B}} = 14.9^{+8.0}_{-4.5}$, while the latter has $Y_{e,2} = 0.161^{+0.149}_{-0.104}$ and $s_2 / k_{\mathrm{B}} = 21.5^{+8.3}_{-9.5}$. Again, expansion velocities are poorly constrained. Both entropies are better-constrained and consistent with the entropies inferred in the single-component (and multi-component) models at 1.4 and 2.4 days. The $Y_{e,1}$ and $Y_{e,2}$ are both substantially lower than, and inconsistent with, those of the single- and multi- component fits at 1.4 and 2.4 days. This leads to an ejecta which is substantially more lanthanide-rich. The two components have $\log_{10} X_{\mathrm{lan},1} = -0.97^{+0.23}_{-0.32}$ and $\log_{10} X_{\mathrm{lan},2} = -0.88^{+0.32}_{-0.55}$, respectively. This yields a total lanthanide fraction of $\log_{10} X_{\mathrm{lan,total}} = -0.97^{+0.23}_{-0.32}$ (the same as $\log_{10} X_{\mathrm{lan},1}$ after rounding). As we discuss in the following sections, the increased abundance of lanthanides is crucial for producing the absorption at $\lesssim$7500 \AA, while the presence of strontium is needed to produce the absorption at $\sim$8000 \AA. Figure~\ref{fig:abunds_components_compare} (Appendix~\ref{app:compare_components}) shows the abundances of the two components, with uncertainties. One of these components has $\sim$10$\times$ as much Sr as the other, but $\sim$10-100$\times$ fewer lanthanides. 
-
-In Figure~\ref{fig:infer_multicomp_wedges}, we show a physical picture of the inferred ejecta. The photosphere further recedes compared to 1.4 and 2.4 days. Both components mostly overlap in space and the mass is roughly equally split: they have  masses $M_1/M_{\odot} = 5.3^{+1.8}_{-1.3} \times 10^{-4}$ and $M_2/M_{\odot} = 3.8^{+1.1}_{-0.9} \times 10^{-4}$, respectively.  Given the roughly equal contributions from (1) a component rich in lanthanides, and (2) another rich in Sr, and that the multi-component model is a substantially better fit than the single-component at 3.4 days, we interpret the ejecta as being two-component. One bluer component contains the abundance of Sr needed to produce the $\sim$8000 \AA~absorption, while the other redder component contains enough lanthanides to produce the $\lesssim$7500 \AA~absorption. This combination of abundances is not obtained with a single-component model.
+In Figure~\ref{fig:infer_multicomp_wedges}, we show a physical picture of the inferred ejecta. The photosphere further recedes compared to 1.4 and 2.4 days. Both components mostly overlap in space and the mass is roughly equally split: they have  masses $M_{\mathrm{phot},1}/M_{\odot} = 5.3^{+1.8}_{-1.3} \times 10^{-4}$ and $M_{\mathrm{phot},2}/M_{\odot} = 3.8^{+1.1}_{-0.9} \times 10^{-4}$, respectively. Given the roughly equal contributions from a component rich in lanthanides and another with a similar abundance of lanthanides but $\sim$10$\times$ as much Sr, and the fact that the multi-component model is a substantially better fit than the single-component at 3.4 days, we interpret the ejecta as being genuinely two-component at this epoch. As we will see, the equal contribution from two components with distinct properties shapes the emergent spectrum. 
 
 
 
@@ -420,31 +433,24 @@ In Figure~\ref{fig:infer_multicomp_wedges}, we show a physical picture of the in
 \subsection{Favored models}
 
 %%% REPLACING the bluer component for purple+warm; Fig. 4
-\begin{figure}[!t]
-    \includegraphics[width=0.4\textwidth]{figs/swap-purplewarm-multicomp_compare_all_SPARK_2.png}
-    \figcaption{\textbf{Hypothetical models at 1.4, 2.4, and 3.4 days, where the bluer component of each multi-component fit has been replaced by that of the purple + warm (single-component, 1.4 days) model of V23}. Here, we take the best fit parameters from our multi-component runs (Table~\ref{tab:bestfit_multi}) and, \textit{after} fitting, swap out the bluer (higher $Y_e$) component with the purple + warm $(Y_e = 0.311,~v_{\mathrm{exp}}/c=0.240,~s / k_{\mathrm{B}}=13.6)$. Comparing to the original multi-component models (dashed lines in Figure~\ref{fig:bestfits}), the differences are negligible at all epochs.}\label{fig:swap-purplewarm}
-\end{figure}
-
-%%% FIXING the bluer component for purple+warm; Fig. 5
-\begin{figure}[!t]
-    \includegraphics[width=0.4\textwidth]{figs/fix-purplewarm-multicomp_compare_all_SPARK_2.png}
-    \figcaption{\textbf{Best-fit spectra at 1.4, 2.4, and 3.4 days, from multi-component \SPARK~runs where one of the two components has fixed abundance-setting parameters corresponding to the purple + warm model}. Here, we fix one of the components to the purple + warm $(Y_e = 0.311,~v_{\mathrm{exp}}/c=0.240,~s / k_{\mathrm{B}}=13.6)$, \textit{a priori}. We then run \SPARK~to obtain a new model. These fits are all disfavoured by visual inspection, compared to original multi-component models (dashed lines in Figure~\ref{fig:bestfits}). Nonetheless, these fits serve to demonstrate that the addition of a new, redder component cannot improve the fit at 1.4 and 2.4 days. \redbf{At 3.4 days...}}\label{fig:fix-purplewarm}
+\begin{figure}[!ht]
+    \includegraphics[width=0.47\textwidth]{figs/swap-purplewarm-multicomp_compare_all_SPARK_2.png}
+    \figcaption{\textbf{Hypothetical models at 1.4, 2.4, and 3.4 days, where the higher-$Y_e$ component of each multi-component fit has been replaced by that of the single-component, 1.4 days (purple + warm) model of \V23}. Here, we take the best fit parameters from our multi-component runs (Table~\ref{tab:bestfit_multi}) and, \textit{after} fitting, swap out the higher-$Y_e$ component with the purple + warm $(Y_e = 0.311,~v_{\mathrm{exp}}/c=0.240,~s / k_{\mathrm{B}}=13.6)$. $L_{\mathrm{outer}}$, $\rho_0$, and the velocities are left unchanged, and thus the mass in each component is also unchanged. Comparing to the original multi-component models (dashed lines, Figure~\ref{fig:bestfits}), the differences are negligible at all epochs.}\label{fig:swap-purplewarm}
 \end{figure}
 
 
-Thus far, we have selected our favored models by visual inspection, seeing which produces a better fit to the observed spectrum at a given epoch. We have found that the 1.4 and 2.4 days spectra are well-fit by a single bluer component, whereas the 3.4 day spectrum needs an additional redder component rich in lanthanides. 
 
-We observe that, even when allowed to yield multiple components, the multi-component \SPARK~runs yield effectively single-component best fits at 1.4 and 2.4 days. At 1.4 days, the bluer component contains $\sim$100$\times$ the mass of the redder, and the presence of the red is inconsequential. At 2.4 days, the two components are roughly equal in mass and are characterized by similar abundance patterns. 
+Thus far, we have selected our favored models by visual inspection, seeing which produces a better fit to the observed spectrum at a given epoch. Here, we explore the physical consistency of our favored models. 
 
-In contrast, at 3.4 days, the two components have different abundance patterns. In particular, the role of the bluer component is to provide enough Sr to yield the $\sim$8000 \AA~absorption, while the redder yields the ensemble of lanthanides needed to produce the short-wavelength $\lesssim$7500 \AA~absorption. Given our atomic data, line list, and (most importantly) abundance patterns from the reaction network calculations of \cite{wanajo18}, no single component is able to simultaneously yield the abundance of Sr and lanthanides needed to reproduce the observed 3.4 day spectrum of AT2017gfo.
+We have found that the 1.4 and 2.4 day spectra are well-fit by a single bluer component. Even when allowed to yield multiple components, the multi-component \SPARK~runs yield effectively single-component best fits at 1.4 and 2.4 days. At 1.4 days, the bluer component contains $\sim$100$\times$ the mass of the redder, and the presence of the red component is thus inconsequential. At 2.4 days, the two components are roughly equal in mass and characterized by similar abundance patterns; this fit is thus also effectively single-component.
 
-Aside from asking whether a single- or multi-component ejecta is individually preferred at each epoch, we also ask: does the \textit{addition} of a new component to the original, purple + warm ejecta at 1.4 days improve the fit? As a first test, we replace the bluer component of the multi-component models at 1.4, 2.4, and 3.4 days with this purple + warm component. (The bluer components have $Y_{e} = $ $ 0.340^{+0.022}_{-0.021}$, $0.288^{+0.129}_{-0.187}$, and $0.228^{+0.073}_{-0.088}$ at 1.4, 2.4, and 3.4 days, respectively). Figure~\ref{fig:swap-purplewarm} shows the resultant spectra. Replacing these components with the $(Y_e = 0.311,~v_{\mathrm{exp}}/c=0.240,~s / k_{\mathrm{B}}=13.6)$, there is minimal impact on the resultant spectrum and we retain a good fit.  This is not surprising at 1.4 and 2.4 days, where the inferred $Y_e$ is consistent with the purple + warm model. It is, however, surprising at 3.4 days. This further suggests that the role of the bluer component at 3.4 days is simply to provide enough Sr to produce the $\sim$8000 \AA~absorption. 
+In contrast, at 3.4 days, the two components in the multi-component fit have different abundance patterns. In particular, an additional lower-$Y_e$ component rich in lanthanides is required to fit the observed spectrum. The lower-$Y_e$ component contains as much as $\sim$10$\times$ more lanthanides than the higher-$Y_e$ component, given the broadness of the posterior. The remaining higher-$Y_e$ component, however, contains $\sim$10$\times$ as much Sr. Given our atomic data, line list, and (most importantly) abundance patterns from the reaction network calculations of \cite{wanajo18}, no single component is able to simultaneously yield the abundance of Sr and lanthanides needed to reproduce the observed 3.4 day spectrum of AT2017gfo. As we will see in the following sections, the role of the higher-$Y_e$ component is to provide enough Sr to yield the $\sim$8000 \AA~absorption, while the lower-$Y_e$ yields most of the lanthanides needed to produce the short-wavelength $\lesssim$7500 \AA~absorption. 
 
-As a second, more rigorous test, we re-perform multi-component \SPARK~runs with one of the two components fixed to that of the purple + warm. Specifically, we fix $Y_{e,2} = 0.311$, $v_{\mathrm{exp},2}/c = 0.240$ and $s_2 / k_{\mathrm{B}} = 13.6$. We compile the resultant fits in Figure~\ref{fig:fix-purplewarm}. At 1.4 days, we obtain a good fit which captures most of the continuum at short wavelengths $\lesssim$5500 \AA, and the $\sim$8000 \AA~absorption. However, the absorption is somewhat underestimated, and the single-component purple + warm on its own remains the favoured model. Nonetheless, the component which is allowed to vary converges to $Y_{e,1} = 0.337^{+0.034}_{-0.027}$, and $s_1 / k_{\mathrm{B}} = 20.4^{+4.2}_{-3.9}$. This component has essentially the same abundance pattern as the purple + warm. Moreover, the two components overlap completely in space. Once again, this model is effectively single-component, demonstrating that the fit at 1.4 days cannot be improved by adding some new component to the purple + warm. At 2.4 days, we find what is generally a poor fit, but the fit captures the general shape of the continuum and some of the absorption at $\sim$8000 \AA. The component which is allowed to vary converges to $Y_{e,1} = 0.243^{+0.169}_{-0.183}$, and $s_1 / k_{\mathrm{B}} = 25.5^{+8.2}_{-11.5}$, and overlaps completely with the other component. While these parameters are consistent with those of a blue component with similar abundance pattern to the purple + warm, the broadness of the posterior and the poor fit make this agreement less significant. Nonetheless, at 2.4 days, the component allowed to vary has converged to one that completely overlaps the other and has a similar abundance pattern---again, effectively yielding a single-component ejecta. \redbf{[At 3.4 days, we find...]} 
+Aside from asking whether a single- or multi-component ejecta is individually preferred at each epoch, we also ask: does the \textit{addition} of a new component to the original, purple + warm ejecta at 1.4 days improve the fit? To test this, we replace the higher-$Y_e$ components of the multi-component models at 1.4, 2.4, and 3.4 days with this purple + warm component. (These higher-$Y_e$ components have $Y_{e} = $ $ 0.340^{+0.022}_{-0.021}$, $0.288^{+0.129}_{-0.187}$, and $0.228^{+0.073}_{-0.088}$ at 1.4, 2.4, and 3.4 days, respectively). Figure~\ref{fig:swap-purplewarm} shows the spectra which result from replacing these components with the parameters $(Y_e = 0.311,~v_{\mathrm{exp}}/c=0.240,~s / k_{\mathrm{B}}=13.6)$ at each epoch. At all epochs, there is minimal impact on the resultant spectrum and we retain a good fit.  This is not surprising at 1.4 and 2.4 days, where the inferred $Y_e$ is consistent with the purple + warm model. It is, however, surprising at 3.4 days. Crucially, replacing the higher-$Y_e$ component at 3.4 days changes the overall abundance pattern, but the overall abundance of Sr remains unchanged due to the presence of substantial Sr in the purple + warm ejecta. This further suggests that the role of the higher-$Y_e$ component at 3.4 days is primarily to provide enough Sr to produce the $\sim$8000 \AA~absorption, with the lower-$Y_e$ providing sufficient lanthanides. 
 
-Finally, given our Bayesian inference framework, we also use quantitative model comparison to assess how one model is favored over another. We compare the single- and multi-component models compiled in Figure~\ref{fig:bestfits}. \redbf{(Explain how we do model comparison. Will probably be something tricky)}. \redbf{(If Bayes factors are what we even use)} We find a Bayes factor  of \redbf{$X$} favoring the single- over multi-component at 1.4 days, \redbf{$X$} favoring the single- over multi-component at 2.4 days, and \redbf{$X$} favoring the multi- over single-component at 3.4 days. \redbf{This implies...}
+Overall, we infer that a new, redder, lanthanide-rich component emerges at 3.4 days. This new red ejecta component has photospheric velocity $0.21c$ and extends out to $0.35c$, suggesting that this component was in fact present at earlier epochs, but was partially buried underneath the photosphere and/or out-shined by the brighter blue component.
 
-Overall, we see that a new, redder component emerges at 3.4 days. We emphasize that arguments based on the physical properties of the components, and quantitative Bayesian model comparison, separately and independently confirm the need for a new component at 3.4 days. One of these lines of reasoning is physical, while the other is statistical. This new red ejecta component has photospheric velocity $0.21c$ and extends out to $0.35c$, suggesting that this component was in fact present at earlier epochs, but was (1) buried underneath a much brighter blue component, and (2) partially hidden below the photosphere. 
+% ====================================================
 
 
 
@@ -452,19 +458,20 @@ Overall, we see that a new, redder component emerges at 3.4 days. We emphasize t
 
 %%% === SECTION 4 === %%%
 %% DISCUSSION %%
-
 \section{Discussion}\label{sec:disco}
 
 %%% subsection 4.1: ABUNDANCES
 \subsection{Abundances of the favored models}\label{ssc:disco-abundances}
 
-We favor the single-component models at 1.4 and 2.4 days, and multi-component model at 3.4 days. We show the abundance patterns of these favored models in Figure~\ref{fig:abunds_time_evolution}. The overall multi-component abundance pattern at 3.4 days is computed as the mass-weighted sum over all shells, including both components. 
+Given our favored inferred models, and their best fit ($Y_e$, $v_{\mathrm{exp}}$, $s$), we study the inferred abundance pattern of the ejecta as a function of time. We favor the single-component models at 1.4 and 2.4 days, and multi-component model at 3.4 days. We show the abundance patterns of these favored models in Figure~\ref{fig:abunds_time_evolution}. The overall multi-component abundance pattern at 3.4 days is computed as the mass-weighted sum over all shells, including both components. 
 
-The 1.4 and 2.4 day abundance patterns are remarkably similar, but the 2.4 day model has greater uncertainties due to the broader overall posterior. These 2.4 day abundances show evidence for $\sim 10^{-9} - 10^{-6}$ mass fractions for some of the lighter lanthanides. However, as we see in the following section, lanthanides do not leave any clear imprint on the spectrum at 2.4 days. Overall, the 1.4 and 2.4 day spectra are well-described by a single bluer component with moderate entropy. 
+The 1.4 and 2.4 day abundance patterns are remarkably similar, but the 2.4 day model has greater uncertainties due to the broader overall posterior. These 2.4 day abundances show evidence for $\sim 10^{-9} - 10^{-6}$ mass fractions for some of the lighter lanthanides. However, as we see in the following section, lanthanides do not leave any clear imprint on the spectrum at 2.4 days. Overall, the 1.4 and 2.4 day spectra are well-described by a single component dominated by light $r$-process elements around the first $r$-process peak.
 
-In contrast, the 3.4 day abundance pattern indicates the clear presence of lanthanides in the ejecta. The total lanthanide fraction (again, taken as the mass-weighted sum over all shells, including both components) is $\log_{10} X_{\mathrm{lan,total}} = -0.97^{+0.23}_{-0.32}$. Nonetheless, the bluer component of this multi-component ejecta provides Sr, the role of which is crucial, as seen in the following section. Indeed, we infer abundances of $Y_{\mathrm{Sr},1.4} = 0.069^{+0.021}_{-0.010}$ and $Y_{\mathrm{Sr},2.4} = 0.087^{+0.060}_{-0.020}$ at 1.4 and 2.4 days, and $Y_{\mathrm{Sr},3.4} = 0.067^{+0.035}_{-0.002}$ (mass-weighted sum over all shells, including both components) at 3.4 days. These are remarkably consistent with each other.
+In contrast, 3.4 day abundance pattern indicates the clear presence of heavier elements and especially lanthanides in the ejecta. The total lanthanide fraction is $\log_{10} X_{\mathrm{lan,total}} = -0.97^{+0.23}_{-0.32}$, several orders of magnitude larger than inferred at 1.4 and 2.4 days. The higher-$Y_e$ component of this multi-component ejecta then provides Sr, the role of which is crucial, as we will see in the the following section. Indeed, we infer abundances of $Y_{\mathrm{Sr},1.4} = 0.069^{+0.021}_{-0.010}$ and $Y_{\mathrm{Sr},2.4} = 0.087^{+0.060}_{-0.020}$ at 1.4 and 2.4 days, and $Y_{\mathrm{Sr},3.4} = 0.067^{+0.035}_{-0.002}$ (mass-weighted sum over all shells, including both components) at 3.4 days. These are remarkably consistent with each other.
 
-The inferred abundance patterns at 1.4 and 2.4 days are markedly non-Solar, where the Solar $r$-process abundance pattern is taken using the data of \cite{lodders09} with the $s$-process residuals subtracted according to \cite{bisterzo14}. If all NS-NS/BH mergers produced such blue ejecta, this would point to the inability of these mergers to yield the $r$-process abundances seen in several astrophysical settings. However, the 3.4 days abundance pattern is much closer to Solar, up to $Z \sim 80$. In particular, the presence of lanthanides improves this agreement. % In the following section, we examine the role of individual elements and ions, including these lanthanides. 
+The inferred abundance patterns at 1.4 and 2.4 days are markedly non-Solar in Figure~\ref{fig:abunds_time_evolution}, where the Solar $r$-process abundance pattern is taken using the data of \cite{lodders09} with the $s$-process residuals subtracted according to \cite{bisterzo14}. If all NS-NS/BH mergers produced such blue ejecta, this would point to the inability of these mergers to yield the $r$-process abundances seen in several astrophysical settings. The 3.4 day abundance pattern, in contrast, is much closer to Solar up to $Z \sim 80$. In particular, the presence of lanthanides improves this agreement. 
+
+Our abundance results are in broad agreement with inference on the light curves and spectral fitting of AT2017gfo (see \citealt{ji19}, and references therein). While light curve modelling typically uses grey (wavelength-independent) opacities, this modelling generally recovers the emergence of multiple components, including a higher-opacity redder component at $\gtrsim$3 days, as we find here. Our results for lanthanide fractions deviate somewhat from previous works. In particular, previous works find lanthanide fractions $\log_{10} X_{\mathrm{lan}} \sim -6$ to $\sim -4$ for a blue component, and $\sim -2$ for a red component. We find a more lanthanide-poor bluer component, and a marginally more lanthanide-rich ($\log_{10} X_{\mathrm{lan}} \sim -1$) redder component. This is notable, as \cite{ji19} find that the $\log_{10} X_{\mathrm{lan}} \sim -2$ inferred in previous works falls on the low end of the lanthanide fractions measured in metal-poor stars. If our higher inferred lanthanide fraction is correct, we relieve some of the tension between the lanthanide fractions of the AT2017gfo ejecta and metal-poor stars. However, we caution that we do not probe all of the ejecta, and in particular are not sensitive to the ejecta below the photosphere. This ejecta could be more or less lanthanide-rich, complicating these comparisons.
 
 
 
@@ -472,47 +479,40 @@ The inferred abundance patterns at 1.4 and 2.4 days are markedly non-Solar, wher
 %%% subsection 4.2: LoO AND SDEC
 \subsection{Elements \& ions present in the favored models}\label{ssc:disco-elements}
 
-
 %%% leave-one-out spectra; Fig. 5
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.35\textwidth]{figs/220816_130039_leaveoneout_all_TARDIS_evals_label-interest-38-39-40.png}
-    \includegraphics[width=0.35\textwidth]{figs/230409_234104_leaveoneout_all_TARDIS_evals_label-interest-38-39.png}
-    \includegraphics[width=0.35\textwidth]{figs/230626_170245_leaveoneout_all_TARDIS_evals_label-interest-38-56-58.png}
-    \figcaption{\textbf{Leave-one-out spectra for the favored models: single-component for 1.4 (\textit{top}) and 2.4 (\textit{center}) days, and multi-component for 3.4 days \textit{(bottom)}.} All models show clear absorption from strontium (${}_{38}$Sr) at $\sim$8000 \AA. At 3.4 days, when the abundances includes heavier elements, we see an over-absorption from barium (${}_{56}$Ba) at $\sim$4500\AA. We also see absorption (at $\sim$7000 \AA~and $\sim$12,000 \AA) and emission (at $\sim$8000 \AA) from the lanthanide cerium (${}_{58}$Ce) at this epoch. Spectral DEComposition (SDEC) plots, included in Appendix~\ref{app:SDEC}, provide a complementary view of the dominant species.}\label{fig:leaveoneout_pref}
+    \includegraphics[width=0.36\textwidth]{figs/220816_130039_leaveoneout_all_TARDIS_evals_label-interest-38-39-40.png}
+    \includegraphics[width=0.36\textwidth]{figs/230409_234104_leaveoneout_all_TARDIS_evals_label-interest-38-39.png}
+    \includegraphics[width=0.36\textwidth]{figs/230626_170245_leaveoneout_all_TARDIS_evals_label-interest-38-56-58.png}
+    \figcaption{\textbf{Leave-one-out spectra for the favored models: single-component for 1.4 (\textit{top}) and 2.4 (\textit{center}) days, and multi-component for 3.4 days \textit{(bottom)}.} All models show clear absorption from strontium (${}_{38}$Sr) at $\sim$8000 \AA. At 3.4 days, when the ejecta is richer in heavier elements, we also see absorption (at $\sim$7000 \AA~and $\sim$12,000 \AA) and emission (at $\sim$8000 \AA) from the lanthanide cerium (${}_{58}$Ce). However, we also see over-absorption from barium (${}_{56}$Ba) at $\sim$4500\AA.  Spectral DEComposition (SDEC) plots in Figure~\ref{fig:SDEC} (Appendix~\ref{app:SDEC}), provide a complementary view of the dominant species.}\label{fig:leaveoneout_pref}
 \end{figure}
 
 
 To assess the impact of different elements on the best fits, we generate leave-one-out spectra. In each, we iteratively leave out a single element by setting its abundance to 0 and transferring that original abundance to a filler element. We use helium (He) as our filler element, since it should not have a marked impact on the emergent spectrum when the ejecta remains optically thick and local thermodynamic equilibrium (LTE) is a valid approximation (\citealt{perego22, tarumi23}).
 
-In Figure~\ref{fig:leaveoneout_pref}, we show leave-one-out spectra for the new favored models at 2.4 and 3.4 days, and the 1.4 day model from V23. We see the clear imprint of Sr at $\sim$8000 \AA~at 1.4, 2.4, and 3.4 days. This is in line with \cite{watson19, gillanders22, domoto21, domoto22, sneppen23, sneppenwatson23}, and V23, which all argue for the importance of Sr in the spectra. 
+In Figure~\ref{fig:leaveoneout_pref}, we show leave-one-out spectra for the new favored models at 2.4 and 3.4 days, and the 1.4 day model from \V23. We see the clear imprint of Sr at $\sim$8000 \AA~at all epochs. This is consistent with \cite{watson19, gillanders22, domoto21, domoto22, sneppen23, sneppenwatson23}, which all argue for the importance of Sr in the spectra. In our new model for 2.4 days, we also see some light evidence for absorption from an adjacent first $r$-process peak element, yttrium (${}_{39}$Y), at short wavelengths $\lesssim$4500~\AA. Considering our previous identification of Y at 1.4 days in \V23, this identification at 2.4 days strengthens our previous claim of the importance of Y, and is in agreement with \cite{gillanders22}. Interestingly, Y does not have the same pronounced impact at 3.4 days. This is in agreement with \cite{sneppenwatson23}, which finds that absorption from Y is less prominent at 3.4 days, before a P Cygni feature emerges at $\sim$7600~\AA~at 4.4 and 5.4 days. In our favored multi-component model, the absorption from the lanthanides is much stronger at these (and shorter) wavelengths. 
 
-At 2.4 days, we also see evidence for absorption from yttrium (${}_{39}$Y) at short wavelengths, as we have at 1.4 days in V23. This identification at 2.4 days strengthens our previous claim of the importance of Y, and is in agreement with \cite{gillanders22}, which identified Y at these early epochs. Interestingly, Y does not have the same pronounced impact at 3.4 days. This is in agreement with \cite{sneppenwatson23}, which finds that absorption from Y is less prominent at 3.4 days, before a P Cygni feature emerges at $\sim$7600~\AA~at 4.4 and 5.4 days. In our favored multi-component model, the absorption from the lanthanides is much stronger at these (and shorter) wavelengths. 
+At 3.4 days, we identify two new, heavier elements: barium (${}_{56}$Ba), an open $s$-shell element in the same periodic table group as Sr, and cerium (${}_{58}$Ce), a lanthanide. Ba is actually responsible for some of the \textit{over}estimated absorption at $\lesssim$5000 \AA. However, recall that we neglect wavelengths $\leqslant$6400 \AA~in our computation of the likelihood at 3.4 days to obtain a fit which accurately captures the Sr absorption. Nonetheless, the omission of Ba improves the fit, suggesting that we overestimate the abundance of Ba in our best fit abundance pattern. The other new element, Ce, produces absorption at $\sim$7000 \AA~which is reprocessed and emitted at $\sim$8000 \AA, and its omission worsens the fit. Ce also introduces some absorption at $\sim$12,000 \AA. Interestingly, this absorption may originate from astrophysically-measured \ion{Ce}{2} lines with rest wavelengths in the range of $\sim$$15,200$ $-$ $16,700$~\AA~(\citealt{cunha17, majewski17}), blueshifted due to the expansion of the ejecta. \cite{domoto21} similarly noted that these \ion{Ce}{2} lines may be prominent in kilonova spectra. The observation of Ce is also consistent with the kilonova parameter space clustering analysis of \cite{ford23}, which finds that \ion{Ce}{2} may broadly be an important ion in kilonova spectra from 1.4 to 3.4 days. \ion{Ce}{3} may also be important at later epochs (\citealt{gillanders23}). 
 
-At 3.4 days, we identify two new, heavier elements: barium (${}_{56}$Ba), an open $s$-shell element in the same periodic table group as Sr, and cerium (${}_{58}$Ce), a lanthanide. Ba is actually responsible for some of the \textit{over}estimated absorption at $\lesssim$5000 \AA. This overestimated absorption is more severe in the multi-component model than in the single-component, but recall that we neglect wavelengths $\leqslant$6400 \AA~in our computation of the likelihood at 3.4 days to obtain a fit which accurately captures the Sr absorption. Some of the overestimated Ba absorption is re-processed and emitted at $\sim$8000 \AA, but, overall, the omission of Ba improves the fit. This suggests that we overestimate the abundance of Ba in our best fit abundance pattern. The other new element, Ce, produces absorption at $\sim$7000 \AA~which is re-processed and emitted at $\sim$8000 \AA, and its omission worsens the fit. Ce also introduces some absorption at $\sim$12,000 \AA. Interestingly, this absorption may originate from astrophysically-measured \ion{Ce}{2} lines in the range of $\sim$$15,200 - 16,700$ \AA~(\citealt{cunha17, majewski17}), blue-shifted due to the expansion of the ejecta. \cite{domoto21} similarly noted that these \ion{Ce}{2} lines may be prominent in kilonova spectra.
+We complement these leave-one-out analyses using the Spectral DEComposition (SDEC) tool of \TARDIS. SDEC allows us to measure which elements or ions absorb and/or emit the greatest luminosity during a given \TARDIS~run. All SDEC plots, for favored and disfavored models, are compiled in Figure~\ref{fig:SDEC} (Appendix~\ref{app:SDEC}). In both models at 1.4 days, we see that the absorption of photon packets is dominated by just three singly-ionized species: \ion{Sr}{2}, \ion{Y}{2}, and \ion{Zr}{2}. Indeed, 98.9\% of all absorbed luminosity is absorbed by just these three species in the favored single-component model. These ions remain important at 2.4 days, though the impact of \ion{Zr}{2} is less clear. We also see some minor absorption from \ion{Ba}{2} at 2.4 days, at the shortest wavelengths.
 
-We complement these leave-one-out analyses using the Spectral DEComposition (SDEC) tool of \TARDIS. SDEC allows us to measure which elements or ions absorb the greatest luminosity during a given \TARDIS~run. All SDEC plots, for favored and disfavored models, are compiled in Appendix~\ref{app:SDEC}. In both single- and multi-component models at 1.4 days, we see that the absorption of photon packets is dominated by just three singly-ionized species: \ion{Sr}{2}, \ion{Y}{2}, and \ion{Zr}{2}. Indeed, 98.9\% and 83.4\% of all absorbed luminosity is absorbed by just these three species, in the single- and multi-component models, respectively. These ions remain important at 2.4 days, though the impact of \ion{Zr}{2} is less clear. We also see some light absorption from \ion{Ba}{2} at 2.4 days, at the shortest wavelengths. This is more clear in the multi-component model, but the single-component model is favored.
+At 3.4 days, while \ion{Sr}{2} remains important, the SDEC plots reveal the presence of several new heavier ions. In the favored multi-component model, we see clearer evidence for \ion{Ba}{2}, with the caveat that the abundance of Ba is likely overestimated. More interesting, we see absorption from four singly-ionized lanthanides: \ion{Ce}{2}, \ion{Nd}{2}, \ion{Sm}{2}, and \ion{Eu}{2} (cerium, ${}_{58}$Ce; neodymium, ${}_{60}$Nd; samarium, ${}_{62}$Sm; europium, ${}_{63}$Eu). The absorption from Ce is strongest. Altogether, \ion{Ce}{2} is responsible for 27.5\% of the absorbed luminosity at this epoch, compared to 20.4\% from \ion{Nd}{2} + \ion{Sm}{2} + \ion{Eu}{2}, and 30.3\% from \ion{Sr}{2}. This is a clear indication of the presence of lanthanides in the ejecta. Interestingly, Eu is a ``pure'' $r$-process element, in that it is produced in negligible quantities by the $s$-process (\textit{e.g.}, \citealt{bisterzo14}). The presence of Eu is thus further proof for the operation of the $r$-process in NS-NS merger ejecta. Finally, at 3.4 days, we also see some light (5.2\% of the total) absorption from an ion of bismuth (${}_{83}$Bi), \ion{Bi}{2}. This is the heaviest element detected in any of our models, but we caution that its detection is marginal (we measure $Y_{\mathrm{Bi},3.4} = 7.84^{+24.6}_{-7.43} \times 10^{-6}$), and it does not leave a clear imprint on the leave-one-out spectra. 
 
-At 3.4 days, the SDEC plots reveal the presence of several new ions. \ion{Sr}{2} remains important, but singly-ionized species of heavier elements also emerge. In the favored multi-component model, we see clearer evidence for \ion{Ba}{2}, with the caveat that the abundance of Ba is likely overestimated. More interesting, we see absorption from four singly-ionized lanthanides: \ion{Ce}{2}, \ion{Nd}{2}, \ion{Sm}{2}, and \ion{Eu}{2} (cerium, ${}_{58}$Ce; neodymium, ${}_{60}$Nd; samarium, ${}_{62}$Sm; europium, ${}_{63}$Eu). While none of these species except \ion{Ce}{2} contribute enough absorption to emerge on their own in the leave-one-out spectra, altogether, \ion{Ce}{2}) is responsible for 27.5\% of the absorbed luminosity at this epoch, and \ion{Nd}{2} + \ion{Sm}{2} + \ion{Eu}{2} are responsible for 20.4\%, compared to 30.3\% from \ion{Sr}{2}. This is a clear indication of the presence of lanthanides in the ejecta. Interestingly, Eu is a ``pure'' $r$-process element, in that it is produced in negligible quantities by the $s$-process (\textit{e.g.}, \citealt{bisterzo14}). The presence of Eu is thus further proof for the operation of the $r$-process in NS-NS merger ejecta. Finally, at 3.4 days, we also see some light (5.2\% of the total) absorption from an ion of bismuth, \ion{Bi}{2}. This is the heaviest element ($Z=83$) detected in any of our models, but we caution that its detection is marginal (we measure an abundance of $Y_{\mathrm{Bi},3.4} = 7.84^{+24.6}_{-7.43} \times 10^{-6}$) and it does not leave a clear imprint on the leave-one-out spectra. 
+Considering both the leave-one-out and SDEC analyses, we confidently identify Sr at all epochs. We solidify our identification of Y at 1.4 and 2.4 days. Ba may also be present in the ejecta, but its abundance is likely overestimated at 3.4 days, complicating this claim. Finally, at 3.4 days, we infer the presence of singly-ionized species of the lanthanides Ce, Nd, Sm, and Eu, with the detection of Ce being most concrete. This ensemble of lanthanides, which was not present at 1.4 and 2.4 days, emerges at 3.4 days to significantly shape the emergent spectrum. 
 
-Considering both the leave-one-out and SDEC analyses, we confidently identify Sr at all epochs. We solidify our identification of Y at 1.4 and 2.4 days. Ba may also be present in the ejecta, but its abundance is likely overestimated at 3.4 days, complicating this claim. Finally, at 3.4 days, we infer the presence of singly-ionized species of the lanthanides Ce, Nd, Sm, and Eu, with the detection of Ce being most concrete. At 3.4 days, the ejecta has evolved to expose a much redder, lanthanide-rich component which was not needed to fit the earlier spectra at 1.4 and 2.4 days.
 
 
 
 %%% subsection 4.3: PHYSICAL ORIGIN OF EJECTA COMPONENTS
 \subsection{Physical origin of the ejecta components}\label{ssc:disco-origins}
 
- Given the inferred electron fraction and entropy (we neglect expansion velocity, since it is poorly constrained), the ejecta at 1.4 and 2.4 days is consistent with a viscously driven outflow from a remnant accretion disk. At 3.4 days, the bluer component ($Y_{e,1} = 0.228^{+0.073}_{-0.088}$, $s / k_{\mathrm{B}} = 14.9^{+8.0}_{-4.5}$), is consistent with \redbf{[some other component with ($Y_e \sim 0.23$, $s / k_{\mathrm{B}} \sim 15$)]} \citneeded . However, this component can also be replaced with the purple + warm model of 1.4 days, which is consistent with an outflow from an accretion disk, without significantly changing the fit (see Figure~\ref{fig:swap-purplewarm}). The redder component ($Y_{e,2} = 0.161^{+0.149}_{-0.104}$, $s / k_{\mathrm{B}} = 21.5^{+8.3}_{-9.5}$) is better matched to \redbf{[some other component with ($Y_e \sim 0.16$, $s / k_{\mathrm{B}} \sim 22$)]} \citneeded . \redbf{[Interpretation here...]}
+Inferring the parameters of the ejecta component(s) also allows us to map these components to different ejection mechanisms in the NS-NS merger which generated the kilonova. Given the inferred $Y_e$ and $s$ (we neglect $v_{\mathrm{exp}}$, since it is poorly constrained), the ejecta at 1.4 and 2.4 days can be attributed to matter that has undergone strong neutrino reprocessing. This ejecta can arise from the neutrino-reprocessed wind of a hypermassive neutron star remnant plus disk, either magnetized (\eg, \citealt{combi23,curtis23b}) or unmagnetized (\eg, \citealt{fujibayashi23,just23}). Alternatively, accretion disks around black holes---evolved in MHD---also yield ejecta with a broad distribution of electron fractions (\eg, \citealt{siegel18, fernandez19, christie19, miller19, just22, fahlman22, hayashi23, curtis23a}). An outflow from such an accretion disk could in principle provide both the ejecta at 1.4 and 2.4 days, and, the neutron-rich component which emerges at 3.4 days. 
+ 
+The lanthanide-bearing component at 3.4 days ($Y_{e,2} = 0.161^{+0.149}_{-0.104}$, $s_2 / k_{\mathrm{B}} = 21.5^{+8.3}_{-9.5}$) can also be accounted for by dynamical ejecta. Numerical relativity simulations that include neutrino absorption typically find $Y_e \sim 0.15 - 0.25$ and $s / k_{\mathrm{B}} \sim 20$ (\eg, \citealt{zappa23}), consistent with our inferred  parameters. The slightly higher-$Y_e$ component at 3.4 days ($Y_{e,1} = 0.228^{+0.073}_{-0.088}$, $s_1 / k_{\mathrm{B}} = 14.9^{+8.0}_{-4.5}$) is also consistent with such dynamical ejecta. However, the dynamical ejecta alone is unlikely to account for most of the mass generating the kilonova, as numerical relativity simulations {that employ parameters consistent with GW170817 produce $\lesssim 10^{-2} M_{\odot}$ in this dynamical component (\eg, \citealt{shibata17, most19, nedora21}). Our inferred masses $M_{\mathrm{phot},1} \sim M_{\mathrm{phot},2} \sim 10^{-4} M_{\odot}$ are consistent with this bound, but recall that we are only sensitive to the mass above the photosphere. Moreover, light curve modelling has found that more mass is contained in the red than the blue component, which is challenging to accomplish if our red component is indeed dynamical ejecta. Modelling the later spectra of AT2017gfo, when we are sensitive to more of the ejecta mass, will be important for understanding whether this new, redder, lanthanide-rich component is more consistent with dynamical ejecta or an outflow from an accretion disk. 
 
- The mass ratio of the redder over the bluer component at 3.4 days (equivalently, the mass ratio of the \redbf{[some other component with ($Y_e \sim 0.16$, $s / k_{\mathrm{B}} \sim 22$)]} over the mass of the disk wind) is $M_1 / M_2 = 1.42^{+0.14}_{-0.14}$. \redbf{[This is or isn't consistent with...]}
+% ====================================================
 
-
-
-
-% %%% subsection 4.4: CONSISTENCY WITH PHOTOMETRIC ANALYSES
-% \subsection{Consistency with light curves}\label{ssc:disco-lightcurves}
-
-% \redbf{May or may not do this depending on time. Idea: convolve our best fit spectra with various filters and produce light curves. See if these light curves are consistent with the various components reported in \cite{villar17}.}
 
 
 
@@ -521,47 +521,24 @@ Considering both the leave-one-out and SDEC analyses, we confidently identify Sr
 %% CONCLUSIONS %%
 \section{Conclusions}\label{sec:conco}
 
-We fit single- and multi-component ejecta models to the spectra of the GW170817 kilonova, AT2017gfo, during the early, optically thick phase: 1.4, 2.4, and 3.4 days post-merger. With these fits, we infer the element-by-element abundance patterns, with uncertainties, at each of these epochs. Using both physical argument and quantitative model comparison, we find that a single-component model is favored at 1.4 and 2.4 days, while a multi-component model is favored at 3.4 days. 
+We fit single- and multi-component ejecta models to the spectra of the GW170817 kilonova, AT2017gfo, during the early, optically thick phase at 1.4, 2.4, and 3.4 days post-merger. With these fits, we infer the element-by-element abundance patterns at each of these epochs. We find that a single-component model is favored at 1.4 and 2.4 days, while a multi-component model is favored at 3.4 days. 
 
-This single component at 1.4 and 2.4 days is blue, characterized by an electron fraction $Y_e = 0.3$, and moderate specific entropy per nucleon $s / k_{\mathrm{B}} = 13 - 18$. At 3.4 days, we find a bluer (but less so than earlier epochs; $Y_e = 0.23$) and redder component ($Y_e = 0.16$), with entropies in the range $s / k_{\mathrm{B}} = 15 - 22$. At 3.4 days, the photosphere has receded into the ejecta, from $0.31c$ at 1.4 days, to $0.25c$ at 2.4 days, to $0.21c$ at 3.4 days. The recession of the photosphere, and the dimming of the blue component, reveals this new redder component which was not inferred at earlier epochs. The emergence of a new red component at 3.4 days is in line with photospheric modelling of the kilonova. This new redder component is rich in lanthanides, which provide absorption in the spectrum at $\lesssim$7500~\AA. Strontium (${}_{38}$Sr) remains present in the blue component, and provides the $\sim$8000~\AA~absorption, in agreement with other spectroscopic studies. The combination of two components---one rich in strontium and poor in lanthanides, the other the opposite---is needed to reproduce the observed spectrum at 3.4 days.
+This single component at 1.4 and 2.4 days is characterized by a high electron fraction $Y_e \sim 0.3$ and moderate specific entropy $s / k_{\mathrm{B}} \sim 13 - 18$, yielding an ejecta dominated by lighter $r$-process elements and a blue kilonova. This ejecta is consistent with material which has undergone substantial neutrino reprocessing, \eg, winds from a remnant hypermassive neutron star and/or an accretion disk. The multi-component ejecta at 3.4 days contains a higher $Y_e \sim 0.23$ component and lower $Y_e \sim 0.16$ component, with entropies in the range $s / k_{\mathrm{B}}\sim 15 - 22$. These new components contain heavier elements, and especially the lanthanides, yielding a redder kilonova. The most substantial contribution of lanthanides comes from the lower-$Y_e$ component, which is consistent with either dynamical ejecta or a neutron-rich outflow from a remnant accretion disk. 
 
-Aside from finding Sr at each epoch, we also strengthen our identification of yttrium (${}_{39}$Y) at short wavelengths $\lesssim$4500~\AA~at 2.4 days. At 3.4 days, this absorption from Y is less clear, as absorption from an ensemble of lanthanides (cerium, ${}_{58}$Ce; neodymium, ${}_{60}$Nd; samarium, ${}_{62}$Sm; europium, ${}_{63}$Eu) dominates the absorption at these short wavelengths. The identification of Ce is most concrete, producing absorption at $\sim$7000~\AA~and $\sim$12,000~\AA~and emission at $\sim$8000~\AA.
+The emergence of a new red component at 3.4 days is broadly in agreement with modelling of the light curves of AT2017gfo. Physically, we infer that the photosphere recedes into the ejecta over time: from $0.31c$ at 1.4 days, to $0.25c$ at 2.4 days, to $0.21c$ at 3.4 days. This recession of the photosphere, and the dimming of the earlier, blue component, reveals this new red component that was not inferred at earlier epochs. 
 
-The abundance patterns at 1.4 and 2.4 days show a dearth of lanthanides and heavier elements which makes these inconsistent with the Solar $r$-process abundance pattern. The blue component at these epochs is consistent with a viscously-driven wind from a remnant accretion disk. At 3.4 days, the emergence of the lanthanide-rich red component---which leads to an overall lanthanide fraction of $X_{\mathrm{lan}} = -0.97$---substantially improves the agreement between the inferred abundance pattern and the Solar $r$-process. This new red component is consistent with \redbf{[some other component]}. The better agreement between the Solar $r$-process and inferred abundance pattern at 3.4 days, and the possible presence of multiple components (disk wind and \redbf{[some other component]}), lends more credence to the ability of NS-NS/BH mergers to yield the Universal $r$-process abundances seen in several other systems.
+Using both leave-one-out and Spectral DEComposition analyses, we assess the contributions of individual elements to the emergent spectra. We find that strontium Sr produces the $\sim$8000~\AA~absorption at each epoch. We also strengthen our identification of yttrium Y at short wavelengths $\lesssim$4500~\AA~at 1.4 and 2.4 days. At 3.4 days, this absorption from Y is less clear, as absorption from an ensemble of lanthanides (cerium Ce, neodymium Nd, samarium Sm, and europium Eu) dominates the absorption at these short wavelengths. The identification of Ce is most concrete, producing absorption at $\sim$7000~\AA~and $\sim$12,000~\AA.
 
-While we have fit at 1.4, 2.4, and 3.4 days, observations of AT2017gfo extend to later epochs. At these epochs, the ejecta may leave the photospheric phase and enter the so-called ``nebular'' phase. At this time, non-LTE effects may be non-negligible. Given the modular nature of \SPARK, it would be possible to swap our \TARDIS~for a code specifically suited to nLTE, or, use the nLTE functionality already available in \TARDIS. The Bayesian framework would also enable quantitative model comparison between models with and without nLTE effects at epochs where their importance is not yet understood (\eg, 4.4, 5.4 days). 
+The abundance patterns at 1.4 and 2.4 days show a dearth of lanthanides and heavier elements which makes these inconsistent with the Solar $r$-process abundance pattern. However, at 3.4 days, the emergence of ejecta with lanthanide fraction $X_{\mathrm{lan}} \sim -1$~substantially improves the agreement between the inferred abundance pattern and the Solar $r$-process, and the distribution of lanthanide fractions measured in metal-poor stars. The better agreement between the Solar $r$-process/metal-poor stars and inferred abundance pattern at 3.4 days, and the possible presence of multiple components (remnant/disk wind and dynamical ejecta), lends more credence to the ability of NS-NS/BH mergers to dominate the $r$-process in the Universe. 
 
-Finally, the inferences here are reliant on atomic/nuclear physics inputs, namely, a list of lines and nuclear reaction network calculations which map elemental abundances to relevant kilonova parameters. These reaction network calculations in turn rely on nuclear physics such as the nuclear mass model employed. Future work could explore the impact of different nuclear physics inputs on the inferred parameters, abundance patterns, and dominant species in the spectra. 
-
-% \begin{itemize}
-    
-%     \item We fit single- and multi-component models to the spectra of the GW170817 kilonova, AT2017gfo, during the early, optically thick phase of the ejecta: 1.4, 2.4, and 3.4 days post-merger. We infer the element-by-element abundance patterns, with uncertainties, at each of these epochs. 
-
-%     \item We find that the ejecta at 1.4 and 2.4 days is well-fit with a single, blue ($Y_e = 0.3$) component. At 3.4 days, we find that the spectrum is best fit with multiple components: one bluer ($Y_e = 0.23$) component which contains sufficient strontium to produce the $\sim 8000$ \AA~absorption, and another redder ($Y_e = 0.16$) which contains sufficient lanthanides for the $\leqslant 7500$ \AA~absorption. 
-
-%     \item We find that strontium is important at all epochs. We also strengthen our identification of yttrium. Finally, we find that the 3.4 day ejecta must contain lanthanides: we specifically identify cerium, neodymium, samarium, and europium, with cerium being the most impactful. This new lanthanide-rich component at 3.4 days, with $\log_{10} X_{\mathrm{lan}} = -0.97$, is more consistent with the Solar $r$-process abundance pattern.
-
-%     \item The bluer components present at 1.4 and 2.4 days are consistent with a viscously-driven accretion disk wind. At 3.4 days, the bluer component is consistent with \redbf{[some other component]}, though it can be replaced with that of 1.4 days without severely impacting the spectrum. The new redder component is consistent with \redbf{[some other component].}
-
-%     \item Potential future direction: fit the 4.5, 5.5, etc. epochs
-
-%     \item Potential future direction: by connecting our inference to reaction network calculations, we have also effectively inferred the heating rate. Can we use this to try to fit light curves and check for consistency with photometric analyses?
-
-%     \item Potential future direction: replace \TARDIS~with some nLTE code, extend \SPARK~to the post-photospheric (nebular) epochs
-
-%     \item Potential future direction: assess the impact of different nuclear physics (most likely nuclear mass models) and the resultant reaction networks on spectral synthesis / inference
-
-% \end{itemize}
-
-
-
+While we have fit spectra of AT2017gfo at 1.4, 2.4, and 3.4 days, the observed spectra of AT2017gfo extend to 10.4 days. At later times, the ejecta is expected to leave the photospheric phase and enter the optically-thin nebular phase, when non-LTE effects become non-negligible. Given the modular nature of \SPARK, we could swap out \TARDIS~for a code specifically suited to non-LTE radiative transfer, or, use the non-LTE functionality already available in \TARDIS. Our Bayesian inference framework would also enable quantitative model comparison between models with and without non-LTE effects at epochs where their relative importance is not yet understood (\eg, 4.4 and 5.4 days). Fitting later epochs will also be crucial for inferring the abundances and masses of all of the ejecta components, including those hidden below the photosphere at 3.4 days. Beyond the later epochs of AT2017gfo, \SPARK~can perform inference on the growing zoo of kilonova yielded by NS-NS/BH binaries with different parameters, allowing us to understand the connections between binary parameters, ejection mechanisms, elemental compositions, and fundamental $r$-process conditions in the ejecta. 
 
 
 %%% === ACKNOWLEDGEMENTS === %%%
 \acknowledgments
 
 
-NV works in Tiohti{\'a}:ke / Mooniyang, also known as Montr{\'e}al, which lies on the unceded land of the Haudenosaunee and Anishinaabeg nations. This work made use of high-performance computing resources in Tiohti{\'a}:ke / Mooniyang and in Burnaby, British Columbia, the unceded land of the Coast Salish peoples, including the Tsleil-Waututh, Kwikwetlem, Squamish, and Musqueam nations. We acknowledge the ongoing struggles of Indigenous peoples on this land, and elsewhere on Turtle Island, and hope for a future marked by true reconciliation. 
+NV works in Tiohti{\'a}:ke / Mooniyang, also known as Montr{\'e}al, which lies on the unceded land of the Haudenosaunee and Anishinaabeg nations. This work made use of high-performance computing resources in Tiohti{\'a}:ke / Mooniyang and in Burnaby, British Columbia, the unceded land of the Coast Salish peoples, including the Tsleil-Waututh, Kwikwetlem, Squamish, and Musqueam nations. We acknowledge the ongoing struggles of Indigenous peoples on this land, and elsewhere on Turtle Island, and hope for a future marked by true reconciliation.
 
 We thank the attendees of an April 2023 workshop at University of California---Santa Cruz, for fruitful discussions on kilonovae and the $r$-process. We are also grateful to Shinya Wanajo for kindly sharing their reaction network calculations. Finally, we thank Jessica Birky and David Fleming for useful discussions on approximate Bayesian inference and the use of \href{https://dflemin3.github.io/approxposterior/index.html}{\approxposterior}.
 
@@ -572,7 +549,8 @@ This work made use of the \href{http://vald.astro.uu.se/~vald/php/vald.php}{Vien
 This research also made use of \href{https://tardis-sn.github.io/tardis/index.html}{\TARDIS}, a community-developed software package for spectral synthesis in supernovae (\citealt{kerzendorf14}). The development of \TARDIS~received support from the Google Summer of Code initiative and from the European Space Agency (ESA)'s Summer of Code in Space program. \TARDIS~is a fiscally
 sponsored project of NumFOCUS. \TARDIS~makes extensive use of \href{https://docs.astropy.org/en/stable/}{\texttt{astropy}} and \href{https://pyne.io/}{\texttt{PyNE}}. We thank Andrew Fullard, Wolfgang Kerzendorf, and the entire \TARDIS~development team for their assistance and their commitment to the development and maintenance of the code. 
 
-N.V. acknowledges funding from the National Sciences and Engineering Research Council of Canada (NSERC) Canada Graduate Scholarship - Doctoral (CGS-D), the Murata Family Fellowship, and the the Bob Wares Science Innovation Prospectors Fund. J.J.R.\ and D.H.\ acknowledge support from the Canada Research Chairs (CRC) program, the NSERC Discovery Grant program, the FRQNT Nouveaux Chercheurs Grant program, and the Canadian Institute for Advanced Research (CIFAR). J.J.R.\ acknowledges funding from the Canada Foundation for Innovation (CFI), and the Qu\'{e}bec Ministère de l’\'{E}conomie et de l’Innovation. \redbf{N.M.F. acknowledgements.} \redbf{M.R.D. acknowledgements.} \redbf{R.F. acknowledgements.}
+N.V. acknowledges funding from the Natural Sciences and Engineering Research Council of Canada (NSERC) Canada Graduate Scholarship - Doctoral (CGS-D), the Murata Family Fellowship, and the the Bob Wares Science Innovation Prospectors Fund. J.J.R.\ and D.H.\ acknowledge support from the Canada Research Chairs (CRC) program, the NSERC Discovery Grant program, the FRQNT Nouveaux Chercheurs Grant program, and the Canadian Institute for Advanced Research (CIFAR). J.J.R.\ acknowledges funding from the Canada Foundation for Innovation (CFI), and the Qu\'{e}bec Ministère de l’\'{E}conomie et de l’Innovation. N.M.F. acknowledges funding from the Fondes de Recherche Nature et Technologies (FRQNT) Doctoral research scholarship number 328732. M.R.D. acknowledges support from the NSERC through grant RGPIN-2019-06186, the Canada Research Chairs Program, and the Dunlap Institute at the University of Toronto.
+R.F. acknowledges support from NSERC of Canada through Discovery Grant RGPIN-2022-03463.
 \newline
 
 %%% === SOFTWARE === %%%
@@ -596,7 +574,6 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 %%% === BIBLIOGRAPHY === %%%
 \bibliographystyle{apj}
 \begin{thebibliography}{}
-
 
 %\bibitem[Abbott \& Lucy(1985)]{abbott85} Abbott, D.~C. \& Lucy, L.~B.\ 1985, \apj, 288, 679
 %%%%% TARDIS LUCY FORMALISM
@@ -717,7 +694,8 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 %%%%% GW170817 SPECTRA
 
 
-%\bibitem[Christie et al.(2019)]{christie19} Christie, I.~M., Lalakos, A., Tchekhovskoy, A., et al.\ 2019, \mnras, 490, 4811
+\bibitem[Christie et al. (2019)]{christie19} Christie, I. M., Lalakos, A., Tchekhovskoy, A., Fern\'andez, R., Foucart, F., Quataert, E., Kasen, D. \ 2019, \mnras, 490, 4811
+%%%% RODRIGO
 
 
 % \bibitem[Ciolfi(2020)]{ciolfi20a} Ciolfi, R.\ 2020, General Relativity and Gravitation, 52, 59
@@ -727,6 +705,9 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 % \bibitem[Ciolfi \& Kalinani(2020)]{ciolfi20b} Ciolfi, R. \& Kalinani, J.~V.\ 2020, \apjl, 900, L35
 % %%%%% B-DRIVEN WIND FOR GW170817
 
+
+\bibitem[Combi \& Siegel (2023)]{combi23} Combi, L., Siegel, D.~M. \ 2023, arXiv:2303.12284
+%%%% RODRIGO
 
 % \bibitem[C{\^o}t{\'e} et al.(2018)]{cote18} C{\^o}t{\'e}, B., Fryer, C.~L., Belczynski, K., et al.\ 2018, \apj, 855, 99
 % %%%%% ASTROPHYSICAL SITE OF THE R-PROCESS
@@ -754,6 +735,15 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 
 \bibitem[Cunha et al.(2017)]{cunha17} Cunha, K., Smith, V.~V., Hasselquist, S., et al.\ 2017, \apj, 844, 145
 %%%% APOGEE
+
+
+\bibitem[Curtis et al.(2023a)]{curtis23a} Curtis, S., Miller, J. M., Fr\"ohlich, C., 
+Sprouse, T., Lloyd-Ronning, N., Mumpower, M. \ 2023, \apjl, 945, L13
+%%%% RODRIGO
+
+
+\bibitem[Curtis et al.(2023b)]{curtis23b} Curtis, S., Bosch, P., M{\"o}sta, P., et al.\ 2023, arXiv:2305.07738
+%%%% RODRIGO 
 
 
 \bibitem[Czekala et al.(2015)]{czekala15} Czekala, I., Andrews, S.~M., Mandel, K.~S., et al.\ 2015, \apj, 812, 128
@@ -805,8 +795,7 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 
 % \bibitem[Even et al.(2020)]{even20} Even, W., Korobkin, O., Fryer, C.~L., et al.\ 2020, \apj, 899, 24
 
-
-% \bibitem[Fahlman \& Fern{\'a}ndez(2018)]{fahlman18} Fahlman, S. \& Fern{\'a}ndez, R.\ 2018, \apjl, 869, L3
+\bibitem[Fahlman \& Fern\'andez (2022)]{fahlman22} Fahlman, S., \& Fer\'andez, R. \ 2022, \mnras, 513, 2689
 
 
 %\bibitem[Fern{\'a}ndez \& Metzger(2013)]{fernandez13} Fern{\'a}ndez, R., \& Metzger, B.~D.\ 2013, \mnras, 435, 502
@@ -818,7 +807,8 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 %\bibitem[Fern{\'a}ndez et al.(2017)]{fernandez17} Fern{\'a}ndez, R., Foucart, F., Kasen, D., et al.\ 2017, Classical and Quantum Gravity, 34, 154001
 
 
-%\bibitem[Fern{\'a}ndez et al.(2019)]{fernandez19} Fern{\'a}ndez, R., Tchekhovskoy, A., Quataert, E., et al.\ 2019, \mnras, 482, 3373
+\bibitem[Fern{\'a}ndez et al.(2019)]{fernandez19} Fern{\'a}ndez, R., Tchekhovskoy, A., Quataert, E., et al.\ 2019, \mnras, 482, 3373
+%%%% RODRIGO
 
 
 \bibitem[Fleming \& VanderPlas(2018)]{fleming18} Fleming, D.~P., \& VanderPlas, J.\ 2018, The Journal of Open Source Software, 3, 781
@@ -830,6 +820,9 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 
 
 % \bibitem[Fontes et al.(2020)]{fontes20} Fontes, C.~J., Fryer, C.~L., Hungerford, A.~L., et al.\ 2020, \mnras, 493, 4143
+
+
+\bibitem[Ford et al.(2023)]{ford23} Ford, N.~M., Vieira, N., Ruan, J.~J., et al.\ 2023, arXiv:2308.15657
 
 
 % \bibitem[Foreman-Mackey et al.(2013)]{foreman-mackey13} Foreman-Mackey, D., Hogg, D.~W., Lang, D., et al.\ 2013, \pasp, 125, 306
@@ -857,6 +850,10 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 % %%%%% POST-MERGER EJECTA FOR LOW-MASS BNSs
 
 
+\bibitem[Fujibayashi et al.(2023)]{fujibayashi23} Fujibayashi, S., Kiuchi, K., Wanajo, S., et al.\ 2023, \apj, 942, 39
+%%%% RODRIGO 
+
+
 % \bibitem[Gillanders et al.(2021)]{gillanders21} Gillanders, J.~H., McCann, M., Smartt, S.~A.~S.~S.~J., et al.\ 2021, arXiv:2101.08271
 % %%%%% GOLD AND PLATINUM IN GW170817
 
@@ -865,8 +862,8 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 %%%%% MODELLING THE SPECTRUM AT EARLY TIMES
 
 
-% \bibitem[Gillanders et al.(2023)]{gillanders23} Gillanders, J.~H., Sim, S.~A., Smartt, S.~J., et al.\ 2023, arXiv:2306.15055
-% %%%%% MODELLING THE SPECTRUM AT LATE TIMES 
+\bibitem[Gillanders et al.(2023)]{gillanders23} Gillanders, J.~H., Sim, S.~A., Smartt, S.~J., et al.\ 2023, arXiv:2306.15055
+%%%%% MODELLING THE SPECTRUM AT LATE TIMES 
 
 
 %\bibitem[Goriely(1999)]{goriely99} Goriely, S.\ 1999, \aap, 342, 881
@@ -881,6 +878,9 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 
 % \bibitem[Hasselquist et al.(2016)]{hasselquist16} Hasselquist, S., Shetrone, M., Cunha, K., et al.\ 2016, \apj, 833, 81
 % %%%%% APOGEE
+
+\bibitem[Hayashi et al. (2023)]{hayashi23} Hayashi, K., Kiuchi, K., Kyutoku, K., Sekiguchi, Y., Shibata, M. \ 2023, \prd, 107, 123001
+%%%% RODRIGO
 
 
 % \bibitem[Heinzel et al.(2021)]{heinzel21} Heinzel, J., Coughlin, M.~W., Dietrich, T., et al.\ 2021, \mnras, 502, 3057
@@ -902,8 +902,8 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 % %%%%% NEBULAR NSMs
 
 
-% \bibitem[Hotokezaka et al.(2023)]{2023arXiv230700988H} Hotokezaka, K., Tanaka, M., Kato, D., et al.\ 2023, arXiv:2307.00988
-% %%%%%%% Te III LINE IN AT2017gfo
+\bibitem[Hotokezaka et al.(2023)]{hotokezaka23} Hotokezaka, K., Tanaka, M., Kato, D., et al.\ 2023, arXiv:2307.00988
+%%%%%%% Te III LINE IN AT2017gfo
 
 
 \bibitem[Hu et al.(2017)]{hu17} Hu, L., Wu, X., Andreoni, I., et al.\ 2017, Science Bulletin, 62, 1433
@@ -925,6 +925,13 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 
 
 % \bibitem[Just et al.(2022)]{just22} Just, O., Kullmann, I., Goriely, S., et al.\ 2022, \mnras, 510, 2820
+
+
+\bibitem[Just et al.(2022)]{just22} Just, O., Goriely, S., Janka, H.-T., et al.\ 2022, \mnras, 509, 1377
+%%%% RODRIGO
+
+\bibitem[Just et al. (2023)]{just23} Just, O., Vijayan, V., Xiong, Z., Goriely, S., Soultanis, T., Bauswein, A., Guilet, J., Janka, H. -Th., Martínez-Pinedo, G. \ 2023, \apjl, 951, L12
+%%%% RODRIGO
 
 
 \bibitem[Kandasamy et al.(2017)]{kandasamy17} Kandasamy, K., Schneider, J., P{\'o}czos, B.\ 2017, Artificial Intelligence, 243
@@ -1086,7 +1093,13 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 % %%%%% TOME ON KNe
 
 
-% \bibitem[Miller et al.(2019)]{miller19} Miller, J.~M., Ryan, B.~R., Dolence, J.~C., et al.\ 2019, \prd, 100, 023008. doi:10.1103/PhysRevD.100.023008
+
+\bibitem[Miller et al.(2019)]{miller19} Miller, J.~M., Ryan, B.~R., Dolence, J.~C., et al.\ 2019, \prd, 100, 023008
+%%%% RODRIGO
+
+
+\bibitem[Most et al.(2019)]{most19} Most, E.~R., Papenfort, L.~J., Tsokaros, A., et al.\ 2019, \apj, 884, 40
+%%%% RODRIGO
 
 
 % \bibitem[Mumpower et al.(2016)]{mumpower16} Mumpower, M.~R., Surman, R., McLaughlin, G.~C., et al.\ 2016, Progress in Particle and Nuclear Physics, 86, 86
@@ -1095,7 +1108,8 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 % \bibitem[Nativi et al.(2021)]{nativi21} Nativi, L., Bulla, M., Rosswog, S., et al.\ 2021, \mnras, 500, 1772
 
 
-% \bibitem[Nedora et al.(2021)]{nedora21} Nedora, V., Bernuzzi, S., Radice, D., et al.\ 2021, \apj, 906, 98
+\bibitem[Nedora et al.(2021)]{nedora21} Nedora, V., Bernuzzi, S., Radice, D., et al.\ 2021, \apj, 906, 98
+%%%% RODRIGO
 
 
 \bibitem[Nelder \& Mead(1965)]{neldermead65} Nelder, J.~A., Mead, R.\ 1965, Computer Journal, 7, 308
@@ -1209,14 +1223,20 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 %\bibitem[Shibata \& Taniguchi(2008)]{shibata08} Shibata M., \& Taniguchi, K.\ 2008, \prd, 77, 084015
 
 
+\bibitem[Shibata et al. (2017)]{shibata17} Shibata, M., Fujibayashi, S., Hotokezaka, K., Kiuchi, K., Kyutoku, K., Sekiguchi, Y., Tanaka, M. \ 2017, \prd, 96, 123012
+
+
 % \bibitem[Shibata \& Hotokezaka(2019)]{shibata19} Shibata, M. \& Hotokezaka, K.\ 2019, Annual Review of Nuclear and Particle Science, 69, 41
 % %%%%% REVIEW OF EJECTION MECHANISMS
+
+
 
 
 %\bibitem[Siegel \& Metzger(2017)]{siegel17} Siegel, D.~M., \& Metzger, B.~D.\ 2017, \prl, 119, 231102
 
 
-% \bibitem[Siegel \& Metzger(2018)]{siegel18} Siegel, D.~M. \& Metzger, B.~D.\ 2018, \apj, 858, 52
+\bibitem[Siegel \& Metzger(2018)]{siegel18} Siegel, D.~M. \& Metzger, B.~D.\ 2018, \apj, 858, 52
+%%%% RODRIGO
 
 
 % \bibitem[Siegel et al.(2019)]{siegel19} Siegel, D.~M., Barnes, J., \& Metzger, B.~D.\ 2019, \nat, 569, 241
@@ -1359,6 +1379,7 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 % \bibitem[Yaron \& Gal-Yam(2012)]{yaron12} Yaron, O., \& Gal-Yam, A.\ 2012, \pasp, 124, 668
 % %%%%% WISeREP
 
+\bibitem[Zappa et al.(2023)]{zappa23} Zappa, F., Bernuzzi, S., Radice, D., et al.\ 2023, \mnras, 520, 1481
 
 %\bibitem[Zhu et al.(2018)]{zhu18} Zhu, Y., Wollaeger, R.~T., Vassh, N., et al.\ 2018, \apjl, 863, L23
 
@@ -1377,7 +1398,7 @@ N.V. acknowledges funding from the National Sciences and Engineering Research Co
 
 Figure~\ref{fig:all_spec_single} shows all of the spectra used to construct the training sets in the single-component \SPARK~runs at 1.4, 2.4, and 3.4 days post-merger. Figure~\ref{fig:all_spec_multi} shows the same for the multi-component equivalents. These include the $m_0 = 1500$ Latin Hypercube Samples, $m_{\mathrm{active}}$ active learning samples, and the best fit spectrum, for each.
 
-Posterior probabilities are computed for each of these spectra, and these are used by the Gaussian Process to construct a surrogate posterior. All posteriors are obtained through dynamic nested sampling of the surrogate Gaussian Process using \texttt{dynesty} (\citealt{speagle20}). Figures \ref{fig:corner_single_2.4}~and~\ref{fig:corner_single_3.4} show the full posteriors for the new single-component fits to the 2.4 and 3.4 day spectra, respectively. Both posteriors are multi-modal. We highlight the modes which correspond to the best fits (given in Table~\ref{tab:bestfit_single}) in Figures~\ref{fig:corner_single_2.4_zoom}~and~\ref{fig:corner_single_3.4_zoom}. Figures~\ref{fig:corner_multi_1.4},~\ref{fig:corner_multi_2.4}, and~\ref{fig:corner_multi_3.4} show the full posteriors for the new multi-component fits to the 1.4, 2.4, and 3.4 day spectra, respectively. The medians of these posteriors are given as the best fit parameters in Table~\ref{tab:bestfit_multi}. %Samples from these posteriors can be accessed online.\footnote{\redbf{Add a link to the posteriors? Extended data objects?}} 
+Posterior probabilities are computed for each of these spectra, and these are used by the Gaussian Process to construct a surrogate posterior. All posteriors are obtained through dynamic nested sampling of the surrogate Gaussian Process using \texttt{dynesty} (\citealt{speagle20}). Figures \ref{fig:corner_single_2.4}~and \ref{fig:corner_single_3.4} show the full posteriors for the new single-component fits to the 2.4 and 3.4 day spectra, respectively. Both posteriors are multi-modal. We highlight the modes which correspond to the best fits in Table~\ref{tab:bestfit_single}. Figures~\ref{fig:corner_multi_1.4}, \ref{fig:corner_multi_2.4}, and~\ref{fig:corner_multi_3.4} show the full posteriors for the new multi-component fits to the 1.4, 2.4, and 3.4 day spectra, respectively. The medians of these posteriors are given as the best fit parameters in Table~\ref{tab:bestfit_multi}. 
 
 
 \begin{figure*}[!ht]
@@ -1385,7 +1406,7 @@ Posterior probabilities are computed for each of these spectra, and these are us
     \includegraphics[width=0.47\textwidth]{figs/appendix/all-spec/220809_150113_single_all_TARDIS_evals_mactive-1140_m0-1500.png}
     \includegraphics[width=0.47\textwidth]{figs/appendix/all-spec/221024_080947_single_all_TARDIS_evals_mactive-600_m0-1500.png}
     \includegraphics[width=0.47\textwidth]{figs/appendix/all-spec/230621_082134_single_all_TARDIS_evals_mactive-600_m0-1500.png}
-    \figcaption{\textbf{All spectra in the training set, and the best fits, for the single-component \SPARK~runs at 2.4 and 3.4 days.} \textit{Top left:} Spectra corresponding to the $m_0 = 1500$ initial Latin Hypercube samples to explore parameter space and $m_{\mathrm{active}} = 1140$ additional active learning points selected using BAPE, for the fit to the 1.4 day spectrum of AT2017gfo, taken from V23. We also show the best fit, as obtained from the median of the posteriors. \textit{Top right:} The same, for $m_0 + m_{\mathrm{active}} = 1500 + 600$ spectra for the 2.4 day fit. \textit{Bottom center:} The same, for the 3.4 day fit. See Appendix~\ref{app:allspec_posteriors} for the complete posteriors for these single-component models. The 1.4 and 2.4 day single-component models (shown here) are favored over the multi-component models, while the 3.4 day single-component model is disfavored with respect to the multi-component model shown in Figure~\ref{fig:all_spec_multi}.}\label{fig:all_spec_single}
+    \figcaption{\textbf{All spectra in the training set, and the best fits, for the single-component \SPARK~runs at 1.4, 2.4, and 3.4 days.} \textit{Top left:} Spectra corresponding to the $m_0 = 1500$ initial Latin Hypercube samples to explore parameter space and $m_{\mathrm{active}} = 1140$ additional active learning points selected using BAPE, for the fit to the 1.4 day spectrum of AT2017gfo, taken from \V23. We also show the best fit, as obtained from the median of the posteriors. \textit{Top right:} The same, for $m_0 + m_{\mathrm{active}} = 1500 + 600$ spectra for the 2.4 day fit. \textit{Bottom center:} The same, for the 3.4 day fit. The 1.4 and 2.4 day single-component models (shown here) are favored over the multi-component models; the 3.4 day single-component model is disfavored with respect to the multi-component model shown in Figure~\ref{fig:all_spec_multi}.}\label{fig:all_spec_single}
 \end{figure*}
 
 \begin{figure*}[!ht]
@@ -1393,35 +1414,22 @@ Posterior probabilities are computed for each of these spectra, and these are us
     \includegraphics[width=0.47\textwidth]{figs/appendix/all-spec/230726_113032_single_all_TARDIS_evals_mactive-1440_m0-1500.png}
     \includegraphics[width=0.47\textwidth]{figs/appendix/all-spec/230412_035244_single_all_TARDIS_evals_mactive-1020_m0-1500.png}
     \includegraphics[width=0.47\textwidth]{figs/appendix/all-spec/230626_073230_single_all_TARDIS_evals_mactive-1140_m0-1500.png}
-    \figcaption{\textbf{All spectra in the training set, and the best fits, for the multi-component \SPARK~runs at 1.4, 2.4, and 3.4 days.} \textit{Top left:} Spectra corresponding to the $m_0 = 1500$ initial Latin Hypercube samples to explore parameter space and $m_{\mathrm{active}} = 1440$ additional active learning points selected using BAPE, for the fit to the 1.4 day spectrum of AT2017gfo. We also show the best fit, as obtained from the median of the posteriors. \textit{Top right:} The same, for the 2.4 day fit, where $m_{\mathrm{active}} = 1020$ active learning samples are required. \textit{Bottom center:} The same for the 3.4 day fit, where $m_{\mathrm{active}} = 1140$ active learning samples are required. See Appendix~\ref{app:allspec_posteriors} for the complete posteriors for these multi-component models. The 1.4 and 2.4 day multi-component models shown here are disfavored with respect to the single-component models; the 3.4 day multi-component model shown here is favored over the single-component.}\label{fig:all_spec_multi}
+    \figcaption{\textbf{All spectra in the training set, and the best fits, for the multi-component \SPARK~runs at 1.4, 2.4, and 3.4 days.} \textit{Top left:} Spectra corresponding to the $m_0 = 1500$ initial Latin Hypercube samples to explore parameter space and $m_{\mathrm{active}} = 1440$ additional active learning points selected using BAPE, for the fit to the 1.4 day spectrum of AT2017gfo. We also show the best fit, as obtained from the median of the posteriors. \textit{Top right:} The same, for the 2.4 day fit, where $m_{\mathrm{active}} = 1020$ active learning samples are required. \textit{Bottom center:} The same for the 3.4 day fit, where $m_{\mathrm{active}} = 1140$ active learning samples are required. The 1.4 and 2.4 day multi-component models shown here are disfavored with respect to the single-component models; the 3.4 day multi-component model shown here is favored over the single-component.}\label{fig:all_spec_multi}
 \end{figure*}
-
-
-
 
 \begin{figure*}[!ht]
     \includegraphics[width=0.95\textwidth]{figs/appendix/corners/221022_084052_dynesty_corner_pretty_smooth2d0.05_nodatapts.png}
-    \figcaption{\textbf{Posterior from the single-component \SPARK~run at 2.4 days.} All posteriors are obtained through dynamic nested sampling of the surrogate Gaussian Process using \texttt{dynesty} (\citealt{speagle20}). The posterior presents some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. In Figure~\ref{fig:corner_single_2.4_zoom}, we discard samples with $s/k_{\mathrm{B}} \geqslant 25.0$. This lower-entropy mode of the posterior is our preferred model.}\label{fig:corner_single_2.4}
-\end{figure*}
-
-\begin{figure*}[!ht]
-    \includegraphics[width=0.95\textwidth]{figs/appendix/corners/221022_084052_dynesty_corner_pretty_smooth2d0.05_nodatapts_zoom.png}
-    \figcaption{\textbf{Posterior from the single-component \SPARK~run at 2.4 days, zoomed in to the mode which produces the best fit.} Samples $s/k_{\mathrm{B}} \geqslant 25.0$ are discarded to show only this mode of the posterior, which corresponds to the preferred model in Table~\ref{tab:bestfit_single}.}\label{fig:corner_single_2.4_zoom}
+    \figcaption{\textbf{Posterior from the single-component \SPARK~run at 2.4 days.} All posteriors are obtained through dynamic nested sampling of the surrogate Gaussian Process using \texttt{dynesty} (\citealt{speagle20}). The posterior presents some bimodality, most evident in the $s/k_{\mathrm{B}}$ dimension. We discard samples with $s/k_{\mathrm{B}} \geqslant 25.0$ to select the lower-entropy mode of the posterior, which is a better fit and is our preferred model in Table~\ref{tab:bestfit_single}.}\label{fig:corner_single_2.4}
 \end{figure*}
 
 \begin{figure*}[!ht]
     \includegraphics[width=0.95\textwidth]{figs/appendix/corners/230618_143307_dynesty_corner_pretty_mactive-600_smooth2d0.05_nodatapts.png}
-    \figcaption{\textbf{Posterior from the single-component \SPARK~run at 3.4 days.} The posterior at this epoch is highly multi-modal, as most evident in the $\rho_0,~Y_{\mathrm{e}},~\mathrm{and}~s/k_{\mathrm{B}}$ dimensions. Although none of these modes in the posterior correspond to a good fit, and the multi-component model is favored at 3.4 days, we find the higher-$\rho_0$, mid-$Y_{\mathrm{e}}$, low-$s$ mode produces the best possible fit with single-component ejecta. In Figure~\ref{fig:corner_single_3.4_zoom}, we highlight this mode of the posterior by discarding samples outside the range $\log_{10}(\rho_0 / \mathrm{g~cm^{-3}}) \in [-15.0, -14.0] \cup Y_{\mathrm{e}} \in [0.13, 0.29] \cup s/k_{\mathrm{B}} \in [10.0, 25.0]$.  }\label{fig:corner_single_3.4}
-\end{figure*}
-
-\begin{figure*}[!ht]
-    \includegraphics[width=0.95\textwidth]{figs/appendix/corners/230618_143307_dynesty_corner_pretty_mactive-600_smooth2d0.05_nodatapts_zoom-midYe-lows-highdens_add-nlive-30000.png}
-    \figcaption{\textbf{Posterior from the single-component \SPARK~run at 3.4 days, zoomed in to the mode which produces the best fit.} Samples outside the range $\log_{10}(\rho_0 / \mathrm{g~cm^{-3}}) \in [-15.0, -14.0] \cup Y_{\mathrm{e}} \in [0.13, 0.29] \cup s/k_{\mathrm{B}} \in [10.0, 25.0]$ are discarded to show only the mode of the posterior which corresponds to the preferred model in Table~\ref{tab:bestfit_single}.}\label{fig:corner_single_3.4_zoom}
+    \figcaption{\textbf{Posterior from the single-component \SPARK~run at 3.4 days.} The posterior at this epoch is highly multi-modal, as most evident in the $\rho_0,~Y_{\mathrm{e}},~\mathrm{and}~s/k_{\mathrm{B}}$ dimensions. Although none of these modes in the posterior correspond to a good fit, and the multi-component model is favored at 3.4 days, the higher-$\rho_0$, mid-$Y_{\mathrm{e}}$, low-$s$ mode produces the best possible fit with single-component ejecta. We select this mode of the posterior by discarding samples outside the range $\log_{10}(\rho_0 / \mathrm{g~cm^{-3}}) \in [-15.0, -14.0]~\cup~Y_{\mathrm{e}} \in [0.13, 0.29]~\cup~s/k_{\mathrm{B}} \in [10.0, 25.0]$. The parameters of this mode are given in Table~\ref{tab:bestfit_single}.}\label{fig:corner_single_3.4}
 \end{figure*}
 
 \begin{figure*}[!ht]
     \includegraphics[width=0.95\textwidth]{figs/appendix/corners/230103_064024_dynesty_corner_pretty_mactive-1440_smooth2d0.05_nodatapts_overridetitles.png}
-    \figcaption{\textbf{Posterior from the multi-component \SPARK~run at 1.4 days.}}\label{fig:corner_multi_1.4}
+    \figcaption{\textbf{Posterior from the multi-component \SPARK~run at 1.4 days.} The region of parameter space sampled using active learning is substantially larger than the higher-probability region of the posterior, which is relatively narrow.}\label{fig:corner_multi_1.4}
 \end{figure*}
 
 \begin{figure*}[!ht]
@@ -1447,26 +1455,11 @@ Posterior probabilities are computed for each of these spectra, and these are us
     \includegraphics[width=0.98\textwidth]{figs/appendix/compare-components/compare_abunds_230103_064024_components_dynesty_100samples.png}
     \includegraphics[width=0.98\textwidth]{figs/appendix/compare-components/compare_abunds_230103_060017_components_dynesty_100samples.png}
     \includegraphics[width=0.98\textwidth]{figs/appendix/compare-components/compare_abunds_230622_230103_components_dynesty_100samples.png}
-    \figcaption{\textbf{Comparison of the abundances of different components for the multi-component models at 1.4, 2.4, and 3.4 days.} The abundance patterns for the two components are similar at 2.4 days. At 3.4 days, there is a redder (lower-$Y_e$) component with more lanthanides and a relative dearth of the crucial element strontium (${}_{38}$Sr), while the bluer (higher-$Y_e$) component contains $\sim$10$\times$ as much Sr and a dearth of lanthanides. Importantly, these plots show abundances, and not mass fractions: the components are approximately equipartitioned in mass at 2.4 and 3.4 days, such that both contribute to the emergent spectrum, while the redder component at 1.4 days has $\sim$100$\times$ less mass than the blue and thus its contribution to the emergent spectrum is negligible, despite having a substantially different abundance pattern.}\label{fig:abunds_components_compare}
+    \figcaption{\textbf{Comparison of the abundances of different components for the multi-component models at 1.4, 2.4, and 3.4 days.} The abundance patterns for the two components are similar at 2.4 days. At 3.4 days, there is a lower-$Y_e$ component with more lanthanides and a relative dearth of Sr, while the higher-$Y_e$ component contains $\sim$10$\times$ as much Sr. Importantly, these plots show abundances, and not mass fractions. The red component at 1.4 days has $\sim$100$\times$ less mass than the blue and its contribution to the emergent spectrum is negligible, despite having a substantially different abundance pattern. The components are approximately equipartitioned in mass at 2.4 and 3.4 days, such that both contribute to the emergent spectrum.}\label{fig:abunds_components_compare}
 \end{figure*}
 
-Figure~\ref{fig:abunds_components_compare} compares the abundances of each component in the multi-component models at 1.4, 2.4, and 3.4 days. Crucially, these are abundances, not mass fractions: while the components are approximately equipartitioned in mass at 2.4 and 3.4 days, at 1.4 days, the bluer has $\sim$100$\times$ the mass of the redder, and the redder has negligible impact on the emergent spectrum, despite having a substantially different abundance pattern.
+Figure~\ref{fig:abunds_components_compare} compares the abundances of each component in the multi-component models at 1.4, 2.4, and 3.4 days. The abundance patterns for the two components are highly similar at 2.4 days. At 3.4 days, there is a lower-$Y_e$ component with more lanthanides and a relative dearth of Sr, while the higher-$Y_e$ component contains $\sim$10$\times$ as much Sr. Crucially, these are abundances, not mass fractions: while the components are approximately equipartitioned in mass at 2.4 and 3.4 days, at 1.4 days, the blue has $\sim$100$\times$ the mass of the red such that the red has negligible impact on the emergent spectrum.
 
-
-
-% %%% === APPENDIX C === %%%
-% %% LEAVE-ONE-OUT SPECTRA %%
-% \section{Leave-one-out Spectra---Non-Preferred Models}\label{app:leave_out_nonpref}
-
-% In Figure~\ref{fig:leave_out_nonpref}, we show leave-one-out spectra for the non-preferred fits: multi-component for 1.4 and 2.4 days, and single-component for 3.4 days.
-
-% \begin{figure*}[!ht]
-%     \centering
-%     \includegraphics[width=0.47\textwidth]{figs/appendix/LoO/230729_020047_leaveoneout_all_TARDIS_evals_label-interest-38-39-40.png}
-%     \includegraphics[width=0.47\textwidth]{figs/appendix/LoO/230504_003423_leaveoneout_all_TARDIS_evals_label-interest-38-39-56.png}
-%     \includegraphics[width=0.47\textwidth]{figs/appendix/LoO/230628_205804_leaveoneout_all_TARDIS_evals_label-interest-38-56.png}
-%     \figcaption{\textbf{Leave-one-out spectra for the disfavored models: multi-component for 1.4 and 2.4 days, and single-component for 3.4 days.} All models show clear absorption from strontium (${}_{38}$Sr) at $\sim8000$\AA. Both 1.4 and 2.4 day multi-component models also show absorption from yttrium (${}_{39}$Y). At (multi-component) 2.4 and (single-component) 3.4 days, absorption from barium (${}_{56}$Ba) is also present. Spectral DEComposition (SDEC) plots, included in Appendix~\ref{app:SDEC}, provide a complementary view of the dominant species to these leave-one-out plots.}\label{fig:leave_out_nonpref}
-% \end{figure*}
 
 
 
@@ -1476,7 +1469,7 @@ Figure~\ref{fig:abunds_components_compare} compares the abundances of each compo
 %% SDEC %%
 \section{Spectral DEComposition Plots}\label{app:SDEC}
 
-Figure~\ref{fig:SDEC} shows the Spectral DEComposition (SDEC) plots for all 1.4, 2.4, and 3.4 day single- and multi-component fits. These SDEC plots show the species (elements or ions) which dominate the absorption (measured by absorbed luminosity) and emission (measured by emitted luminosity) in the spectrum. Above the $y = 0$ line, the height of the histogram indicates the total emitted luminosity in some wavelength bin, across different species. Below the $y = 0$ line, the depth of the histogram indicates the total absorbed luminosity. These plots also show how emission may be re-processed, \ie, absorbed in some wavelength range and reemmitted in another. These are complementary to the leave-one-out plots, which show which elements have the largest impact on the shape of the spectrum, in terms of either absorption or emission.
+Figure~\ref{fig:SDEC} shows the Spectral DEComposition (SDEC) plots for all 1.4, 2.4, and 3.4 day single- and multi-component fits. These SDEC plots show the species (elements or ions) which dominate the absorption (measured by absorbed luminosity) and emission (measured by emitted luminosity) in the spectrum. Above the horizontal axis, the height of the histogram indicates the total emitted luminosity in some wavelength bin, across different species. Below the horizontal axis, the depth of the histogram indicates the total absorbed luminosity. These plots also show how emission may be reprocessed, \ie, absorbed in some wavelength range and re-emitted in another. These are complementary to leave-one-out plots (Figure~\ref{fig:leaveoneout_pref}), which highlight the elements that have the largest impact on the shape of the spectrum, in terms of either absorption or emission.
 
 % \addstackgap SOLUTION INSPIRED BY [1]: https://tex.stackexchange.com/a/219766 
 % \addstackgap SOLUTION INSPIRED BY [2]: https://tex.stackexchange.com/a/226335
@@ -1497,36 +1490,6 @@ Figure~\ref{fig:SDEC} shows the Spectral DEComposition (SDEC) plots for all 1.4,
 
 
 
-
-
-%%% === APPENDIX D === %%%
-%% CONVERGENCE OF FITS %%
-\section{Convergence of fits}\label{app:convergence}
-
-We assess the convergence of each fit using the \approxposterior~$z$ convergence diagnostic:
-
-\begin{equation}
-    z_{t,j} = \frac{\mu_{t,j} - \mu_{t-1,j}}{\sigma_{t-1,j}},
-\end{equation}\label{eqn:convergence_z}
-
-\noindent where $\mu_{t,j}$ and $\sigma_{t,j}$ are the mean and standard deviation of the posterior for model parameter $\theta_j$ at the $t$'th instance of nested sampling. This diagnostic thus assesses the stability of the posterior as more active learning samples are added to the training set of the GP. Figure~\ref{fig:convergence_single} shows these convergence plots for single-component runs at 1.4, 2.4, and 3.4 days; Figure~\ref{fig:convergence_multi} shows the multi-component equivalents. We define convergence as $z_{t,j} \leqslant 0.5$ for all $j$ for sufficient consecutive iterations. In all cases, convergence is obtained, and the final posterior is stable as more active learning samples are added to the training set.
-
-
-\begin{figure*}[!ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figs/appendix/convergence/220808_014638_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.8\textwidth]{figs/appendix/convergence/221022_084052_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.8\textwidth]{figs/appendix/convergence/230618_143307_dynesty-sampling_convergence_z_eps0.5.png}
-    \figcaption{\textbf{Convergence of the GP, measured according to the $z$ \approxposterior~convergence diagnostic, for the single-component runs at 1.4, 2.4, and 3.4 days.} We define convergence as $z_{t,j} \leqslant 0.5$ for all $j$ for sufficient consecutive iterations (see Equation~\ref{eqn:convergence_z}). In all cases, convergence is obtained.}\label{fig:convergence_single}
-\end{figure*}
-
-\begin{figure*}[!ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figs/appendix/convergence/230103_064024_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.8\textwidth]{figs/appendix/convergence/230103_060017_dynesty-sampling_convergence_z_eps0.5.png}
-    \includegraphics[width=0.8\textwidth]{figs/appendix/convergence/230622_230103_dynesty-sampling_convergence_z_eps0.5.png}
-    \figcaption{\textbf{Same as Figure~\ref{fig:convergence_single}, for multi-component equivalents.}}\label{fig:convergence_multi}
-\end{figure*}
 
 
 % ============================
